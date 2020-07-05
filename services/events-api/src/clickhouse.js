@@ -11,7 +11,7 @@ const recordEvent = (event) => {
   console.log("Recording event: ", JSON.stringify(event));
 
   return new Promise((resolve, reject) => {
-    const writableStream = ch.query(`INSERT INTO youranalytics.events FORMAT JSONEachRow`, (err) => {
+    const writableStream = ch.query(`INSERT INTO youranalytics.events`, { format: 'JSONEachRow' }, (err) => {
       if (err) {
         reject(err);
       } else {
@@ -21,7 +21,7 @@ const recordEvent = (event) => {
     });
 
     // data will be formatted for you
-    writableStream.write(event);
+    writableStream.write({...event, timestamp: new Date()});
     // writableStream.write([
     //   new Date(), // timestamp DateTime
     //   event.name, // name String,
