@@ -31,8 +31,8 @@
       h.pushState = function () {
         originalPushState.apply(this, arguments);
         sendEvent();
-      }
-      window.addEventListener('popstate', sendEvent);
+      };
+      // window.addEventListener('popstate', sendEvent);
     }
     sendEvent();
   } catch (error) {
