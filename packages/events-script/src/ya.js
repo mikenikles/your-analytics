@@ -1,6 +1,6 @@
 (() => {
   const sendEvent = () => {
-    fetch("https://events-api-sizrfb2hwq-uc.a.run.app", {
+    fetch("https://events-api-sizrfb2hwq-uc.a.run.app", JSON.stringify({
       method: 'POST',
       body: {
         name: "pageview",
@@ -21,7 +21,7 @@
       headers: {
         'Content-Type': 'text/plain'
       }
-    });
+    }));
   };
 
   try {
