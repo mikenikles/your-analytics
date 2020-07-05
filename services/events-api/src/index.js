@@ -6,7 +6,7 @@ const port = process.env.PORT || 8080;
 
 app.use(express.json());
 
-app.post("/", (req, res) => {
+app.post("/", async (req, res) => {
   const {
     name,
     domain,
@@ -21,7 +21,7 @@ app.post("/", (req, res) => {
     browser
   } = req.body;
 
-  recordEvent({
+  await recordEvent({
     name,
     domain,
     user_id,
