@@ -7,6 +7,7 @@ const port = process.env.PORT || 8080;
 app.use(express.text());
 
 app.post("/", async (req, res) => {
+  console.log(req.body);
   const {
     name,
     domain,
