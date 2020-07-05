@@ -19,6 +19,7 @@
    - 'managed'
    - '--vpc-connector'
    - 'cloud-run-vpc-connector'
+   - '--allow-unauthenticated'
    dir: 'services/events-api'
    env:
    - 'CH_HOST=$_CH_HOST'
