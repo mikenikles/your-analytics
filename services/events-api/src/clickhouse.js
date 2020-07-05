@@ -11,7 +11,7 @@ const recordEvent = (event) => {
   console.log("Recording event: ", JSON.stringify(event));
 
   return new Promise((resolve, reject) => {
-    const writableStream = ch.query(`INSERT INTO youranalytics.events FORMAT TSV`, (err) => {
+    const writableStream = ch.query(`INSERT INTO youranalytics.events FORMAT JSONEachRow`, (err) => {
       if (err) {
         reject(err);
       } else {
@@ -21,20 +21,21 @@ const recordEvent = (event) => {
     });
 
     // data will be formatted for you
-    writableStream.write([
-      new Date(), // timestamp DateTime
-      event.name, // name String,
-      event.domain, // domain String,
-      event.user_id, // user_id UInt64,
-      event.session_id, // session_id UInt64,
-      event.hostname, // hostname String,
-      event.path, // path String,
-      event.referrer, // referrer String,
-      event.country_code, // country_code LowCardinality(FixedString(2)),
-      event.screen_size, // screen_size LowCardinality(String),
-      event.operating_system, // operating_system LowCardinality(String),
-      event.browser, // browser LowCardinality(String)
-    ]);
+    writableStream.write(event);
+    // writableStream.write([
+    //   new Date(), // timestamp DateTime
+    //   event.name, // name String,
+    //   event.domain, // domain String,
+    //   event.user_id, // user_id UInt64,
+    //   event.session_id, // session_id UInt64,
+    //   event.hostname, // hostname String,
+    //   event.path, // path String,
+    //   event.referrer, // referrer String,
+    //   event.country_code, // country_code LowCardinality(FixedString(2)),
+    //   event.screen_size, // screen_size LowCardinality(String),
+    //   event.operating_system, // operating_system LowCardinality(String),
+    //   event.browser, // browser LowCardinality(String)
+    // ]);
 
     writableStream.end();
   });
