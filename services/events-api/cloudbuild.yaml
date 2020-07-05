@@ -14,7 +14,7 @@
    - '--image'
    - 'gcr.io/$PROJECT_ID/events-api:$COMMIT_SHA'
    - '--region'
-   - 'us-central-1'
+   - 'us-central1'
    - '--platform'
    - 'managed'
    - '--vpc-connector'
