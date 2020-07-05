@@ -8,6 +8,8 @@ const ch = new ClickHouse({
 });
 
 const recordEvent = (event) => {
+  console.log("Recording event: ", JSON.stringify(event));
+
   return new Promise((resolve, reject) => {
     const writableStream = ch.query(`INSERT INTO youranalytics.events FORMAT TSV`, (err) => {
       if (err) {
@@ -20,7 +22,7 @@ const recordEvent = (event) => {
 
     // data will be formatted for you
     writableStream.write([
-      Math.floor(Date.now() / 1000), // timestamp DateTime
+      new Date(), // timestamp DateTime
       event.name, // name String,
       event.domain, // domain String,
       event.user_id, // user_id UInt64,
