@@ -9,7 +9,6 @@ app.use(express.json({
 }));
 
 app.post("/", async (req, res) => {
-  console.log(req.body);
   const {
     name,
     domain,
