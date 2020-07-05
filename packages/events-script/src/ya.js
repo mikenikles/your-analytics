@@ -34,7 +34,7 @@
       };
       // window.addEventListener('popstate', sendEvent);
     }
-    sendEvent();
+    // sendEvent();
   } catch (error) {
     // TODO: Capture and send to events-api for troubleshooting
   }
