@@ -20,7 +20,7 @@ const recordEvent = (event) => {
 
     // data will be formatted for you
     writableStream.write([
-      new Date(), // timestamp DateTime
+      Date.now(), // timestamp DateTime
       event.name, // name String,
       event.domain, // domain String,
       event.user_id, // user_id UInt64,
