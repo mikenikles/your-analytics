@@ -3,17 +3,17 @@
     fetch("https://events-api-sizrfb2hwq-uc.a.run.app", {
       method: 'POST',
       body: {
-        name = "pageview",
-        domain = "TODO",
-        user_id = 1,
-        session_id = 9,
-        hostname = location.hostname,
-        path = location.pathname,
-        referrer = document.referrer,
-        // country_code = "",
-        screen_size = `${window.innerWidth}x${window.innerHeight}`,
-        // operating_system = "",
-        // browser = ""
+        name: "pageview",
+        domain: "TODO",
+        user_id: 1,
+        session_id: 9,
+        hostname: location.hostname,
+        path: location.pathname,
+        referrer: document.referrer,
+        // country_code: "",
+        screen_size: `${window.innerWidth}x${window.innerHeight}`,
+        // operating_system: "",
+        // browser: ""
       },
       credentials: 'omit',
       cache: 'no-store',
