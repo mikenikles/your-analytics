@@ -1,8 +1,8 @@
 (() => {
   const sendEvent = () => {
-    fetch("https://events-api-sizrfb2hwq-uc.a.run.app", JSON.stringify({
+    fetch("https://events-api-sizrfb2hwq-uc.a.run.app", {
       method: 'POST',
-      body: {
+      body: JSON.stringify({
         name: "pageview",
         domain: "TODO",
         user_id: 1,
@@ -14,14 +14,14 @@
         screen_size: `${window.innerWidth}x${window.innerHeight}`,
         // operating_system: "",
         // browser: ""
-      },
+      }),
       credentials: 'omit',
       cache: 'no-store',
       mode: 'no-cors',
       headers: {
         'Content-Type': 'text/plain'
       }
-    }));
+    });
   };
 
   try {
