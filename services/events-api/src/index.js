@@ -4,7 +4,9 @@ const { recordEvent } = require("./clickhouse");
 const app = express();
 const port = process.env.PORT || 8080;
 
-app.use(express.text());
+app.use(express.json({
+  type: "text/plain"
+}));
 
 app.post("/", async (req, res) => {
   console.log(req.body);
@@ -20,7 +22,7 @@ app.post("/", async (req, res) => {
     screen_size,
     operating_system,
     browser
-  } = JSON.stringify(req.body);
+  } = req.body;
 
   try {
     await recordEvent({
