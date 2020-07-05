@@ -26,15 +26,15 @@
 
   try {
     const h = window.history
-    if (h.pushState) {
-      const originalPushState = h['pushState']
-      h.pushState = function () {
-        originalPushState.apply(this, arguments);
-        sendEvent();
-      };
-      // window.addEventListener('popstate', sendEvent);
-    }
-    // sendEvent();
+    // if (h.pushState) {
+      // const originalPushState = h['pushState']
+      // h.pushState = function () {
+      //   originalPushState.apply(this, arguments);
+      //   sendEvent();
+      // };
+      window.addEventListener('popstate', sendEvent);
+    // }
+    sendEvent();
   } catch (error) {
     // TODO: Capture and send to events-api for troubleshooting
   }
