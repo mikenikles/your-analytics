@@ -16,6 +16,7 @@
    - 'managed'
    - '--vpc-connector'
    - 'cloud-run-vpc-connector'
+   dir: 'services/events-api'
    env:
    - 'CH_HOST=$_CH_HOST'
    - 'CH_PORT=$_CH_PORT'
