@@ -1,6 +1,5 @@
 const ClickHouse = require('@apla/clickhouse');
 
-console.log("CH_HOST", process.env.CH_HOST)
 const ch = new ClickHouse({
   host: process.env.CH_HOST,
   port: process.env.CH_PORT,
@@ -10,7 +9,7 @@ const ch = new ClickHouse({
 
 const recordEvent = (event) => {
   return new Promise((resolve, reject) => {
-    const writableStream = ch.query(`INSERT INTO your-analytics.events FORMAT TSV`, (err) => {
+    const writableStream = ch.query(`INSERT INTO youranalytics.events FORMAT TSV`, (err) => {
       if (err) {
         reject(err);
       } else {
