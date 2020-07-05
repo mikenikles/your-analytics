@@ -21,20 +21,23 @@ app.post("/", async (req, res) => {
     browser
   } = req.body;
 
-  await recordEvent({
-    name,
-    domain,
-    user_id,
-    session_id,
-    hostname,
-    path,
-    referrer,
-    country_code,
-    screen_size,
-    operating_system,
-    browser
-  });
-
+  try {
+    await recordEvent({
+      name,
+      domain,
+      user_id,
+      session_id,
+      hostname,
+      path,
+      referrer,
+      country_code,
+      screen_size,
+      operating_system,
+      browser
+    });
+  } catch (error) {
+    console.error(error)
+  }
   res.status(201).end();
 });
 

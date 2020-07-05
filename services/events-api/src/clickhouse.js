@@ -11,7 +11,6 @@ const recordEvent = (event) => {
   return new Promise((resolve, reject) => {
     const writableStream = ch.query(`INSERT INTO your-analytics.events FORMAT TSV`, (err) => {
       if (err) {
-        console.error(err);
         reject(err);
       } else {
         console.log('Event recorded!');
