@@ -1,5 +1,6 @@
 const ClickHouse = require('@apla/clickhouse');
 
+console.log("CH_HOST", process.env.CH_HOST)
 const ch = new ClickHouse({
   host: process.env.CH_HOST,
   port: process.env.CH_PORT,
