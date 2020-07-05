@@ -1,0 +1,13 @@
+{
+  "name": "@your-analytics/events-script",
+  "version": "1.0.0",
+  "description": "The JavaScript events script file loaded on websites that track events.",
+  "main": "src/ya.js",
+  "scripts": {
+    "clean": "rm -fr ./public",
+    "build": "npm run clean && mkdir ./public && cp src/ya.js ./public/ya.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
