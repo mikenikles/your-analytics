@@ -20,11 +20,8 @@
    - '--vpc-connector'
    - 'cloud-run-vpc-connector'
    - '--allow-unauthenticated'
+   - '--set-env-vars'
+   - 'CH_HOST=$_CH_HOST,CH_PORT=$_CH_PORT,CH_USER=$_CH_USER,CH_PASSWORD=$_CH_PASSWORD'
    dir: 'services/events-api'
-   env:
-   - 'CH_HOST=$_CH_HOST'
-   - 'CH_PORT=$_CH_PORT'
-   - 'CH_USER=$_CH_USER'
-   - 'CH_PASSWORD=$_CH_PASSWORD'
  images:
  - 'gcr.io/$PROJECT_ID/events-api:$COMMIT_SHA'
