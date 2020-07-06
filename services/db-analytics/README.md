@@ -34,24 +34,41 @@ Call with `sh ./2-create-db-and-tables.sh [PASSWORD]`
 
 clickhouse-client --password $1 --query "CREATE DATABASE IF NOT EXISTS youranalytics"
 
+clickhouse-client --password $1 --query "DROP TABLE IF EXISTS youranalytics.events"
+
 TABLE_EVENTS=$(cat << EOM
   CREATE TABLE IF NOT EXISTS youranalytics.events (
-      timestamp DateTime,
-      name String,
-      domain String,
-      user_id UInt64,
-      session_id UInt64,
-      hostname String,
-      path String,
-      referrer String,
-      country_code LowCardinality(FixedString(2)),
-      screen_size LowCardinality(String),
-      operating_system LowCardinality(String),
-      browser LowCardinality(String)
-    ) ENGINE = MergeTree()
-    PARTITION BY toYYYYMM(timestamp)
-    ORDER BY (name, domain, user_id, timestamp)
-    SETTINGS index_granularity = 8192
+    browser Nested
+    (
+      name LowCardinality(String),
+      version LowCardinality(String),
+      major LowCardinality(String)
+    ),
+    country_code LowCardinality(FixedString(2)),
+    device Nested
+    (
+      vendor LowCardinality(String),
+      model LowCardinality(String),
+      type LowCardinality(String)
+    ),
+    domain String,
+    hostname String,
+    name String,
+    os Nested
+    (
+      name LowCardinality(String),
+      version LowCardinality(String)
+    ),
+    path String,
+    referrer String,
+    screen_size LowCardinality(String),
+    session_id UInt64,
+    timestamp DateTime,
+    user_id UInt64
+  ) ENGINE = MergeTree()
+  PARTITION BY toYYYYMM(timestamp)
+  ORDER BY (name, domain, user_id, timestamp)
+  SETTINGS index_granularity = 8192
 EOM
 )
 
