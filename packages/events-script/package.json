@@ -5,9 +5,12 @@
   "main": "src/ya.js",
   "scripts": {
     "clean": "rm -fr ./public",
-    "build": "npm run clean && mkdir ./public && cp src/ya.js ./public/ya.js",
+    "build": "npm run clean && mkdir ./public && uglifyjs --compress --mangle -o ./public/ya.js src/ya.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "uglify-es": "^3.3.9"
+  }
 }
