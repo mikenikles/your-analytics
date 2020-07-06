@@ -9,7 +9,12 @@ const ch = new ClickHouse({
 
 const recordEvent = (event) => new Promise((resolve, reject) => {
   console.log("Recording event:", JSON.stringify(event));
-  const writableStream = ch.query(`INSERT INTO youranalytics.events`, { format: 'JSONEachRow' }, (err) => {
+  const writableStream = ch.query(`INSERT INTO youranalytics.events`, {
+    format: 'JSONEachRow',
+    queryOptions: {
+      input_format_import_nested_json: 1
+    }
+  }, (err) => {
     if (err) {
       reject(err);
     } else {
