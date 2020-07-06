@@ -1,4 +1,7 @@
 const express = require("express");
+const userAgentParser = require('ua-parser-js');
+const urlParse = require("url-parse");
+
 const { recordEvent } = require("./clickhouse");
 
 const app = express();
@@ -10,37 +13,38 @@ app.use(express.json({
 
 app.post("/", async (req, res) => {
   const {
-    name,
     domain,
-    user_id,
-    session_id,
-    hostname,
-    path,
+    name,
     referrer,
-    country_code,
     screen_size,
-    operating_system,
-    browser
+    url,
   } = req.body;
 
+  const userAgent = userAgentParser(req.get("user-agent"));
+  const urlParsed = urlParse(url, true);
+
   try {
-    await recordEvent({
-      name,
+    const event = {
+      browser: userAgent.browser,
+      country_code: "",
+      device: userAgent.device,
       domain,
-      user_id,
-      session_id,
-      hostname,
-      path,
+      hostname: urlParsed.hostname,
+      name,
+      os: userAgent.os,
+      path: urlParsed.pathname,
       referrer,
-      country_code,
       screen_size,
-      operating_system,
-      browser
-    });
+      session_id: 0,
+      user_id: 0,
+    };
+
+    await recordEvent(event);
   } catch (error) {
     console.error(error)
+  } finally {
+    res.status(201).end();
   }
-  res.status(201).end();
 });
 
 app.listen(port, () => {
