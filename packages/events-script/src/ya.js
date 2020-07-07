@@ -1,11 +1,11 @@
 (() => {
   try {
     const sendEvent = () => {
-      fetch("https://events-api-sizrfb2hwq-uc.a.run.app", {
+      fetch("https://events-api.your-analytics.org", {
         method: 'POST',
         body: JSON.stringify({
           name: "pageview",
-          domain: document.querySelector('[src*="your-analytics.vercel"]').getAttribute("data-domain"),
+          domain: document.querySelector('[src*="your-analytics.org"]').getAttribute("data-domain"),
           url: location.protocol + '//' + location.hostname + location.pathname + location.search,
           // user_id: 1,
           // session_id: 9,
