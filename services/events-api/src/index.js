@@ -25,13 +25,24 @@ app.post("/", async (req, res) => {
 
   try {
     const event = {
-      browser: userAgent.browser,
+      browser: [
+        userAgent.browser.name,
+        userAgent.browser.version,
+        userAgent.browser.major
+      ],
       country_code: "",
-      device: userAgent.device,
+      device: [
+        userAgent.device.vendor,
+        userAgent.device.model,
+        userAgent.device.type
+      ],
       domain,
       hostname: urlParsed.hostname,
       name,
-      os: userAgent.os,
+      os: [
+        userAgent.os.name,
+        userAgent.os.version
+      ],
       path: urlParsed.pathname,
       referrer,
       screen_size,
