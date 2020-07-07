@@ -38,27 +38,18 @@ clickhouse-client --password $1 --query "DROP TABLE IF EXISTS youranalytics.even
 
 TABLE_EVENTS=$(cat << EOM
   CREATE TABLE IF NOT EXISTS youranalytics.events (
-    browser Nested
-    (
-      name LowCardinality(String),
-      version LowCardinality(String),
-      major LowCardinality(String)
-    ),
+    browser_major LowCardinality(String),
+    browser_name LowCardinality(String),
+    browser_version LowCardinality(String),
     country_code LowCardinality(FixedString(2)),
-    device Nested
-    (
-      vendor LowCardinality(String),
-      model LowCardinality(String),
-      type LowCardinality(String)
-    ),
+    device_model LowCardinality(String),
+    device_type LowCardinality(String),
+    device_vendor LowCardinality(String),
     domain String,
     hostname String,
     name String,
-    os Nested
-    (
-      name LowCardinality(String),
-      version LowCardinality(String)
-    ),
+    os_name LowCardinality(String),
+    os_version LowCardinality(String),
     path String,
     referrer String,
     screen_size LowCardinality(String),
