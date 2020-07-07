@@ -1,6 +1,7 @@
 const express = require("express");
 const userAgentParser = require('ua-parser-js');
 const urlParse = require("url-parse");
+const Geo2IpReader = require('@maxmind/geoip2-node').Reader;
 
 const { recordEvent } = require("./clickhouse");
 
@@ -28,7 +29,6 @@ app.post("/", async (req, res) => {
       browser_major: userAgent.browser.major,
       browser_name: userAgent.browser.name,
       browser_version: userAgent.browser.version,
-      country_code: "",
       device_model: userAgent.device.model,
       device_type: userAgent.device.type,
       device_vendor: userAgent.device.vendor,
@@ -43,6 +43,16 @@ app.post("/", async (req, res) => {
       session_id: 0,
       user_id: 0,
     };
+
+    if (req.get("X-Forwarded-For")) {
+      const readGeoFromIp = await Geo2IpReader.open("./geo-db/GeoLite2-City.mmdb");
+      const geoFromIpResponse = await readGeoFromIp.city(req.get("X-Forwarded-For"));
+
+      event.geo_city = geoFromIpResponse.city.names.en;
+      event.geo_country = geoFromIpResponse.country.isoCode;
+      event.geo_lat = geoFromIpResponse.location.latitude;
+      event.geo_long = geoFromIpResponse.location.longitude;
+    }
 
     await recordEvent(event);
   } catch (error) {
