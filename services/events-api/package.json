@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@apla/clickhouse": "^1.6.3",
+    "@maxmind/geoip2-node": "^1.4.0",
     "express": "^4.17.1",
     "ua-parser-js": "^0.7.21",
     "url-parse": "^1.4.7"
