@@ -1,0 +1,25 @@
+steps:
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["build", "-t", "gcr.io/$PROJECT_ID/admin-api:$COMMIT_SHA", "."]
+    dir: "services/admin-api"
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["push", "gcr.io/$PROJECT_ID/admin-api:$COMMIT_SHA"]
+    dir: "services/admin-api"
+  - name: "gcr.io/cloud-builders/gcloud"
+    args:
+      - "beta"
+      - "run"
+      - "deploy"
+      - "admin-api"
+      - "--image"
+      - "gcr.io/$PROJECT_ID/admin-api:$COMMIT_SHA"
+      - "--region"
+      - "us-central1"
+      - "--platform"
+      - "managed"
+      - "--vpc-connector"
+      - "cloud-run-vpc-connector"
+      - "--allow-unauthenticated"
+    dir: "services/admin-api"
+images:
+  - "gcr.io/$PROJECT_ID/admin-api:$COMMIT_SHA"
