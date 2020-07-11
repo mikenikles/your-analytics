@@ -1,13 +1,7 @@
 {
+  "domain": "example.com",
   "name": "pageview",
-  "domain": "mikenikles.com",
-  "user_id": 123,
-  "session_id": 789,
-  "hostname": "www.mikenikles.com",
-  "path": "/test-page",
   "referrer": "",
-  "country_code": "UK",
   "screen_size": "1240x900",
-  "operating_system": "ChromeOS",
-  "browser": "Chrome"
+  "url": "http://www.example.com/test-path"
 }
