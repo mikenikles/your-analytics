@@ -1,14 +1,20 @@
 {
   "name": "@your-analytics/query-api",
   "version": "1.0.0",
-  "description": "Provide a query interface to the analytics database.",
+  "description": "Provides a query interface to the analytics database.",
   "main": "src/index.js",
   "scripts": {
+    "dev": "nodemon .",
+    "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@apla/clickhouse": "^1.6.3"
+    "@apla/clickhouse": "^1.6.3",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
   }
 }
