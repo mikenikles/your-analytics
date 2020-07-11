@@ -10,9 +10,10 @@ A VM on GCE as part of the POC.
 
 There are a number of `dev:docker:*` NPM scripts to assist with local development. Mainly,
 the following are important:
-* `npm run dev:docker:build`
-* `npm run dev:docker:start`
-* `npm run dev:docker:clean`
+
+- `npm run dev:docker:build`
+- `npm run dev:docker:start`
+- `npm run dev:docker:clean`
 
 The database is seeded with all SQL scripts located in `dev/sql`.
 
@@ -23,6 +24,7 @@ https://www.digitalocean.com/community/tutorials/how-to-install-and-use-clickhou
 ### Installation script
 
 `1-install-clickhouse.sh`
+
 ```bash
 #!/bin/bash
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv E0C56BD4
