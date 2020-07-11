@@ -4,8 +4,9 @@
   "description": "The JavaScript events script file loaded on websites that track events.",
   "main": "src/ya.js",
   "scripts": {
-    "clean": "rm -fr ./public",
     "build": "npm run clean && mkdir ./public && uglifyjs --compress --mangle -o ./public/ya.js src/ya.js",
+    "clean": "rm -fr ./public",
+    "deploy": "npm run build && cp ./public/ya.js ../../services/website/static/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
