@@ -1,27 +1,27 @@
- steps:
- - name: 'gcr.io/cloud-builders/docker'
-   args: ['build', '-t', 'gcr.io/$PROJECT_ID/query-api:$COMMIT_SHA', '.']
-   dir: 'services/query-api'
- - name: 'gcr.io/cloud-builders/docker'
-   args: ['push', 'gcr.io/$PROJECT_ID/query-api:$COMMIT_SHA']
-   dir: 'services/query-api'
- - name: 'gcr.io/cloud-builders/gcloud'
-   args:
-   - 'beta'
-   - 'run'
-   - 'deploy'
-   - 'query-api'
-   - '--image'
-   - 'gcr.io/$PROJECT_ID/query-api:$COMMIT_SHA'
-   - '--region'
-   - 'us-central1'
-   - '--platform'
-   - 'managed'
-   - '--vpc-connector'
-   - 'cloud-run-vpc-connector'
-   - '--allow-unauthenticated'
-   - '--set-env-vars'
-   - 'CH_HOST=$_CH_HOST,CH_PORT=$_CH_PORT,CH_USER=$_CH_USER,CH_PASSWORD=$_CH_PASSWORD'
-   dir: 'services/query-api'
- images:
- - 'gcr.io/$PROJECT_ID/query-api:$COMMIT_SHA'
+steps:
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["build", "-t", "gcr.io/$PROJECT_ID/query-api:$COMMIT_SHA", "."]
+    dir: "services/query-api"
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["push", "gcr.io/$PROJECT_ID/query-api:$COMMIT_SHA"]
+    dir: "services/query-api"
+  - name: "gcr.io/cloud-builders/gcloud"
+    args:
+      - "beta"
+      - "run"
+      - "deploy"
+      - "query-api"
+      - "--image"
+      - "gcr.io/$PROJECT_ID/query-api:$COMMIT_SHA"
+      - "--region"
+      - "us-central1"
+      - "--platform"
+      - "managed"
+      - "--vpc-connector"
+      - "cloud-run-vpc-connector"
+      - "--allow-unauthenticated"
+      - "--set-env-vars"
+      - "CH_HOST=$_CH_HOST,CH_PORT=$_CH_PORT,CH_USER=$_CH_USER,CH_PASSWORD=$_CH_PASSWORD"
+    dir: "services/query-api"
+images:
+  - "gcr.io/$PROJECT_ID/query-api:$COMMIT_SHA"

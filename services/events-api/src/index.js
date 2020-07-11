@@ -1,25 +1,21 @@
 const express = require("express");
-const userAgentParser = require('ua-parser-js');
+const userAgentParser = require("ua-parser-js");
 const urlParse = require("url-parse");
-const Geo2IpReader = require('@maxmind/geoip2-node').Reader;
+const Geo2IpReader = require("@maxmind/geoip2-node").Reader;
 
 const { recordEvent } = require("./clickhouse");
 
 const app = express();
 const port = process.env.PORT || 8080;
 
-app.use(express.json({
-  type: "text/plain"
-}));
+app.use(
+  express.json({
+    type: "text/plain",
+  })
+);
 
 app.post("/", async (req, res) => {
-  const {
-    domain,
-    name,
-    referrer,
-    screen_size,
-    url,
-  } = req.body;
+  const { domain, name, referrer, screen_size, url } = req.body;
 
   const userAgent = userAgentParser(req.get("user-agent"));
   const urlParsed = urlParse(url, true);
@@ -45,8 +41,12 @@ app.post("/", async (req, res) => {
     };
 
     if (req.get("X-Forwarded-For")) {
-      const readGeoFromIp = await Geo2IpReader.open("./geo-db/GeoLite2-City.mmdb");
-      const geoFromIpResponse = await readGeoFromIp.city(req.get("X-Forwarded-For"));
+      const readGeoFromIp = await Geo2IpReader.open(
+        "./geo-db/GeoLite2-City.mmdb"
+      );
+      const geoFromIpResponse = await readGeoFromIp.city(
+        req.get("X-Forwarded-For")
+      );
 
       event.geo_city = geoFromIpResponse.city.names.en;
       event.geo_country = geoFromIpResponse.country.isoCode;
@@ -56,7 +56,7 @@ app.post("/", async (req, res) => {
 
     await recordEvent(event);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   } finally {
     res.status(201).end();
   }

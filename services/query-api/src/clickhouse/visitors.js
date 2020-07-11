@@ -18,5 +18,5 @@ const fetchVisitors = (ch) => async () => {
 };
 
 module.exports = {
-  fetchVisitors
+  fetchVisitors,
 };
