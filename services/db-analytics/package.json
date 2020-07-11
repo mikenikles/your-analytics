@@ -1,0 +1,17 @@
+{
+  "name": "@your-analytics/db-analytics",
+  "version": "1.0.0",
+  "description": "The database service that stores events, sessions, etc.",
+  "main": "index.js",
+  "scripts": {
+    "dev:docker:build": "cd dev && docker build -t ya-clickhouse-dev .",
+    "dev:docker:clean": "npm run dev:docker:stopAndRm && npm run dev:docker:removeimage",
+    "dev:docker:cli": "docker run -it --rm --link ch-your-analytics:clickhouse-server yandex/clickhouse-client --host clickhouse-server",
+    "dev:docker:removeimage": "docker image rm ya-clickhouse-dev",
+    "dev:docker:start": "docker run -d -p 8123:8123 --volume $PWD/dbvolume:/var/lib/clickhouse --name ch-your-analytics --ulimit nofile=262144:262144 ya-clickhouse-dev:latest",
+    "dev:docker:stopAndRm": "docker rm $(docker stop $(docker ps -a -q --filter ancestor=ya-clickhouse-dev --format=\"{{.ID}}\"))",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

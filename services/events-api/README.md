@@ -5,7 +5,7 @@ Processes incoming events. In the initial phase, these events are sent from the 
 ## Send a test event
 
 ```
-curl -v -X POST -H "Content-Type: application/json" -d @./test-event.json "https://[URL]"
+curl -v -X POST -H "Content-Type: text/plain" -H "user-agent:Mozilla/5.0 (X11; CrOS x86_64 13099.48.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.64 Safari/537.36" -d @./test-event.json "http://localhost:8080"
 ```
 
 ## Serverless VPC Access
