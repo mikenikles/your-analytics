@@ -6,6 +6,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/your-analytics-org/your-analytics.git"
@@ -18,6 +23,7 @@
   "homepage": "https://github.com/your-analytics-org/your-analytics#readme",
   "devDependencies": {
     "husky": "^4.2.5",
+    "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1"
   }
 }
