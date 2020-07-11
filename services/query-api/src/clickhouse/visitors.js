@@ -1,4 +1,4 @@
-const fetchVisitors = () => {
+const fetchVisitors = (ch) => () => {
   return {
     visitors: [{
       "January": 128,

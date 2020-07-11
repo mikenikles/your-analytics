@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { fetchVisitors } = require("./clickhouse/visitors");
+const { fetchVisitors } = require("./clickhouse");
 
 const app = express();
 const port = process.env.PORT || 8080;
