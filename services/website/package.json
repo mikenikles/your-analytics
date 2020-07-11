@@ -3,11 +3,12 @@
   "description": "TODO",
   "version": "0.0.1",
   "scripts": {
-    "build": "sapper build --legacy",
+    "build": "run-s clean && sapper build --legacy",
+    "clean": "rm -fr __sapper__",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "dev": "sapper dev",
-    "export": "sapper export --legacy",
+    "dev": "run-s clean && sapper dev",
+    "export": "run-s clean && sapper export --legacy",
     "start": "node __sapper__/build",
     "test": "run-p --race dev cy:run"
   },
