@@ -1,0 +1,23 @@
+{
+  "name": "@your-analytics/monorepo",
+  "version": "1.0.0",
+  "description": "An analytis platform to collect events, such as from web visits, user behavior in native apps or IoT-enabled devices.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-analytics-org/your-analytics.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/your-analytics-org/your-analytics/issues"
+  },
+  "homepage": "https://github.com/your-analytics-org/your-analytics#readme",
+  "devDependencies": {
+    "husky": "^4.2.5",
+    "pretty-quick": "^2.0.1"
+  }
+}
