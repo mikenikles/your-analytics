@@ -5,7 +5,7 @@ import { authErrorStore, authTokenStore, authUserInfoStore } from "./store";
 const auth0Config = {
   domain: "your-analytics.us.auth0.com",
   client_id: "YPG55JTRdfbvrFheR5qerssl3fx8Yyux",
-  // audience: ""
+  audience: "https://events-api.your-analytics.org/",
 };
 
 let auth0;

@@ -7,6 +7,22 @@
   initAuth();
 
   $: isAuthenticated = $authTokenStore;
+
+  $: if (isAuthenticated) {
+    fetchVisitors();
+  }
+
+  let result;
+
+  const fetchVisitors = async () => {
+    const response = await fetch("https://8081-fe64c5f9-d995-4313-b604-3351faf8883a.ws-eu01.gitpod.io/visitors", {
+      headers: {
+        Authorization: `Bearer ${$authTokenStore}`
+      }
+    });
+
+    result = await response.json();
+  }
 </script>
 
 {#if isAuthenticated}
@@ -16,4 +32,8 @@
   <pre>{JSON.stringify($authUserInfoStore)}</pre>
 
   <pre>{JSON.stringify($authTokenStore)}</pre>
+
+  {#if result}
+    <pre>{result}</pre>
+  {/if}
 {/if}
