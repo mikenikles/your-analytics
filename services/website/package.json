@@ -8,7 +8,7 @@
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "dev": "run-s clean && sapper dev",
-    "export": "run-s clean && sapper export --legacy",
+    "export": "run-s clean && sapper export --legacy --entry '/ /auth /dashboard'",
     "start": "node __sapper__/build",
     "test": "run-p --race dev cy:run"
   },
