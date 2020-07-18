@@ -2,10 +2,17 @@
   import { topReferrers } from "../../api/stats";
 </script>
 
+<style>
+  img {
+    height: 16px;
+    width: 16px;
+  }
+</style>
+
 <h2>Top Referrers</h2>
 
 {#each Object.entries($topReferrers) as [domain, total]}
   <div>
-    <p>{domain}: {total}</p>
+    <p><img src="https://external-content.duckduckgo.com/ip3/{domain}.ico" alt="{domain} favicon" />{domain}: {total}</p>
   </div>
 {/each}
