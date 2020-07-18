@@ -2,10 +2,10 @@ const devData = require("./dev-data.json");
 
 const IS_DEV = process.env.NODE_ENV === "development";
 
-const fetchVisitorsDev = () => () => devData;
+const fetchTopPagesDev = () => () => devData;
 
-const fetchVisitors = (ch) => async () => {
-  const sql = `SELECT toDate(timestamp) AS day, COUNT(*) AS total FROM youranalytics.events GROUP BY day`;
+const fetchTopPages = (ch) => async () => {
+  const sql = `SELECT path, COUNT(*) AS total FROM youranalytics.events GROUP BY path ORDER BY total DESC`;
   const stream = ch.query(sql);
 
   return new Promise((resolve, reject) => {
@@ -13,7 +13,7 @@ const fetchVisitors = (ch) => async () => {
     stream.on("error", (error) => reject(error));
 
     stream.on("data", (row) => {
-      // row: [day, total]
+      // row: [path, total]
       result[row[0]] = row[1];
     });
 
@@ -24,5 +24,5 @@ const fetchVisitors = (ch) => async () => {
 };
 
 module.exports = {
-  fetchVisitors: IS_DEV ? fetchVisitorsDev : fetchVisitors,
+  fetchTopPages: IS_DEV ? fetchTopPagesDev : fetchTopPages,
 };

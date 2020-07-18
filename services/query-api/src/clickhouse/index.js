@@ -1,5 +1,6 @@
 const ClickHouse = require("@apla/clickhouse");
 
+const { fetchTopPages } = require("./top-pages");
 const { fetchVisitors } = require("./visitors");
 
 const ch = new ClickHouse({
@@ -10,5 +11,6 @@ const ch = new ClickHouse({
 });
 
 module.exports = {
+  fetchTopPages: fetchTopPages(ch),
   fetchVisitors: fetchVisitors(ch),
 };
