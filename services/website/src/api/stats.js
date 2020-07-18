@@ -17,5 +17,9 @@ const fetchStats = async (path, store) => {
 export const topPages = writable(null);
 export const fetchTopPages = () => fetchStats("top-pages", topPages);
 
+export const topReferrers = writable(null);
+export const fetchTopReferrers = () =>
+  fetchStats("top-referrers", topReferrers);
+
 export const visitors = writable(null);
 export const fetchVisitors = () => fetchStats("visitors", visitors);
