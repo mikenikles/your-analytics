@@ -4,6 +4,7 @@ const express = require("express");
 const app = express();
 app.use(
   cors({
+    allowedHeaders: ["Authorization"],
     origin: [
       /your-analytics\.vercel\.app$/,
       /your-analytics\.org$/,
