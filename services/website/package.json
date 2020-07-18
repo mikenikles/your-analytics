@@ -8,12 +8,13 @@
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "dev": "run-s clean && sapper dev",
-    "export": "run-s clean && sapper export --legacy",
+    "export": "run-s clean && sapper export --legacy --entry '/ /auth /dashboard'",
     "start": "node __sapper__/build",
     "test": "run-p --race dev cy:run"
   },
   "dependencies": {
     "compression": "^1.7.1",
+    "magic-sdk": "^2.3.1",
     "polka": "next",
     "sirv": "^0.4.0"
   },

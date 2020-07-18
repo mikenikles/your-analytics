@@ -4,11 +4,20 @@
   "description": "Provides functionality used by the website, e.g. account creation, auth, etc.",
   "main": "src/index.js",
   "scripts": {
+    "dev": "nodemon -r dotenv/config .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "@magic-sdk/admin": "^1.2.2",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "passport": "^0.4.1",
+    "passport-magic": "^1.0.0"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.4"
   }
 }
