@@ -1,7 +1,7 @@
 <script>
   import { goto } from "@sapper/app";
   import { onMount } from "svelte";
-  import { fetchVisitors } from "../../api/stats";
+  import { fetchVisitors, visitors } from "../../api/stats";
   import { userMetadataStore, init } from "../../auth/magic";
   import Visitors from "../../components/stats/visitors.svelte";
 
@@ -15,11 +15,8 @@
   });
 </script>
 
-{#if $userMetadataStore}
-  <p>Welcome to the secure area</p>
-  <pre>
-    {JSON.stringify($userMetadataStore)}
-  </pre>
+<h1>Analytics</h1>
 
+{#if $visitors}
   <Visitors />
 {/if}
