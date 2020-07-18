@@ -32,8 +32,13 @@ app.get("/visitors", isAuthenticated, async (req, res) => {
     // TODO
     // - Load database query parameters based on who called this endpoint
 
-    const visitors = await fetchVisitors();
-    res.json({ visitors });
+    // const data = await fetchVisitors();
+    const data = {
+      January: 131,
+      February: 187,
+      March: 113,
+    };
+    res.json({ data });
   } catch (error) {
     console.error(error);
     res.status(500).end();
