@@ -21,7 +21,7 @@ steps:
       - "cloud-run-vpc-connector"
       - "--allow-unauthenticated"
       - "--set-env-vars"
-      - "FRONTEND_HOST=$_FRONTEND_HOST"
+      - "FRONTEND_HOST=$_FRONTEND_HOST,MAGIC_SECRET_KEY=$_MAGIC_SECRET_KEY"
     dir: "services/admin-api"
 images:
   - "gcr.io/$PROJECT_ID/admin-api:$COMMIT_SHA"
