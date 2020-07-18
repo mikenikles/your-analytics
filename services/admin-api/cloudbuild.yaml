@@ -20,6 +20,8 @@ steps:
       - "--vpc-connector"
       - "cloud-run-vpc-connector"
       - "--allow-unauthenticated"
+      - "--set-env-vars"
+      - "FRONTEND_HOST=$_FRONTEND_HOST"
     dir: "services/admin-api"
 images:
   - "gcr.io/$PROJECT_ID/admin-api:$COMMIT_SHA"

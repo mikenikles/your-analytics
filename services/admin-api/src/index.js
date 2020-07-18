@@ -4,8 +4,7 @@ const express = require("express");
 const app = express();
 app.use(
   cors({
-    origin:
-      "https://3000-fe64c5f9-d995-4313-b604-3351faf8883a.ws-eu01.gitpod.io",
+    origin: process.env.FRONTEND_HOST,
   })
 );
 const port = process.env.PORT || 8082;
