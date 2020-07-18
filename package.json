@@ -4,6 +4,10 @@
   "description": "An analytis platform to collect events, such as from website visits, user behavior in native apps or IoT-enabled devices.",
   "main": "index.js",
   "scripts": {
+    "dev": "run-p dev:*",
+    "dev:admin-api": "npm run dev --prefix services/admin-api",
+    "dev:query-api": "npm run dev --prefix services/query-api",
+    "dev:website": "npm run dev --prefix services/website",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "husky": {
@@ -23,6 +27,7 @@
   "homepage": "https://github.com/your-analytics-org/your-analytics#readme",
   "devDependencies": {
     "husky": "^4.2.5",
+    "npm-run-all": "^4.1.5",
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1"
   }
