@@ -2,7 +2,11 @@ const { Magic } = require("@magic-sdk/admin");
 const cors = require("cors");
 const express = require("express");
 
-const { fetchTopPages, fetchVisitors } = require("./clickhouse");
+const {
+  fetchTopPages,
+  fetchTopReferrers,
+  fetchVisitors,
+} = require("./clickhouse");
 
 const magic = new Magic(process.env.MAGIC_SECRET_KEY);
 
@@ -29,12 +33,12 @@ const isAuthenticated = async (req, res, next) => {
   }
 };
 
-app.get("/visitors", isAuthenticated, async (req, res) => {
+app.get("/top-pages", isAuthenticated, async (req, res) => {
   try {
     // TODO
     // - Load database query parameters based on who called this endpoint
 
-    const data = await fetchVisitors();
+    const data = await fetchTopPages();
     res.json({ data });
   } catch (error) {
     console.error(error);
@@ -42,12 +46,25 @@ app.get("/visitors", isAuthenticated, async (req, res) => {
   }
 });
 
-app.get("/top-pages", isAuthenticated, async (req, res) => {
+app.get("/top-referrers", isAuthenticated, async (req, res) => {
   try {
     // TODO
     // - Load database query parameters based on who called this endpoint
 
-    const data = await fetchTopPages();
+    const data = await fetchTopReferrers();
+    res.json({ data });
+  } catch (error) {
+    console.error(error);
+    res.status(500).end();
+  }
+});
+
+app.get("/visitors", isAuthenticated, async (req, res) => {
+  try {
+    // TODO
+    // - Load database query parameters based on who called this endpoint
+
+    const data = await fetchVisitors();
     res.json({ data });
   } catch (error) {
     console.error(error);
