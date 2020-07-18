@@ -9,8 +9,11 @@ const magic = new Magic(process.env.MAGIC_SECRET_KEY);
 const app = express();
 app.use(
   cors({
-    credentials: true,
-    origin: process.env.FRONTEND_HOST,
+    origin: [
+      /your-analytics\.vercel\.app$/,
+      /your-analytics\.org$/,
+      process.env.FRONTEND_HOST,
+    ],
   })
 );
 const port = process.env.PORT || 8081;
