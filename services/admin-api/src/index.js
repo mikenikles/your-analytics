@@ -4,12 +4,7 @@ const express = require("express");
 const app = express();
 app.use(
   cors({
-    allowedHeaders: ["Authorization"],
-    origin: [
-      /your-analytics\.vercel\.app$/,
-      /your-analytics\.org$/,
-      process.env.FRONTEND_HOST,
-    ],
+    origin: true,
   })
 );
 const port = process.env.PORT || 8082;
