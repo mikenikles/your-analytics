@@ -35,6 +35,8 @@ self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET" || event.request.headers.has("range"))
     return;
 
+  if (event.request.url.match(/-api.your-analytics.org/)) return;
+
   const url = new URL(event.request.url);
 
   // don't try to handle e.g. data: URIs
