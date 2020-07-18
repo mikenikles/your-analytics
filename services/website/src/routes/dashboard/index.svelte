@@ -1,8 +1,9 @@
 <script>
   import { goto } from "@sapper/app";
   import { onMount } from "svelte";
-  import { fetchVisitors, visitors } from "../../api/stats";
+  import { fetchTopPages, topPages, fetchVisitors, visitors } from "../../api/stats";
   import { userMetadataStore, init } from "../../auth/magic";
+  import TopPages from "../../components/stats/top-pages.svelte";
   import Visitors from "../../components/stats/visitors.svelte";
 
   onMount(async () => {
@@ -11,7 +12,9 @@
       goto("/auth");
       return;
     }
-    await fetchVisitors();
+    // await fetchVisitors();
+    await Promise.allSettled([fetchTopPages(), fetchVisitors()]);
+    // TODO: Check if any of the promises failed, show error if so
   });
 </script>
 
@@ -19,4 +22,8 @@
 
 {#if $visitors}
   <Visitors />
+{/if}
+
+{#if $topPages}
+  <TopPages />
 {/if}

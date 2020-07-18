@@ -8,6 +8,10 @@
     "dev:admin-api": "npm run dev --prefix services/admin-api",
     "dev:query-api": "npm run dev --prefix services/query-api",
     "dev:website": "npm run dev --prefix services/website",
+    "install:admin-api": "npm i --prefix services/admin-api",
+    "install:query-api": "npm i --prefix services/query-api",
+    "install:website": "npm i --prefix services/website",
+    "postinstall": "run-p install:*",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "husky": {

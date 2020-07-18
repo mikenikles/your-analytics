@@ -17,6 +17,15 @@ the following are important:
 
 The database is seeded with all SQL scripts located in `dev/sql`.
 
+## Transfer prod data to local DB
+
+1. On prod: `clickhouse-client --password <PASSWORD> --query="SELECT * FROM youranalytics.events FORMAT Native" > events.native`
+1. Download `events.native`
+1. Upload `events.native` to GCP shell
+1. In GCP shell
+   1. Start DB
+   1. Run: `cat ~/events.native | curl 'http://localhost:8123/?query=INSERT%20INTO%20youranalytics.events%20FORMAT%20Native' --data-binary @-`
+
 ## Ubuntu 18.04 installation instructions
 
 https://www.digitalocean.com/community/tutorials/how-to-install-and-use-clickhouse-on-ubuntu-18-04

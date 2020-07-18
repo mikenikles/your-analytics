@@ -1,3 +1,9 @@
+const devData = require("./dev-data.json");
+
+const IS_DEV = process.env.NODE_ENV === "development";
+
+const fetchVisitorsDev = () => () => devData;
+
 const fetchVisitors = (ch) => async () => {
   const sql = `SELECT toDate(timestamp) AS day, COUNT(*) AS total FROM youranalytics.events GROUP BY day`;
   const stream = ch.query(sql);
@@ -18,5 +24,5 @@ const fetchVisitors = (ch) => async () => {
 };
 
 module.exports = {
-  fetchVisitors,
+  fetchVisitors: IS_DEV ? fetchVisitorsDev : fetchVisitors,
 };
