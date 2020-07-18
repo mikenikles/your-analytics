@@ -2,6 +2,7 @@ const cors = require("cors");
 const express = require("express");
 
 const app = express();
+console.log("FRONTEND_HOST", process.env.FRONTEND_HOST);
 app.use(
   cors({
     origin: process.env.FRONTEND_HOST,
