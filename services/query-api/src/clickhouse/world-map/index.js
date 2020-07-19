@@ -12,8 +12,9 @@ const fetchWorldMapDev = () => () =>
     return result;
   }, {});
 
-const fetchWorldMap = (ch) => async () => {
-  const sql = `SELECT geo_country, COUNT(*) AS total FROM youranalytics.events GROUP BY geo_country ORDER BY total DESC`;
+const fetchWorldMap = (ch) => async (dateRange) => {
+  const timezone = "Europe/London";
+  const sql = `SELECT geo_country, COUNT(*) AS total FROM youranalytics.events WHERE toUnixTimestamp(timestamp, '${timezone}') >= ${dateRange.from} AND toUnixTimestamp(timestamp, '${timezone}') <= ${dateRange.to} GROUP BY geo_country ORDER BY total DESC`;
   const stream = ch.query(sql);
 
   return new Promise((resolve, reject) => {

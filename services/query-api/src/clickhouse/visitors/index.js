@@ -4,8 +4,9 @@ const IS_DEV = process.env.NODE_ENV === "development";
 
 const fetchVisitorsDev = () => () => devData;
 
-const fetchVisitors = (ch) => async () => {
-  const sql = `SELECT toDate(timestamp) AS day, COUNT(*) AS total FROM youranalytics.events GROUP BY day`;
+const fetchVisitors = (ch) => async (dateRange) => {
+  const timezone = "Europe/London";
+  const sql = `SELECT toDate(timestamp, '${timezone}') AS day, COUNT(*) AS total FROM youranalytics.events WHERE toUnixTimestamp(timestamp, '${timezone}') >= ${dateRange.from} AND toUnixTimestamp(timestamp, '${timezone}') <= ${dateRange.to} GROUP BY day`;
   const stream = ch.query(sql);
 
   return new Promise((resolve, reject) => {

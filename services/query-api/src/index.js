@@ -34,57 +34,82 @@ const isAuthenticated = async (req, res, next) => {
   }
 };
 
-app.get("/top-pages", isAuthenticated, async (req, res) => {
-  try {
-    // TODO
-    // - Load database query parameters based on who called this endpoint
+const createStatsEndpoint = (path, fetcher) => {
+  app.get(path, isAuthenticated, async (req, res) => {
+    try {
+      // TODO
+      // - Load database query parameters based on who called this endpoint
 
-    const data = await fetchTopPages();
-    res.json({ data });
-  } catch (error) {
-    console.error(error);
-    res.status(500).end();
-  }
-});
+      const dateRange = {
+        from: req.query.from ? req.query.from / 1000 : null,
+        to: req.query.to ? req.query.to / 1000 : null,
+      };
 
-app.get("/top-referrers", isAuthenticated, async (req, res) => {
-  try {
-    // TODO
-    // - Load database query parameters based on who called this endpoint
+      const data = await fetcher(dateRange);
+      res.json({ data });
+    } catch (error) {
+      console.error(error);
+      res.status(500).end();
+    }
+  });
+};
 
-    const data = await fetchTopReferrers();
-    res.json({ data });
-  } catch (error) {
-    console.error(error);
-    res.status(500).end();
-  }
-});
+createStatsEndpoint("/top-pages", fetchTopPages);
+createStatsEndpoint("/top-referrers", fetchTopReferrers);
+createStatsEndpoint("/visitors", fetchVisitors);
+createStatsEndpoint("/world-map", fetchWorldMap);
 
-app.get("/visitors", isAuthenticated, async (req, res) => {
-  try {
-    // TODO
-    // - Load database query parameters based on who called this endpoint
+// app.get("/top-pages", isAuthenticated, async (req, res) => {
+//   try {
+//     // TODO
+//     // - Load database query parameters based on who called this endpoint
 
-    const data = await fetchVisitors();
-    res.json({ data });
-  } catch (error) {
-    console.error(error);
-    res.status(500).end();
-  }
-});
+//     const data = await fetchTopPages();
+//     res.json({ data });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).end();
+//   }
+// });
 
-app.get("/world-map", isAuthenticated, async (req, res) => {
-  try {
-    // TODO
-    // - Load database query parameters based on who called this endpoint
+// app.get("/top-referrers", isAuthenticated, async (req, res) => {
+//   try {
+//     // TODO
+//     // - Load database query parameters based on who called this endpoint
 
-    const data = await fetchWorldMap();
-    res.json({ data });
-  } catch (error) {
-    console.error(error);
-    res.status(500).end();
-  }
-});
+//     const data = await fetchTopReferrers();
+//     res.json({ data });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).end();
+//   }
+// });
+
+// app.get("/visitors", isAuthenticated, async (req, res) => {
+//   try {
+//     // TODO
+//     // - Load database query parameters based on who called this endpoint
+
+//     const data = await fetchVisitors();
+//     res.json({ data });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).end();
+//   }
+// });
+
+// app.get("/world-map", isAuthenticated, async (req, res) => {
+//   try {
+//     // TODO
+//     // - Load database query parameters based on who called this endpoint
+
+//     const data = await fetchWorldMap();
+//     res.json({ data });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).end();
+//   }
+// });
 
 app.listen(port, () => {
   console.log(`Server started at http://localhost:${port}`);
