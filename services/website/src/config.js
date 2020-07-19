@@ -18,7 +18,7 @@ const isDevelopment = process.browser
     window.location.hostname.endsWith(".vercel.app")
   : process.env.NODE_ENV === "development";
 const isProduction = process.browser
-  ? window.location.hostname.endsWith(".your-analytics.org")
+  ? window.location.hostname === "your-analytics.org"
   : process.env.NODE_ENV === "production";
 
 const getEnvironment = () =>
