@@ -6,6 +6,7 @@ const {
   fetchTopPages,
   fetchTopReferrers,
   fetchVisitors,
+  fetchWorldMap,
 } = require("./clickhouse");
 
 const magic = new Magic(process.env.MAGIC_SECRET_KEY);
@@ -65,6 +66,19 @@ app.get("/visitors", isAuthenticated, async (req, res) => {
     // - Load database query parameters based on who called this endpoint
 
     const data = await fetchVisitors();
+    res.json({ data });
+  } catch (error) {
+    console.error(error);
+    res.status(500).end();
+  }
+});
+
+app.get("/world-map", isAuthenticated, async (req, res) => {
+  try {
+    // TODO
+    // - Load database query parameters based on who called this endpoint
+
+    const data = await fetchWorldMap();
     res.json({ data });
   } catch (error) {
     console.error(error);

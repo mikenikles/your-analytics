@@ -23,3 +23,6 @@ export const fetchTopReferrers = () =>
 
 export const visitors = writable(null);
 export const fetchVisitors = () => fetchStats("visitors", visitors);
+
+export const worldMap = writable(null);
+export const fetchWorldMap = () => fetchStats("world-map", worldMap);
