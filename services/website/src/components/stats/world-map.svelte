@@ -12,6 +12,7 @@
     chart.data.datasets[0].data = countries.map((d) => {
       return ({feature: d, value: $worldMap[d.properties.name] || 0})
     });
+    chart.update();
   }
 
   onMount(async () => {
