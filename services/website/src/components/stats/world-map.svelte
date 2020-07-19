@@ -24,7 +24,6 @@
       },
       options: {
         showOutline: true,
-        showGraticule: true,
         legend: {
           display: false
         },
