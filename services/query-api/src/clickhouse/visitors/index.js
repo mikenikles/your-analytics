@@ -9,7 +9,7 @@ const fetchVisitorsDev = () => () => devData;
  * and the "to" date range to be 23:59:59.
  */
 const isDateRangeOneDay = (dateRange) =>
-  (dateRange.to - dateRange.from + 1 = 86400);
+  dateRange.to - dateRange.from + 1 === 86400;
 
 const fetchVisitors = (ch) => async (dateRange) => {
   const timezone = "Europe/London";
