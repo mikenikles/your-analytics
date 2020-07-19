@@ -5,14 +5,17 @@
     fetchTopPages,
     fetchTopReferrers,
     fetchVisitors,
+    fetchWorldMap,
     topPages,
     topReferrers,
-    visitors
+    visitors,
+    worldMap
   } from "../../api/stats";
   import { userMetadataStore, init } from "../../auth/magic";
   import TopPages from "../../components/stats/top-pages.svelte";
   import TopReferrers from "../../components/stats/top-referrers.svelte";
   import Visitors from "../../components/stats/visitors.svelte";
+  import WorldMap from "../../components/stats/world-map.svelte";
 
   onMount(async () => {
     await init();
@@ -24,7 +27,8 @@
     await Promise.allSettled([
       fetchTopPages(),
       fetchTopReferrers(),
-      fetchVisitors()
+      fetchVisitors(),
+      fetchWorldMap()
     ]);
     // TODO: Check if any of the promises failed, show error if so
   });
@@ -42,4 +46,8 @@
 
 {#if $topReferrers}
   <TopReferrers />
+{/if}
+
+{#if $worldMap}
+  <WorldMap />
 {/if}

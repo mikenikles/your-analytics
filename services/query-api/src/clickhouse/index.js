@@ -3,6 +3,7 @@ const ClickHouse = require("@apla/clickhouse");
 const { fetchTopPages } = require("./top-pages");
 const { fetchTopReferrers } = require("./top-referrers");
 const { fetchVisitors } = require("./visitors");
+const { fetchWorldMap } = require("./world-map");
 
 const ch = new ClickHouse({
   host: process.env.CH_HOST,
@@ -15,4 +16,5 @@ module.exports = {
   fetchTopPages: fetchTopPages(ch),
   fetchTopReferrers: fetchTopReferrers(ch),
   fetchVisitors: fetchVisitors(ch),
+  fetchWorldMap: fetchWorldMap(ch),
 };
