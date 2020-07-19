@@ -4,9 +4,15 @@
   import { visitors } from "../../api/stats";
 
   let chartElement;
+  let chart;
+
+  $: if (chart && $visitors) {
+    chart.data.datasets[0].data = Object.values($visitors);
+    chart.data.labels = Object.keys($visitors);
+  }
 
   onMount(() => {
-    const chart = new Chart(chartElement, {
+    chart = new Chart(chartElement, {
       data: {
         datasets: [{
           data: Object.values($visitors)
