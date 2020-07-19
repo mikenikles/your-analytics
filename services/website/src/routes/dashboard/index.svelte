@@ -12,6 +12,7 @@
     worldMap
   } from "../../api/stats";
   import { userMetadataStore, init } from "../../auth/magic";
+  import DateRange from "../../components/date-range.svelte";
   import TopPages from "../../components/stats/top-pages.svelte";
   import TopReferrers from "../../components/stats/top-referrers.svelte";
   import Visitors from "../../components/stats/visitors.svelte";
@@ -23,7 +24,6 @@
       goto("/auth");
       return;
     }
-    // await fetchVisitors();
     await Promise.allSettled([
       fetchTopPages(),
       fetchTopReferrers(),
@@ -35,6 +35,8 @@
 </script>
 
 <h1>Analytics</h1>
+
+<DateRange />
 
 {#if $visitors}
   <Visitors />

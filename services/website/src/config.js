@@ -14,11 +14,11 @@ const config = {
 };
 
 const isDevelopment = process.browser
-  ? window.location.hostname.endsWith(".gitpod.io") ||
-    window.location.hostname.endsWith(".vercel.app")
+  ? window.location.hostname.endsWith(".gitpod.io")
   : process.env.NODE_ENV === "development";
 const isProduction = process.browser
-  ? window.location.hostname === "your-analytics.org"
+  ? window.location.hostname === "your-analytics.org" ||
+    window.location.hostname.endsWith(".vercel.app")
   : process.env.NODE_ENV === "production";
 
 const getEnvironment = () =>

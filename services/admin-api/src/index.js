@@ -5,6 +5,7 @@ const app = express();
 app.use(
   cors({
     origin: [
+      /mikenikles1\.vercel\.app$/,
       /your-analytics\.vercel\.app$/,
       /your-analytics\.org$/,
       process.env.FRONTEND_HOST,

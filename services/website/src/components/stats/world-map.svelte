@@ -5,22 +5,31 @@
   import { worldMap } from "../../api/stats";
 
   let chartElement;
+  let chart;
+  let countries;
+
+  $: if (chart && $worldMap) {
+    chart.data.datasets[0].data = countries.map((d) => {
+      return ({feature: d, value: $worldMap[d.properties.name] || 0})
+    });
+    chart.update();
+  }
 
   onMount(async () => {
     const response = await fetch("https://unpkg.com/world-atlas/countries-50m.json");
     const data = await response.json();
 
-    const countries = topojson.feature(data, data.objects.countries).features;
+    countries = topojson.feature(data, data.objects.countries).features;
 
-    const chart = new Chart(chartElement, {
+    chart = new Chart(chartElement, {
       data: {
-        labels: countries.map((d) => d.properties.name),
         datasets: [{
           label: 'Countries',
           data: countries.map((d) => {
             return ({feature: d, value: $worldMap[d.properties.name] || 0})
           }),
-        }]
+        }],
+        labels: countries.map((d) => d.properties.name)
       },
       options: {
         showOutline: true,

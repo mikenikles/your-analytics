@@ -4,8 +4,9 @@ const IS_DEV = process.env.NODE_ENV === "development";
 
 const fetchTopPagesDev = () => () => devData;
 
-const fetchTopPages = (ch) => async () => {
-  const sql = `SELECT path, COUNT(*) AS total FROM youranalytics.events GROUP BY path ORDER BY total DESC`;
+const fetchTopPages = (ch) => async (dateRange) => {
+  const timezone = "Europe/London";
+  const sql = `SELECT path, COUNT(*) AS total FROM youranalytics.events WHERE toUnixTimestamp(timestamp, '${timezone}') >= ${dateRange.from} AND toUnixTimestamp(timestamp, '${timezone}') <= ${dateRange.to} GROUP BY path ORDER BY total DESC`;
   const stream = ch.query(sql);
 
   return new Promise((resolve, reject) => {
