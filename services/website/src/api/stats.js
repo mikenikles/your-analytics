@@ -39,7 +39,7 @@ export const dateRange = writable({
   from: -1,
   to: -1,
 });
-dateRange.subscribe(async (newDateRange) => {
+dateRange.subscribe(async () => {
   await Promise.allSettled([
     fetchTopPages(),
     fetchTopReferrers(),
