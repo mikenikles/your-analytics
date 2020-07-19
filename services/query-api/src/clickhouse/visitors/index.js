@@ -13,7 +13,7 @@ const isDateRangeOneDay = (dateRange) =>
 
 const fetchVisitors = (ch) => async (dateRange) => {
   const timezone = "Europe/London";
-  const granularity = isDateRangeOneDay(dateRange) ? "Hour" : "Day";
+  const granularity = isDateRangeOneDay(dateRange) ? "Hour" : "Date";
   const sql = `SELECT to${granularity}(timestamp, '${timezone}') AS day, COUNT(*) AS total FROM youranalytics.events WHERE toUnixTimestamp(timestamp, '${timezone}') >= ${dateRange.from} AND toUnixTimestamp(timestamp, '${timezone}') <= ${dateRange.to} GROUP BY day`;
 
   const stream = ch.query(sql);
