@@ -9,6 +9,7 @@
   $: if (chart && $visitors) {
     chart.data.datasets[0].data = Object.values($visitors);
     chart.data.labels = Object.keys($visitors);
+    chart.update();
   }
 
   onMount(() => {
