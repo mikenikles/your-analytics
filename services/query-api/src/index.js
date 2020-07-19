@@ -42,8 +42,8 @@ const createStatsEndpoint = (path, fetcher) => {
       // - Load database query parameters based on who called this endpoint
 
       const dateRange = {
-        from: req.query.from ? req.query.from / 1000 : null,
-        to: req.query.to ? req.query.to / 1000 : null,
+        from: req.query.from ? Math.floor(req.query.from / 1000) : null,
+        to: req.query.to ? Math.floor(req.query.to / 1000) : null,
       };
 
       const data = await fetcher(dateRange);
