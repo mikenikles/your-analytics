@@ -3,6 +3,9 @@ const cors = require("cors");
 const express = require("express");
 
 const {
+  fetchBrowser,
+  fetchOs,
+  fetchScreen,
   fetchTopPages,
   fetchTopReferrers,
   fetchVisitors,
@@ -15,7 +18,7 @@ const app = express();
 app.use(
   cors({
     origin: [
-      /mikenikles1\.vercel\.app$/,
+      /mikenikles\.vercel\.app$/,
       /your-analytics\.vercel\.app$/,
       /your-analytics\.org$/,
       process.env.FRONTEND_HOST,
@@ -55,6 +58,9 @@ const createStatsEndpoint = (path, fetcher) => {
   });
 };
 
+createStatsEndpoint("/browser", fetchBrowser);
+createStatsEndpoint("/os", fetchOs);
+createStatsEndpoint("/screen", fetchScreen);
 createStatsEndpoint("/top-pages", fetchTopPages);
 createStatsEndpoint("/top-referrers", fetchTopReferrers);
 createStatsEndpoint("/visitors", fetchVisitors);
