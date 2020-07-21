@@ -2,10 +2,12 @@
   import { goto } from "@sapper/app";
   import { onMount } from "svelte";
   import {
+    fetchOs,
     fetchTopPages,
     fetchTopReferrers,
     fetchVisitors,
     fetchWorldMap,
+    os,
     topPages,
     topReferrers,
     visitors,
@@ -13,6 +15,7 @@
   } from "../../api/stats";
   import { userMetadataStore, init } from "../../auth/magic";
   import DateRange from "../../components/date-range.svelte";
+  import Devices from "../../components/stats/devices.svelte";
   import TopPages from "../../components/stats/top-pages.svelte";
   import TopReferrers from "../../components/stats/top-referrers.svelte";
   import Visitors from "../../components/stats/visitors.svelte";
@@ -25,6 +28,7 @@
       return;
     }
     await Promise.allSettled([
+      fetchOs(),
       fetchTopPages(),
       fetchTopReferrers(),
       fetchVisitors(),
@@ -48,6 +52,10 @@
 
 {#if $topReferrers}
   <TopReferrers />
+{/if}
+
+{#if $os}
+  <Devices />
 {/if}
 
 {#if $worldMap}

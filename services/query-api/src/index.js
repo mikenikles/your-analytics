@@ -3,6 +3,7 @@ const cors = require("cors");
 const express = require("express");
 
 const {
+  fetchOs,
   fetchTopPages,
   fetchTopReferrers,
   fetchVisitors,
@@ -55,6 +56,7 @@ const createStatsEndpoint = (path, fetcher) => {
   });
 };
 
+createStatsEndpoint("/os", fetchOs);
 createStatsEndpoint("/top-pages", fetchTopPages);
 createStatsEndpoint("/top-referrers", fetchTopReferrers);
 createStatsEndpoint("/visitors", fetchVisitors);

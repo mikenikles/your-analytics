@@ -1,0 +1,11 @@
+{
+  "Mac OS": 648,
+  "Windows": 582,
+  "Android": 380,
+  "iOS": 237,
+  "Linux": 151,
+  "Chromium OS": 110,
+  "Ubuntu": 28,
+  "Unknown": 25,
+  "Fedora": 6
+}

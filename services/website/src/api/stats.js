@@ -22,6 +22,9 @@ const fetchStats = async (path, store) => {
   }
 };
 
+export const os = writable(null);
+export const fetchOs = () => fetchStats("os", os);
+
 export const topPages = writable(null);
 export const fetchTopPages = () => fetchStats("top-pages", topPages);
 
@@ -41,6 +44,7 @@ export const dateRange = writable({
 });
 dateRange.subscribe(async () => {
   await Promise.allSettled([
+    fetchOs(),
     fetchTopPages(),
     fetchTopReferrers(),
     fetchVisitors(),
