@@ -5,6 +5,7 @@ const express = require("express");
 const {
   fetchBrowser,
   fetchOs,
+  fetchScreen,
   fetchTopPages,
   fetchTopReferrers,
   fetchVisitors,
@@ -59,6 +60,7 @@ const createStatsEndpoint = (path, fetcher) => {
 
 createStatsEndpoint("/browser", fetchBrowser);
 createStatsEndpoint("/os", fetchOs);
+createStatsEndpoint("/screen", fetchScreen);
 createStatsEndpoint("/top-pages", fetchTopPages);
 createStatsEndpoint("/top-referrers", fetchTopReferrers);
 createStatsEndpoint("/visitors", fetchVisitors);

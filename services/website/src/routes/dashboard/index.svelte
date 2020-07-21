@@ -4,6 +4,7 @@
   import {
     fetchBrowser,
     fetchOs,
+    fetchScreen,
     fetchTopPages,
     fetchTopReferrers,
     fetchVisitors,
@@ -30,6 +31,7 @@
     await Promise.allSettled([
       fetchBrowser(),
       fetchOs(),
+      fetchScreen(),
       fetchTopPages(),
       fetchTopReferrers(),
       fetchVisitors(),
