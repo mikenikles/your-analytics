@@ -1,5 +1,6 @@
 const ClickHouse = require("@apla/clickhouse");
 
+const { fetchBrowser } = require("./browser");
 const { fetchOs } = require("./os");
 const { fetchTopPages } = require("./top-pages");
 const { fetchTopReferrers } = require("./top-referrers");
@@ -14,6 +15,7 @@ const ch = new ClickHouse({
 });
 
 module.exports = {
+  fetchBrowser: fetchBrowser(ch),
   fetchOs: fetchOs(ch),
   fetchTopPages: fetchTopPages(ch),
   fetchTopReferrers: fetchTopReferrers(ch),

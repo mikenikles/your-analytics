@@ -2,12 +2,12 @@
   import { goto } from "@sapper/app";
   import { onMount } from "svelte";
   import {
+    fetchBrowser,
     fetchOs,
     fetchTopPages,
     fetchTopReferrers,
     fetchVisitors,
     fetchWorldMap,
-    os,
     topPages,
     topReferrers,
     visitors,
@@ -28,6 +28,7 @@
       return;
     }
     await Promise.allSettled([
+      fetchBrowser(),
       fetchOs(),
       fetchTopPages(),
       fetchTopReferrers(),
@@ -54,9 +55,7 @@
   <TopReferrers />
 {/if}
 
-{#if $os}
-  <Devices />
-{/if}
+<Devices />
 
 {#if $worldMap}
   <WorldMap />
