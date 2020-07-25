@@ -19,6 +19,23 @@ const hash = (str) => {
   return result >>> 0;
 };
 
+const logDetailsIfUserAgentCannotBeParsed = (
+  userAgentHeader,
+  { browser, device, os }
+) => {
+  if (!(browser.major && browser.name && browser.version)) {
+    console.log(`Cannot determine browser given UA: ${userAgentHeader}`);
+  }
+
+  if (!(device.model && device.type && device.vendor)) {
+    console.log(`Cannot determine device given UA: ${userAgentHeader}`);
+  }
+
+  if (!(os.name && os.version)) {
+    console.log(`Cannot determine os given UA: ${userAgentHeader}`);
+  }
+};
+
 const app = express();
 const port = process.env.PORT || 8080;
 
@@ -37,6 +54,8 @@ app.post("/", async (req, res) => {
     const userAgent = userAgentParser(userAgentHeader);
     const urlParsed = urlParse(url, true);
     const userId = hash(userAgentHeader + xForwardedFor);
+
+    logDetailsIfUserAgentCannotBeParsed(userAgentHeader, userAgent);
 
     const event = {
       browser_major: userAgent.browser.major,
