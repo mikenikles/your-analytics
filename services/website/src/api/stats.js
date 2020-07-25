@@ -38,6 +38,10 @@ export const topReferrers = writable(null);
 export const fetchTopReferrers = () =>
   fetchStats("top-referrers", topReferrers);
 
+export const totalPageviews = writable(null);
+export const fetchTotalPageviews = () =>
+  fetchStats("total-pageviews", totalPageviews);
+
 export const uniqueVisitors = writable(null);
 export const fetchUniqueVisitors = () =>
   fetchStats("unique-visitors", uniqueVisitors);
@@ -59,6 +63,7 @@ dateRange.subscribe(async () => {
     fetchScreen(),
     fetchTopPages(),
     fetchTopReferrers(),
+    fetchTotalPageviews(),
     fetchUniqueVisitors(),
     fetchVisitors(),
     fetchWorldMap(),
