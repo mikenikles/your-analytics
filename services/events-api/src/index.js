@@ -2,7 +2,6 @@ const express = require("express");
 const userAgentParser = require("ua-parser-js");
 const urlParse = require("url-parse");
 const Geo2IpReader = require("@maxmind/geoip2-node").Reader;
-
 const { recordEvent } = require("./clickhouse");
 
 /**
@@ -38,6 +37,7 @@ const logDetailsIfUserAgentCannotBeParsed = (
 
 const app = express();
 const port = process.env.PORT || 8080;
+let readGeoFromIp;
 
 app.use(
   express.json({
@@ -78,9 +78,11 @@ app.post("/", async (req, res) => {
 
     if (xForwardedFor) {
       try {
-        const readGeoFromIp = await Geo2IpReader.open(
-          "./geo-db/GeoLite2-City.mmdb"
-        );
+        if (!readGeoFromIp) {
+          readGeoFromIp = await Geo2IpReader.open(
+            "./geo-db/GeoLite2-City.mmdb"
+          );
+        }
         const geoFromIpResponse = await readGeoFromIp.city(xForwardedFor);
 
         event.geo_city = geoFromIpResponse.city.names.en;
