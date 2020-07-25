@@ -8,6 +8,7 @@ const {
   fetchScreen,
   fetchTopPages,
   fetchTopReferrers,
+  fetchTotalPageviews,
   fetchUniqueVisitors,
   fetchVisitors,
   fetchWorldMap,
@@ -64,6 +65,7 @@ createStatsEndpoint("/os", fetchOs);
 createStatsEndpoint("/screen", fetchScreen);
 createStatsEndpoint("/top-pages", fetchTopPages);
 createStatsEndpoint("/top-referrers", fetchTopReferrers);
+createStatsEndpoint("/total-pageviews", fetchTotalPageviews);
 createStatsEndpoint("/unique-visitors", fetchUniqueVisitors);
 createStatsEndpoint("/visitors", fetchVisitors);
 createStatsEndpoint("/world-map", fetchWorldMap);

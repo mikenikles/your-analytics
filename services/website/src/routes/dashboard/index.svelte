@@ -7,11 +7,13 @@
     fetchScreen,
     fetchTopPages,
     fetchTopReferrers,
+    fetchTotalPageviews,
     fetchUniqueVisitors,
     fetchVisitors,
     fetchWorldMap,
     topPages,
     topReferrers,
+    totalPageviews,
     uniqueVisitors,
     visitors,
     worldMap
@@ -36,6 +38,7 @@
       fetchScreen(),
       fetchTopPages(),
       fetchTopReferrers(),
+      fetchTotalPageviews(),
       fetchUniqueVisitors(),
       fetchVisitors(),
       fetchWorldMap()
@@ -50,6 +53,10 @@
 
 {#if $uniqueVisitors}
   <p>Unique visitors: {$uniqueVisitors}</p>
+{/if}
+
+{#if $totalPageviews}
+  <p>Total pageviews: {$totalPageviews}</p>
 {/if}
 
 {#if $visitors}
