@@ -35,7 +35,6 @@ app.post("/", async (req, res) => {
   const userAgent = userAgentParser(userAgentHeader);
   const urlParsed = urlParse(url, true);
   const xForwardedFor = req.get("x-forwarded-for");
-  console.log(xForwardedFor);
   const userId = hash(userAgentHeader + xForwardedFor);
 
   try {
