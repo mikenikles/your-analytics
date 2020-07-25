@@ -5,6 +5,20 @@ const Geo2IpReader = require("@maxmind/geoip2-node").Reader;
 
 const { recordEvent } = require("./clickhouse");
 
+/**
+ * @see https://github.com/darkskyapp/string-hash/blob/master/index.js
+ */
+const hash = (str) => {
+  let result = 5381;
+  let i = str.length;
+
+  while (i) {
+    result = (result * 33) ^ str.charCodeAt(--i);
+  }
+
+  return result >>> 0;
+};
+
 const app = express();
 const port = process.env.PORT || 8080;
 
@@ -17,8 +31,10 @@ app.use(
 app.post("/", async (req, res) => {
   const { domain, name, referrer, screen_size, url } = req.body;
 
-  const userAgent = userAgentParser(req.get("user-agent"));
+  const userAgentHeader = req.get("user-agent");
+  const userAgent = userAgentParser(userAgentHeader);
   const urlParsed = urlParse(url, true);
+  const userId = hash(userAgentHeader + req.get("x-forwarded-for"));
 
   try {
     const event = {
@@ -37,7 +53,7 @@ app.post("/", async (req, res) => {
       referrer,
       screen_size,
       session_id: 0,
-      user_id: 0,
+      user_id: userId,
     };
 
     if (req.get("X-Forwarded-For")) {
