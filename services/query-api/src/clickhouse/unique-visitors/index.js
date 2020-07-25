@@ -9,7 +9,7 @@ const fetchUniqueVisitors = (ch) => async (dateRange) => {
   const stream = ch.query(sql);
 
   return new Promise((resolve, reject) => {
-    const result = {};
+    let result = 0;
     stream.on("error", (error) => reject(error));
 
     stream.on("data", (row) => {
