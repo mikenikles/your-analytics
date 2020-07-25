@@ -32,9 +32,10 @@ app.post("/", async (req, res) => {
   const { domain, name, referrer, screen_size, url } = req.body;
 
   const userAgentHeader = req.get("user-agent");
+  const xForwardedFor = req.get("x-forwarded-for");
   const userAgent = userAgentParser(userAgentHeader);
   const urlParsed = urlParse(url, true);
-  const userId = hash(userAgentHeader + req.get("x-forwarded-for"));
+  const userId = hash(userAgentHeader + xForwardedFor);
 
   try {
     const event = {
@@ -56,18 +57,23 @@ app.post("/", async (req, res) => {
       user_id: userId,
     };
 
-    if (req.get("X-Forwarded-For")) {
-      const readGeoFromIp = await Geo2IpReader.open(
-        "./geo-db/GeoLite2-City.mmdb"
-      );
-      const geoFromIpResponse = await readGeoFromIp.city(
-        req.get("X-Forwarded-For")
-      );
+    if (xForwardedFor) {
+      try {
+        const readGeoFromIp = await Geo2IpReader.open(
+          "./geo-db/GeoLite2-City.mmdb"
+        );
+        const geoFromIpResponse = await readGeoFromIp.city(xForwardedFor);
 
-      event.geo_city = geoFromIpResponse.city.names.en;
-      event.geo_country = geoFromIpResponse.country.isoCode;
-      event.geo_lat = geoFromIpResponse.location.latitude;
-      event.geo_long = geoFromIpResponse.location.longitude;
+        event.geo_city = geoFromIpResponse.city.names.en;
+        event.geo_country = geoFromIpResponse.country.isoCode;
+        event.geo_lat = geoFromIpResponse.location.latitude;
+        event.geo_long = geoFromIpResponse.location.longitude;
+      } catch (geoFromIpError) {
+        console.log(
+          `Could not determine GEO from IP: ${xForwardedFor}`,
+          geoFromIpError
+        );
+      }
     }
 
     await recordEvent(event);
