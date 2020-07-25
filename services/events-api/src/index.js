@@ -29,15 +29,15 @@ app.use(
 );
 
 app.post("/", async (req, res) => {
-  const { domain, name, referrer, screen_size, url } = req.body;
-
-  const userAgentHeader = req.get("user-agent");
-  const xForwardedFor = req.get("x-forwarded-for");
-  const userAgent = userAgentParser(userAgentHeader);
-  const urlParsed = urlParse(url, true);
-  const userId = hash(userAgentHeader + xForwardedFor);
-
   try {
+    const { domain, name, referrer, screen_size, url } = req.body;
+
+    const userAgentHeader = req.get("user-agent");
+    const xForwardedFor = req.get("x-forwarded-for");
+    const userAgent = userAgentParser(userAgentHeader);
+    const urlParsed = urlParse(url, true);
+    const userId = hash(userAgentHeader + xForwardedFor);
+
     const event = {
       browser_major: userAgent.browser.major,
       browser_name: userAgent.browser.name,
