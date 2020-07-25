@@ -8,6 +8,7 @@ const {
   fetchScreen,
   fetchTopPages,
   fetchTopReferrers,
+  fetchUniqueVisitors,
   fetchVisitors,
   fetchWorldMap,
 } = require("./clickhouse");
@@ -63,6 +64,7 @@ createStatsEndpoint("/os", fetchOs);
 createStatsEndpoint("/screen", fetchScreen);
 createStatsEndpoint("/top-pages", fetchTopPages);
 createStatsEndpoint("/top-referrers", fetchTopReferrers);
+createStatsEndpoint("/unique-visitors", fetchUniqueVisitors);
 createStatsEndpoint("/visitors", fetchVisitors);
 createStatsEndpoint("/world-map", fetchWorldMap);
 

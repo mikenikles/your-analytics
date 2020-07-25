@@ -7,10 +7,12 @@
     fetchScreen,
     fetchTopPages,
     fetchTopReferrers,
+    fetchUniqueVisitors,
     fetchVisitors,
     fetchWorldMap,
     topPages,
     topReferrers,
+    uniqueVisitors,
     visitors,
     worldMap
   } from "../../api/stats";
@@ -34,6 +36,7 @@
       fetchScreen(),
       fetchTopPages(),
       fetchTopReferrers(),
+      fetchUniqueVisitors(),
       fetchVisitors(),
       fetchWorldMap()
     ]);
@@ -44,6 +47,10 @@
 <h1>Analytics</h1>
 
 <DateRange />
+
+{#if $uniqueVisitors}
+  <p>Unique visitors: {$uniqueVisitors}</p>
+{/if}
 
 {#if $visitors}
   <Visitors />
