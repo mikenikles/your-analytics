@@ -1,5 +1,6 @@
 const cors = require("cors");
 const express = require("express");
+const { createUser, findUser, setLastLoginAt } = require("./faunadb");
 
 const app = express();
 app.use(
@@ -19,14 +20,10 @@ const magic = new Magic(process.env.MAGIC_SECRET_KEY);
 const passport = require("passport");
 const MagicStrategy = require("passport-magic").Strategy;
 
-// TODO: Move to a database
-const users = [];
-
 const strategy = new MagicStrategy(async function (user, done) {
   const userMetadata = await magic.users.getMetadataByIssuer(user.issuer);
-  return users.find((u) => u.issuer === user.issuer)
-    ? login(user, done)
-    : signup(user, userMetadata, done);
+  const existingUser = (await findUser(user.issuer)).data.length === 1;
+  return existingUser ? login(user, done) : signup(user, userMetadata, done);
 });
 
 app.use(passport.initialize());
@@ -38,7 +35,7 @@ const signup = async (user, userMetadata, done) => {
     email: userMetadata.email,
     lastLoginAt: user.claim.iat,
   };
-  users.push(newUser);
+  await createUser(newUser);
   return done(null, newUser);
 };
 
@@ -49,8 +46,7 @@ const login = async (user, done) => {
       message: `Replay attack detected for user ${user.issuer}}.`,
     });
   }
-  const existingUserIndex = users.findIndex((u) => u.issuer === user.issuer);
-  users[existingUserIndex].lastLoginAt = user.claim.iat;
+  await setLastLoginAt(user.issuer, user.claim.iat);
   return done(null, user);
 };
 
