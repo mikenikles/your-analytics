@@ -62,15 +62,19 @@ app.post(
   }
 );
 
-app.post("/user/logout", async (req, res) => {
-  if (req.isAuthenticated()) {
+app.post(
+  "/user/logout",
+  passport.authenticate("magic", { session: false }),
+  async (req, res) => {
+    // if (req.isAuthenticated()) {
     await magic.users.logoutByIssuer(req.user.issuer);
     req.logout();
     return res.status(200).end();
-  } else {
-    return res.status(401).end(`User is not logged in.`);
+    // } else {
+    //   return res.status(401).end(`User is not logged in.`);
+    // }
   }
-});
+);
 
 app.get(
   "/user",

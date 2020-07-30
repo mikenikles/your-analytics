@@ -18,7 +18,7 @@
     visitors,
     worldMap
   } from "../../api/stats";
-  import { userMetadataStore, init } from "../../auth/magic";
+  import { userMetadataStore, init, logout } from "../../auth/magic";
   import DateRange from "../../components/date-range.svelte";
   import Devices from "../../components/stats/devices.svelte";
   import TopPages from "../../components/stats/top-pages.svelte";
@@ -45,9 +45,16 @@
     ]);
     // TODO: Check if any of the promises failed, show error if so
   });
+
+  const handleLogout = async () => {
+    await logout();
+    goto("/auth");
+  };
 </script>
 
 <h1>Analytics</h1>
+
+<button on:click={logout}>Logout</button>
 
 <DateRange />
 
