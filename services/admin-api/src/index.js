@@ -22,8 +22,9 @@ const MagicStrategy = require("passport-magic").Strategy;
 
 const strategy = new MagicStrategy(async function (user, done) {
   const userMetadata = await magic.users.getMetadataByIssuer(user.issuer);
-  const existingUser = (await users.find(user.issuer)).data.length === 1;
-  return existingUser ? login(user, done) : signup(user, userMetadata, done);
+
+  const dbUser = await users.find(user.issuer);
+  return dbUser ? login(user, done) : signup(user, userMetadata, done);
 });
 
 app.use(passport.initialize());
@@ -67,7 +68,17 @@ app.post("/user/logout", authenticate, async (req, res) => {
 });
 
 app.get("/user", authenticate, async (req, res) => {
-  res.status(200).json(req.user).end();
+  const dbUser = await users.find(req.user.issuer);
+  if (dbUser) {
+    const { sites } = dbUser.data;
+    return res
+      .status(200)
+      .json({
+        sites,
+      })
+      .end();
+  }
+  return res.status(404).end();
 });
 
 app.get("/", async (req, res) => {
