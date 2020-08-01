@@ -50,35 +50,25 @@ const login = async (user, done) => {
   return done(null, user);
 };
 
-app.post(
-  "/user/login",
-  passport.authenticate("magic", { session: false }),
-  (req, res) => {
-    if (req.user) {
-      res.status(200).json(req.user);
-    } else {
-      return res.status(401).end("Could not log user in.");
-    }
-  }
-);
+const authenticate = passport.authenticate("magic", { session: false });
 
-app.post(
-  "/user/logout",
-  passport.authenticate("magic", { session: false }),
-  async (req, res) => {
-    await magic.users.logoutByIssuer(req.user.issuer);
-    req.logout();
-    return res.status(200).end();
+app.post("/user/login", authenticate, (req, res) => {
+  if (req.user) {
+    res.status(200).json(req.user);
+  } else {
+    return res.status(401).end("Could not log user in.");
   }
-);
+});
 
-app.get(
-  "/user",
-  passport.authenticate("magic", { session: false }),
-  async (req, res) => {
-    res.status(200).json(req.user).end();
-  }
-);
+app.post("/user/logout", authenticate, async (req, res) => {
+  await magic.users.logoutByIssuer(req.user.issuer);
+  req.logout();
+  return res.status(200).end();
+});
+
+app.get("/user", authenticate, async (req, res) => {
+  res.status(200).json(req.user).end();
+});
 
 app.get("/", async (req, res) => {
   res.status(200).end();
