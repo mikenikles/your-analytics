@@ -1,6 +1,6 @@
 const cors = require("cors");
 const express = require("express");
-const { createUser, findUser, setLastLoginAt } = require("./faunadb");
+const { users } = require("./faunadb");
 
 const app = express();
 app.use(
@@ -22,7 +22,7 @@ const MagicStrategy = require("passport-magic").Strategy;
 
 const strategy = new MagicStrategy(async function (user, done) {
   const userMetadata = await magic.users.getMetadataByIssuer(user.issuer);
-  const existingUser = (await findUser(user.issuer)).data.length === 1;
+  const existingUser = (await users.find(user.issuer)).data.length === 1;
   return existingUser ? login(user, done) : signup(user, userMetadata, done);
 });
 
@@ -35,7 +35,7 @@ const signup = async (user, userMetadata, done) => {
     email: userMetadata.email,
     lastLoginAt: user.claim.iat,
   };
-  await createUser(newUser);
+  await users.create(newUser);
   return done(null, newUser);
 };
 
@@ -46,7 +46,7 @@ const login = async (user, done) => {
       message: `Replay attack detected for user ${user.issuer}}.`,
     });
   }
-  await setLastLoginAt(user.issuer, user.claim.iat);
+  await users.setLastLoginAt(user.issuer, user.claim.iat);
   return done(null, user);
 };
 

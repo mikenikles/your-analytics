@@ -1,11 +1,9 @@
 const faunadb = require("faunadb");
+
 const q = faunadb.query;
-const serverClient = new faunadb.Client({
-  secret: process.env.FAUNADB_SERVER_SECRET,
-});
 
 // prettier-ignore
-const createUser = (user) => serverClient.query(
+const createUser = (serverClient) => (user) => serverClient.query(
   q.Create(
     q.Collection("users"),
     {
@@ -15,7 +13,7 @@ const createUser = (user) => serverClient.query(
 );
 
 // prettier-ignore
-const findUser = (issuer) => serverClient.query(
+const findUser = (serverClient) => (issuer) => serverClient.query(
   q.Paginate(
     q.Match(
       q.Index("user_by_issuer"),
@@ -25,7 +23,7 @@ const findUser = (issuer) => serverClient.query(
 );
 
 // prettier-ignore
-const setLastLoginAt = (issuer, lastLoginAt) => serverClient.query(
+const setLastLoginAt = (serverClient) => (issuer, lastLoginAt) => serverClient.query(
   q.Update(
     q.Select(["data", 0],
       q.Paginate(q.Match(
