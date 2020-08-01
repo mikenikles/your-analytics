@@ -8,6 +8,8 @@ Provides functionality used by the website, e.g. account creation, auth, etc.
 
 **Note**: Use the FaunaDB web shell to run the following commands.
 
+#### Server keys
+
 1. Create a server key
    ```
    CreateKey({
@@ -15,10 +17,16 @@ Provides functionality used by the website, e.g. account creation, auth, etc.
    })
    ```
    **Important**: Copy the `secret` to a secure location. It is only visible once.
+
+#### Collections
+
 1. Create a `users` collection
    ```
    CreateCollection({name: "users"})
    ```
+
+#### Indices
+
 1. Create a `user_by_issuer` index
    ```
    CreateIndex({
