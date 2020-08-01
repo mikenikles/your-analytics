@@ -32,23 +32,38 @@
       goto("/auth");
       return;
     }
-    await Promise.allSettled([
-      fetchBrowser(),
-      fetchOs(),
-      fetchScreen(),
-      fetchTopPages(),
-      fetchTopReferrers(),
-      fetchTotalPageviews(),
-      fetchUniqueVisitors(),
-      fetchVisitors(),
-      fetchWorldMap()
-    ]);
-    // TODO: Check if any of the promises failed, show error if so
+    console.log("Sites: ", $userMetadataStore.sites);
+
+    if (!$userMetadataStore.sites || $userMetadataStore.sites.length === 0) {
+      goto("/onboarding");
+      return;
+    }
+
+    if ($userMetadataStore.sites.length === 1) {
+      await goto(`/${$userMetadataStore.sites[0]}`, {
+        replaceState: true
+      });
+      await Promise.allSettled([
+        fetchBrowser(),
+        fetchOs(),
+        fetchScreen(),
+        fetchTopPages(),
+        fetchTopReferrers(),
+        fetchTotalPageviews(),
+        fetchUniqueVisitors(),
+        fetchVisitors(),
+        fetchWorldMap()
+      ]);
+      // TODO: Check if any of the promises failed, show error if so
+    } else {
+      goto("/websites");
+      return;
+    }
   });
 
   const handleLogout = async () => {
     await logout();
-    goto("/auth");
+    await goto("/auth");
   };
 </script>
 
