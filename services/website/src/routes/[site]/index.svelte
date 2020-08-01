@@ -1,5 +1,5 @@
 <script>
-  import { goto } from "@sapper/app";
+  import { goto, stores } from "@sapper/app";
   import { onMount } from "svelte";
   import {
     fetchBrowser,
@@ -26,6 +26,8 @@
   import Visitors from "../../components/stats/visitors.svelte";
   import WorldMap from "../../components/stats/world-map.svelte";
 
+  const { page } = stores();
+
   onMount(async () => {
     await init();
     if (!$userMetadataStore) {
@@ -39,7 +41,10 @@
       return;
     }
 
-    if ($userMetadataStore.sites.length === 1) {
+    if (
+      $userMetadataStore.sites.length === 1 ||
+      $userMetadataStore.sites.includes($page.params.site)
+    ) {
       await goto(`/${$userMetadataStore.sites[0]}`, {
         replaceState: true
       });

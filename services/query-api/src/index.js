@@ -41,7 +41,7 @@ const isAuthenticated = async (req, res, next) => {
 };
 
 const createStatsEndpoint = (path, fetcher) => {
-  app.get(path, isAuthenticated, async (req, res) => {
+  app.get(`/:website/${path}`, isAuthenticated, async (req, res) => {
     try {
       // TODO
       // - Load database query parameters based on who called this endpoint
@@ -60,15 +60,15 @@ const createStatsEndpoint = (path, fetcher) => {
   });
 };
 
-createStatsEndpoint("/browser", fetchBrowser);
-createStatsEndpoint("/os", fetchOs);
-createStatsEndpoint("/screen", fetchScreen);
-createStatsEndpoint("/top-pages", fetchTopPages);
-createStatsEndpoint("/top-referrers", fetchTopReferrers);
-createStatsEndpoint("/total-pageviews", fetchTotalPageviews);
-createStatsEndpoint("/unique-visitors", fetchUniqueVisitors);
-createStatsEndpoint("/visitors", fetchVisitors);
-createStatsEndpoint("/world-map", fetchWorldMap);
+createStatsEndpoint("browser", fetchBrowser);
+createStatsEndpoint("os", fetchOs);
+createStatsEndpoint("screen", fetchScreen);
+createStatsEndpoint("top-pages", fetchTopPages);
+createStatsEndpoint("top-referrers", fetchTopReferrers);
+createStatsEndpoint("total-pageviews", fetchTotalPageviews);
+createStatsEndpoint("unique-visitors", fetchUniqueVisitors);
+createStatsEndpoint("visitors", fetchVisitors);
+createStatsEndpoint("world-map", fetchWorldMap);
 
 app.listen(port, () => {
   console.log(`Server started at http://localhost:${port}`);
