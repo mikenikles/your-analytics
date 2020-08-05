@@ -13,8 +13,12 @@ const fetchStats = async (path, store) => {
   const site = get(page).params.site;
   console.log("FOUND SITE", site);
 
+  console.log("QUERY BASE URL", QUERY_API_BASE_URL);
+  console.log("PATH", path);
   const url = new URL(`${QUERY_API_BASE_URL}/${site}/${path}`);
+  console.log("A");
   url.searchParams.append("from", get(dateRange).from);
+  console.log("B");
   url.searchParams.append("to", get(dateRange).to);
   console.log("URL", JSON.stringify(url));
 
