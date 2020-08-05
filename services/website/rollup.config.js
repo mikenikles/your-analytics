@@ -24,6 +24,8 @@ const sveltePreprocessOptions = sveltePreprocess({
   },
 });
 
+console.log("ROLLUP ROLLUP", process.env.VERCEL_GITHUB_COMMIT_SHA);
+
 export default {
   client: {
     input: config.client.input(),
@@ -115,7 +117,7 @@ export default {
         "process.browser": true,
         "process.env.NODE_ENV": JSON.stringify(mode),
         "process.env.SAPPER_SW_CACHE_KEY":
-          `${process.env.VERCEL_GITHUB_COMMIT_SHA}` || `${Date.now()}`,
+          process.env.VERCEL_GITHUB_COMMIT_SHA || Date.now(),
       }),
       commonjs(),
       !dev && terser(),
