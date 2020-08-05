@@ -36,7 +36,7 @@ self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET" || event.request.headers.has("range"))
     return;
 
-  if (event.request.url.match(/-api.your-analytics.org/)) return;
+  if (event.request.url.match(/your-analytics.org\/api/)) return;
   if (event.request.url.match(/808\d-.*.gitpod.io/)) return;
 
   const url = new URL(event.request.url);
