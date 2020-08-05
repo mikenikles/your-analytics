@@ -11,7 +11,7 @@ const fetchStats = async (path, store) => {
   const site = get(page).params.site;
 
   const baseUrl = QUERY_API_BASE_URL.startsWith("/")
-    ? `${window.location.hostname}${QUERY_API_BASE_URL}`
+    ? `https://${window.location.hostname}${QUERY_API_BASE_URL}`
     : QUERY_API_BASE_URL;
   const url = new URL(`${baseUrl}/${site}/${path}`);
   url.searchParams.append("from", get(dateRange).from);
