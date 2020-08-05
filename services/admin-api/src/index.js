@@ -27,6 +27,7 @@ const strategy = new MagicStrategy(async function (user, done) {
   return dbUser ? login(user, done) : signup(user, userMetadata, done);
 });
 
+app.use(express.json());
 app.use(passport.initialize());
 passport.use(strategy);
 
@@ -79,6 +80,20 @@ app.get("/user", authenticate, async (req, res) => {
       .end();
   }
   return res.status(404).end();
+});
+
+app.post("/websites", authenticate, async (req, res) => {
+  try {
+    await users.addNewWebsite(
+      req.user.issuer,
+      req.body.websiteUrl,
+      req.body.timezone
+    );
+    return res.status(201).end();
+  } catch (error) {
+    console.error(error);
+    return res.status(500).end();
+  }
 });
 
 app.get("/", async (req, res) => {

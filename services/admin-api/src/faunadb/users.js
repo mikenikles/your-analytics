@@ -7,7 +7,7 @@ const createUser = (serverClient) => (user) => serverClient.query(
   q.Create(
     q.Collection("users"),
     {
-      data: user
+      data: {...user, sites: {}}
     }
   )
 );
@@ -55,8 +55,29 @@ const setLastLoginAt = (serverClient) => (issuer, lastLoginAt) => serverClient.q
   )
 );
 
+// prettier-ignore
+const addNewWebsite = (serverClient) => (issuer, url, timezone) => serverClient.query(
+  q.Update(
+    q.Select(["data", 0],
+      q.Paginate(q.Match(
+        q.Index("user_by_issuer"), issuer
+      ))
+    ),
+    {
+      data: {
+        sites: {
+          [url]: {
+            timezone
+          }
+        }
+      }
+    }
+  )
+);
+
 module.exports = {
   createUser,
   findUser,
   setLastLoginAt,
+  addNewWebsite,
 };
