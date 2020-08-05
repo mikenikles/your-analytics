@@ -37,6 +37,7 @@ self.addEventListener("fetch", (event) => {
     return;
 
   if (event.request.url.match(/your-analytics.org\/api/)) return;
+  if (event.request.url.match(/vercel.app\/api/)) return;
   if (event.request.url.match(/808\d-.*.gitpod.io/)) return;
 
   const url = new URL(event.request.url);
