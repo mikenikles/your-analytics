@@ -8,12 +8,12 @@
   ],
   "routes": [
     {
-      "src": "/api/admin",
-      "dest": "https://admin-api.your-analytics.org"
+      "src": "/api/admin/(.*)",
+      "dest": "https://admin-api.your-analytics.org/$1"
     },
     {
-      "src": "/api/query",
-      "dest": "https://query-api.your-analytics.org"
+      "src": "/api/query/(.*)",
+      "dest": "https://query-api.your-analytics.org/$1"
     }
   ]
 }
