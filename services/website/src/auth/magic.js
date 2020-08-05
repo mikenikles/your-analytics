@@ -18,7 +18,7 @@ export const init = async () => {
       }),
     });
     console.log(response.status);
-    if ([200, 304].includes(response.status)) {
+    if (response.status === 200) {
       console.log("ALL GOOD");
       const user = await response.json();
       console.log("USER", JSON.stringify(user));

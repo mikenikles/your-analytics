@@ -4,15 +4,19 @@ import { QUERY_API_BASE_URL } from "../config";
 import { userTokenStore } from "../auth/magic";
 
 const fetchStats = async (path, store) => {
+  console.log("FETCH STATS");
   if (!get(userTokenStore)) {
     return;
   }
+  console.log("GOT A TOKEN");
   const { page } = stores();
   const site = get(page).params.site;
+  console.log("FOUND SITE", site);
 
   const url = new URL(`${QUERY_API_BASE_URL}/${site}/${path}`);
   url.searchParams.append("from", get(dateRange).from);
   url.searchParams.append("to", get(dateRange).to);
+  console.log("URL", JSON.stringify(url));
 
   const response = await fetch(url, {
     headers: new Headers({
@@ -20,6 +24,7 @@ const fetchStats = async (path, store) => {
     }),
   });
 
+  console.log("RES STATUS", response.status);
   if (response.status === 200) {
     store.set((await response.json()).data);
   }
