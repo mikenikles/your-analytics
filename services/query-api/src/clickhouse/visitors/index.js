@@ -11,10 +11,10 @@ const fetchVisitorsDev = () => () => devData;
 const isDateRangeOneDay = (dateRange) =>
   dateRange.to - dateRange.from + 1 === 86400;
 
-const fetchVisitors = (ch) => async (dateRange) => {
+const fetchVisitors = (ch) => async (dateRange, domain) => {
   const timezone = "Europe/London";
   const granularity = isDateRangeOneDay(dateRange) ? "Hour" : "Date";
-  const sql = `SELECT to${granularity}(timestamp, '${timezone}') AS day, COUNT(DISTINCT user_id) AS total FROM youranalytics.events WHERE toUnixTimestamp(timestamp, '${timezone}') >= ${dateRange.from} AND toUnixTimestamp(timestamp, '${timezone}') <= ${dateRange.to} GROUP BY day`;
+  const sql = `SELECT to${granularity}(timestamp, '${timezone}') AS day, COUNT(DISTINCT user_id) AS total FROM youranalytics.events WHERE toUnixTimestamp(timestamp, '${timezone}') >= ${dateRange.from} AND toUnixTimestamp(timestamp, '${timezone}') <= ${dateRange.to} AND domain = '${domain}' GROUP BY day`;
 
   const stream = ch.query(sql);
 
