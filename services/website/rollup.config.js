@@ -114,6 +114,9 @@ export default {
       replace({
         "process.browser": true,
         "process.env.NODE_ENV": JSON.stringify(mode),
+        "process.env.SAPPER_SW_CACHE_KEY": process.env.VERCEL_GITHUB_COMMIT_SHA
+          ? JSON.stringify(process.env.VERCEL_GITHUB_COMMIT_SHA)
+          : Date.now(),
       }),
       commonjs(),
       !dev && terser(),
