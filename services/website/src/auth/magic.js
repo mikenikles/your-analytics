@@ -17,8 +17,11 @@ export const init = async () => {
         Authorization: "Bearer " + didToken,
       }),
     });
+    console.log(response.status);
     if ([200, 304].includes(response.status)) {
+      console.log("ALL GOOD");
       const user = await response.json();
+      console.log("USER", JSON.stringify(user));
       userMetadataStore.set(user);
       userTokenStore.set(didToken);
     }
