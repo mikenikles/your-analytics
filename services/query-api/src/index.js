@@ -41,17 +41,18 @@ const isAuthenticated = async (req, res, next) => {
 };
 
 const createStatsEndpoint = (path, fetcher) => {
-  app.get(`/:website/${path}`, isAuthenticated, async (req, res) => {
+  app.get(`/:domain/${path}`, isAuthenticated, async (req, res) => {
     try {
       // TODO
       // - Load database query parameters based on who called this endpoint
+      const domain = req.param("domain");
 
       const dateRange = {
         from: req.query.from ? Math.floor(req.query.from / 1000) : null,
         to: req.query.to ? Math.floor(req.query.to / 1000) : null,
       };
 
-      const data = await fetcher(dateRange);
+      const data = await fetcher(dateRange, domain);
       res.json({ data });
     } catch (error) {
       console.error(error);
