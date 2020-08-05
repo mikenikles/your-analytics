@@ -1,5 +1,6 @@
 const cors = require("cors");
 const express = require("express");
+const { users } = require("./faunadb");
 
 const app = express();
 app.use(
@@ -19,16 +20,14 @@ const magic = new Magic(process.env.MAGIC_SECRET_KEY);
 const passport = require("passport");
 const MagicStrategy = require("passport-magic").Strategy;
 
-// TODO: Move to a database
-const users = [];
-
 const strategy = new MagicStrategy(async function (user, done) {
   const userMetadata = await magic.users.getMetadataByIssuer(user.issuer);
-  return users.find((u) => u.issuer === user.issuer)
-    ? login(user, done)
-    : signup(user, userMetadata, done);
+
+  const dbUser = await users.find(user.issuer);
+  return dbUser ? login(user, done) : signup(user, userMetadata, done);
 });
 
+app.use(express.json());
 app.use(passport.initialize());
 passport.use(strategy);
 
@@ -38,7 +37,7 @@ const signup = async (user, userMetadata, done) => {
     email: userMetadata.email,
     lastLoginAt: user.claim.iat,
   };
-  users.push(newUser);
+  await users.create(newUser);
   return done(null, newUser);
 };
 
@@ -49,40 +48,53 @@ const login = async (user, done) => {
       message: `Replay attack detected for user ${user.issuer}}.`,
     });
   }
-  const existingUserIndex = users.findIndex((u) => u.issuer === user.issuer);
-  users[existingUserIndex].lastLoginAt = user.claim.iat;
+  await users.setLastLoginAt(user.issuer, user.claim.iat);
   return done(null, user);
 };
 
-app.post(
-  "/user/login",
-  passport.authenticate("magic", { session: false }),
-  (req, res) => {
-    if (req.user) {
-      res.status(200).json(req.user);
-    } else {
-      return res.status(401).end("Could not log user in.");
-    }
-  }
-);
+const authenticate = passport.authenticate("magic", { session: false });
 
-app.post("/user/logout", async (req, res) => {
-  if (req.isAuthenticated()) {
-    await magic.users.logoutByIssuer(req.user.issuer);
-    req.logout();
-    return res.status(200).end();
+app.post("/user/login", authenticate, (req, res) => {
+  if (req.user) {
+    res.status(200).json(req.user);
   } else {
-    return res.status(401).end(`User is not logged in.`);
+    return res.status(401).end("Could not log user in.");
   }
 });
 
-app.get(
-  "/user",
-  passport.authenticate("magic", { session: false }),
-  async (req, res) => {
-    res.status(200).json(req.user).end();
+app.post("/user/logout", authenticate, async (req, res) => {
+  await magic.users.logoutByIssuer(req.user.issuer);
+  req.logout();
+  return res.status(200).end();
+});
+
+app.get("/user", authenticate, async (req, res) => {
+  const dbUser = await users.find(req.user.issuer);
+  if (dbUser) {
+    const { sites } = dbUser.data;
+    return res
+      .status(200)
+      .json({
+        sites,
+      })
+      .end();
   }
-);
+  return res.status(404).end();
+});
+
+app.post("/websites", authenticate, async (req, res) => {
+  try {
+    await users.addNewWebsite(
+      req.user.issuer,
+      req.body.websiteUrl,
+      req.body.timezone
+    );
+    return res.status(201).end();
+  } catch (error) {
+    console.error(error);
+    return res.status(500).end();
+  }
+});
 
 app.get("/", async (req, res) => {
   res.status(200).end();

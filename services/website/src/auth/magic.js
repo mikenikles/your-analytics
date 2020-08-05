@@ -1,5 +1,5 @@
 import { Magic } from "magic-sdk";
-import { writable } from "svelte/store";
+import { get, writable } from "svelte/store";
 import { ADMIN_API_BASE_URL, MAGIC_PUBLIC_KEY } from "../config";
 
 export const userMetadataStore = writable(null);
@@ -42,4 +42,16 @@ export const login = async (event) => {
       userTokenStore.set(didToken);
     }
   }
+};
+
+export const logout = async () => {
+  await magic.user.logout();
+  await fetch(`${ADMIN_API_BASE_URL}/user/logout`, {
+    headers: new Headers({
+      Authorization: "Bearer " + get(userTokenStore),
+    }),
+    method: "POST",
+  });
+  userMetadataStore.set(null);
+  userTokenStore.set(null);
 };

@@ -1,3 +1,4 @@
+import { stores } from "@sapper/app";
 import { get, writable } from "svelte/store";
 import { QUERY_API_BASE_URL } from "../config";
 import { userTokenStore } from "../auth/magic";
@@ -6,8 +7,10 @@ const fetchStats = async (path, store) => {
   if (!get(userTokenStore)) {
     return;
   }
+  const { page } = stores();
+  const site = get(page).params.site;
 
-  const url = new URL(`${QUERY_API_BASE_URL}/${path}`);
+  const url = new URL(`${QUERY_API_BASE_URL}/${site}/${path}`);
   url.searchParams.append("from", get(dateRange).from);
   url.searchParams.append("to", get(dateRange).to);
 

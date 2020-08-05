@@ -1,5 +1,5 @@
 <script>
-  import { goto } from "@sapper/app";
+  import { goto, stores } from "@sapper/app";
   import { onMount } from "svelte";
   import {
     fetchBrowser,
@@ -18,7 +18,7 @@
     visitors,
     worldMap
   } from "../../api/stats";
-  import { userMetadataStore, init } from "../../auth/magic";
+  import { userMetadataStore, init, logout } from "../../auth/magic";
   import DateRange from "../../components/date-range.svelte";
   import Devices from "../../components/stats/devices.svelte";
   import TopPages from "../../components/stats/top-pages.svelte";
@@ -26,12 +26,9 @@
   import Visitors from "../../components/stats/visitors.svelte";
   import WorldMap from "../../components/stats/world-map.svelte";
 
-  onMount(async () => {
-    await init();
-    if (!$userMetadataStore) {
-      goto("/auth");
-      return;
-    }
+  const { page } = stores();
+
+  const fetchStats = async () => {
     await Promise.allSettled([
       fetchBrowser(),
       fetchOs(),
@@ -44,10 +41,54 @@
       fetchWorldMap()
     ]);
     // TODO: Check if any of the promises failed, show error if so
+  };
+
+  onMount(async () => {
+    await init();
+    if (!$userMetadataStore) {
+      goto("/auth");
+      return;
+    }
+
+    if (!$userMetadataStore.sites || Object.keys($userMetadataStore.sites).length === 0) {
+      goto("/onboarding");
+      return;
+    }
+
+    const sites = Object.keys($userMetadataStore.sites);
+    if (sites.length === 1) {
+      await goto(`/${sites[0]}`, {
+        replaceState: true
+      });
+      await fetchStats();
+      return;
+    }
+
+    if (
+      sites.includes($page.params.site)
+    ) {
+      await goto(`/${$page.params.site}`, {
+        replaceState: true
+      });
+      await fetchStats();
+      return;
+    }
+
+    if (sites.length >= 2) {
+      goto("/websites");
+      return;
+    }
   });
+
+  const handleLogout = async () => {
+    await logout();
+    await goto("/auth");
+  };
 </script>
 
 <h1>Analytics</h1>
+
+<button on:click={logout}>Logout</button>
 
 <DateRange />
 
