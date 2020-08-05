@@ -56,7 +56,6 @@
     }
 
     const sites = Object.keys($userMetadataStore.sites);
-    console.log("SITES", JSON.stringify(sites))
     if (sites.length === 1) {
       await goto(`/${sites[0]}`, {
         replaceState: true
