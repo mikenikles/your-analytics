@@ -3,7 +3,7 @@ const express = require("express");
 const { users } = require("./faunadb");
 
 const app = express();
-process.env.NODE_ENV === "production" &&
+process.env.NODE_ENV !== "production" &&
   app.use(
     cors({
       origin: [

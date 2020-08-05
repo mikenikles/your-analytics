@@ -17,7 +17,7 @@ const {
 const magic = new Magic(process.env.MAGIC_SECRET_KEY);
 
 const app = express();
-process.env.NODE_ENV === "production" &&
+process.env.NODE_ENV !== "production" &&
   app.use(
     cors({
       origin: [
