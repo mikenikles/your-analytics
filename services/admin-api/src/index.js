@@ -3,16 +3,17 @@ const express = require("express");
 const { users } = require("./faunadb");
 
 const app = express();
-app.use(
-  cors({
-    origin: [
-      /mikenikles\.vercel\.app$/,
-      /your-analytics\.vercel\.app$/,
-      /your-analytics\.org$/,
-      process.env.FRONTEND_HOST,
-    ],
-  })
-);
+process.env.NODE_ENV !== "production" &&
+  app.use(
+    cors({
+      origin: [
+        /mikenikles\.vercel\.app$/,
+        /your-analytics\.vercel\.app$/,
+        /your-analytics\.org$/,
+        process.env.FRONTEND_HOST,
+      ],
+    })
+  );
 const port = process.env.PORT || 8082;
 
 const { Magic } = require("@magic-sdk/admin");

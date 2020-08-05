@@ -10,7 +10,10 @@ const fetchStats = async (path, store) => {
   const { page } = stores();
   const site = get(page).params.site;
 
-  const url = new URL(`${QUERY_API_BASE_URL}/${site}/${path}`);
+  const baseUrl = QUERY_API_BASE_URL.startsWith("/")
+    ? `https://${window.location.hostname}${QUERY_API_BASE_URL}`
+    : QUERY_API_BASE_URL;
+  const url = new URL(`${baseUrl}/${site}/${path}`);
   url.searchParams.append("from", get(dateRange).from);
   url.searchParams.append("to", get(dateRange).to);
 

@@ -17,16 +17,17 @@ const {
 const magic = new Magic(process.env.MAGIC_SECRET_KEY);
 
 const app = express();
-app.use(
-  cors({
-    origin: [
-      /mikenikles\.vercel\.app$/,
-      /your-analytics\.vercel\.app$/,
-      /your-analytics\.org$/,
-      process.env.FRONTEND_HOST,
-    ],
-  })
-);
+process.env.NODE_ENV !== "production" &&
+  app.use(
+    cors({
+      origin: [
+        /mikenikles\.vercel\.app$/,
+        /your-analytics\.vercel\.app$/,
+        /your-analytics\.org$/,
+        process.env.FRONTEND_HOST,
+      ],
+    })
+  );
 const port = process.env.PORT || 8081;
 
 const isAuthenticated = async (req, res, next) => {

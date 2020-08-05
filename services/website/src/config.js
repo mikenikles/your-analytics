@@ -7,8 +7,8 @@ const config = {
     magicPublicKey: "pk_test_517AC93805DD89CB",
   },
   production: {
-    adminApiBaseUrl: "https://admin-api.your-analytics.org",
-    queryApiBaseUrl: "https://query-api.your-analytics.org",
+    adminApiBaseUrl: "/api/admin",
+    queryApiBaseUrl: "/api/query",
     magicPublicKey: "pk_live_BA455263710CC21F",
   },
 };
