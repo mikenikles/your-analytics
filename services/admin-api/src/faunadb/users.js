@@ -24,7 +24,7 @@ const findUser = (serverClient) => async (issuer) => {
   );
 
   if (response.data.length > 1) {
-    const error = new Error(`More than one user found for issuer: ${issur}`);
+    const error = new Error(`More than one user found for issuer: ${issuer}`);
     console.error(error);
     throw error;
   }
