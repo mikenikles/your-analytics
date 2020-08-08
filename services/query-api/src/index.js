@@ -85,5 +85,5 @@ createStatsEndpoint("visitors", fetchVisitors);
 createStatsEndpoint("world-map", fetchWorldMap);
 
 app.listen(port, () => {
-  console.log(`Server started at http://localhost:${port}`);
+  console.log(`query-api started at http://localhost:${port}`);
 });
