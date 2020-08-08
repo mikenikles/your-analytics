@@ -1,6 +1,7 @@
 const { Magic } = require("@magic-sdk/admin");
 const cors = require("cors");
 const express = require("express");
+const { users } = require("./faunadb");
 
 const {
   fetchBrowser,
@@ -46,7 +47,18 @@ const createStatsEndpoint = (path, fetcher) => {
     try {
       // TODO
       // - Load database query parameters based on who called this endpoint
-      const domain = req.param("domain");
+      const domain = req.params.domain;
+
+      const user = await users.find(req.user.issuer);
+      if (!user.data.sites[domain]) {
+        console.error(
+          new Error(
+            `User ${req.user.issuer} tried to access domain ${domain} but is not authorized.`
+          )
+        );
+        res.status(401).end();
+        return;
+      }
 
       const dateRange = {
         from: req.query.from ? Math.floor(req.query.from / 1000) : null,
@@ -73,5 +85,5 @@ createStatsEndpoint("visitors", fetchVisitors);
 createStatsEndpoint("world-map", fetchWorldMap);
 
 app.listen(port, () => {
-  console.log(`Server started at http://localhost:${port}`);
+  console.log(`query-api started at http://localhost:${port}`);
 });
