@@ -15,7 +15,10 @@
 
   {#each Object.entries($topReferrers) as [domain, total]}
     <div>
-      <p><img src="https://external-content.duckduckgo.com/ip3/{domain}.ico" alt="{domain} favicon" />{domain}: {total}</p>
+      <p class="flex">
+        <img src="https://external-content.duckduckgo.com/ip3/{domain}.ico" alt="{domain} favicon" />
+        {domain}: {total}
+      </p>
     </div>
   {/each}
 {:else}
