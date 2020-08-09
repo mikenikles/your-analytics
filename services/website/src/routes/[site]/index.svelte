@@ -23,6 +23,8 @@
   import Devices from "../../components/stats/devices.svelte";
   import TopPages from "../../components/stats/top-pages.svelte";
   import TopReferrers from "../../components/stats/top-referrers.svelte";
+  import TotalPageviews from "../../components/stats/total-pageviews.svelte";
+  import UniqueVisitors from "../../components/stats/unique-visitors.svelte";
   import Visitors from "../../components/stats/visitors.svelte";
   import WorldMap from "../../components/stats/world-map.svelte";
 
@@ -93,11 +95,11 @@
 <DateRange />
 
 {#if $uniqueVisitors}
-  <p>Unique visitors: {$uniqueVisitors}</p>
+  <UniqueVisitors />
 {/if}
 
 {#if $totalPageviews}
-  <p>Total pageviews: {$totalPageviews}</p>
+  <TotalPageviews />
 {/if}
 
 {#if $visitors}
