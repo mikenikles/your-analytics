@@ -1,17 +1,6 @@
 <script>
   import { goto, stores } from "@sapper/app";
   import { onMount } from "svelte";
-  import {
-    fetchBrowser,
-    fetchOs,
-    fetchScreen,
-    fetchTopPages,
-    fetchTopReferrers,
-    fetchTotalPageviews,
-    fetchUniqueVisitors,
-    fetchVisitors,
-    fetchWorldMap
-  } from "../../api/stats";
   import { userMetadataStore, init, logout } from "../../auth/magic";
   import DateRange from "../../components/date-range.svelte";
   import Devices from "../../components/stats/devices.svelte";
@@ -24,20 +13,7 @@
 
   const { page } = stores();
 
-  const fetchStats = async () => {
-    await Promise.allSettled([
-      fetchBrowser(),
-      fetchOs(),
-      fetchScreen(),
-      fetchTopPages(),
-      fetchTopReferrers(),
-      fetchTotalPageviews(),
-      fetchUniqueVisitors(),
-      fetchVisitors(),
-      fetchWorldMap()
-    ]);
-    // TODO: Check if any of the promises failed, show error if so
-  };
+  let isReadyToDisplayStats = false;
 
   onMount(async () => {
     await init();
@@ -56,7 +32,7 @@
       await goto(`/${sites[0]}`, {
         replaceState: true
       });
-      await fetchStats();
+      isReadyToDisplayStats = true;
       return;
     }
 
@@ -66,7 +42,7 @@
       await goto(`/${$page.params.site}`, {
         replaceState: true
       });
-      await fetchStats();
+      isReadyToDisplayStats = true;
       return;
     }
 
@@ -86,11 +62,13 @@
 
 <button on:click={logout}>Logout</button>
 
-<DateRange />
-<UniqueVisitors />
-<TotalPageviews />
-<Visitors />
-<TopPages />
-<TopReferrers />
-<Devices />
-<WorldMap />
+{#if isReadyToDisplayStats}
+  <DateRange />
+  <UniqueVisitors />
+  <TotalPageviews />
+  <Visitors />
+  <TopPages />
+  <TopReferrers />
+  <Devices />
+  <WorldMap />
+{/if}
