@@ -2,4 +2,6 @@
   import { totalPageviews } from "../../api/stats";
 </script>
 
-<p>Total pageviews: {$totalPageviews}</p>
+{#if $totalPageviews}
+  <p>Total pageviews: {$totalPageviews}</p>
+{/if}

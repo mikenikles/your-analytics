@@ -9,10 +9,12 @@
   }
 </style>
 
-<h2>Top Referrers</h2>
+{#if $topReferrers}
+  <h2>Top Referrers</h2>
 
-{#each Object.entries($topReferrers) as [domain, total]}
-  <div>
-    <p><img src="https://external-content.duckduckgo.com/ip3/{domain}.ico" alt="{domain} favicon" />{domain}: {total}</p>
-  </div>
-{/each}
+  {#each Object.entries($topReferrers) as [domain, total]}
+    <div>
+      <p><img src="https://external-content.duckduckgo.com/ip3/{domain}.ico" alt="{domain} favicon" />{domain}: {total}</p>
+    </div>
+  {/each}
+{/if}

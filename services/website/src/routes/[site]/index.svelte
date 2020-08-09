@@ -10,13 +10,7 @@
     fetchTotalPageviews,
     fetchUniqueVisitors,
     fetchVisitors,
-    fetchWorldMap,
-    topPages,
-    topReferrers,
-    totalPageviews,
-    uniqueVisitors,
-    visitors,
-    worldMap
+    fetchWorldMap
   } from "../../api/stats";
   import { userMetadataStore, init, logout } from "../../auth/magic";
   import DateRange from "../../components/date-range.svelte";
@@ -93,29 +87,10 @@
 <button on:click={logout}>Logout</button>
 
 <DateRange />
-
-{#if $uniqueVisitors}
-  <UniqueVisitors />
-{/if}
-
-{#if $totalPageviews}
-  <TotalPageviews />
-{/if}
-
-{#if $visitors}
-  <Visitors />
-{/if}
-
-{#if $topPages}
-  <TopPages />
-{/if}
-
-{#if $topReferrers}
-  <TopReferrers />
-{/if}
-
+<UniqueVisitors />
+<TotalPageviews />
+<Visitors />
+<TopPages />
+<TopReferrers />
 <Devices />
-
-{#if $worldMap}
-  <WorldMap />
-{/if}
+<WorldMap />
