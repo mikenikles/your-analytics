@@ -3,6 +3,6 @@
 </script>
 
 <TailwindCSS />
-<main class="prose">
+<main>
 	<slot></slot>
 </main>
