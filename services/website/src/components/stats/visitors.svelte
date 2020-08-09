@@ -1,6 +1,7 @@
 <script>
   import Chart from "chart.js";
   import { visitors } from "../../api/stats";
+  import Loading from "./loading.svelte";
 
   let chartElement;
   let chart;
@@ -42,4 +43,6 @@
     style="position: relative; height:20vh; width:100%">
     <canvas bind:this={chartElement} />
   </div>
+{:else}
+  <Loading />
 {/if}

@@ -1,5 +1,6 @@
 <script>
   import { topPages } from "../../api/stats";
+  import Loading from "./loading.svelte";
 </script>
 
 {#if $topPages}
@@ -10,4 +11,6 @@
       <p>{page}: {total}</p>
     </div>
   {/each}
+{:else}
+  <Loading />
 {/if}

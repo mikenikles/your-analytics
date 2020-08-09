@@ -1,5 +1,6 @@
 <script>
   import { browser, os, screen } from "../../api/stats";
+  import Loading from "./loading.svelte";
 </script>
 
 {#if $browser && $os && $screen}
@@ -39,4 +40,6 @@
       </tr>
     </tbody>
   </table>
+{:else}
+  <Loading />
 {/if}

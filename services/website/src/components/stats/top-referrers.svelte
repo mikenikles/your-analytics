@@ -1,5 +1,6 @@
 <script>
   import { topReferrers } from "../../api/stats";
+  import Loading from "./loading.svelte";
 </script>
 
 <style>
@@ -17,4 +18,6 @@
       <p><img src="https://external-content.duckduckgo.com/ip3/{domain}.ico" alt="{domain} favicon" />{domain}: {total}</p>
     </div>
   {/each}
+{:else}
+  <Loading />
 {/if}
