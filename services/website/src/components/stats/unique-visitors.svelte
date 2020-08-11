@@ -1,10 +1,6 @@
 <script>
   import { uniqueVisitors } from "../../api/stats";
-  import Loading from "./loading.svelte";
+  import ComparisonNumbers from "./elements/comparison-numbers.svelte";
 </script>
 
-{#if $uniqueVisitors}
-  <p>Unique visitors: {$uniqueVisitors}</p>
-{:else}
-  <Loading />
-{/if}
+<ComparisonNumbers currentValue={$uniqueVisitors} />

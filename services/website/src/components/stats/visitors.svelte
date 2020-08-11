@@ -37,12 +37,13 @@
   }
 </script>
 
-{#if $visitors}
-  <h2>Visitors</h2>
-  <div
-    style="position: relative; height:20vh; width:100%">
-    <canvas bind:this={chartElement} />
-  </div>
-{:else}
-  <Loading />
-{/if}
+<div class="px-4 py-5 sm:p-6">
+  {#if $visitors}
+    <div
+      style="position: relative; width:100%">
+      <canvas bind:this={chartElement} />
+    </div>
+  {:else}
+    <Loading />
+  {/if}
+</div>

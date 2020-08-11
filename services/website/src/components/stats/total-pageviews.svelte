@@ -1,10 +1,6 @@
 <script>
   import { totalPageviews } from "../../api/stats";
-  import Loading from "./loading.svelte";
+  import ComparisonNumbers from "./elements/comparison-numbers.svelte";
 </script>
 
-{#if $totalPageviews}
-  <p>Total pageviews: {$totalPageviews}</p>
-{:else}
-  <Loading />
-{/if}
+<ComparisonNumbers currentValue={$totalPageviews} />

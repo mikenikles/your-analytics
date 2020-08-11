@@ -2,6 +2,7 @@
   import { goto, stores } from "@sapper/app";
   import { onMount } from "svelte";
   import { userMetadataStore, init, logout } from "../../auth/magic";
+  import Card from "../../components/card.svelte";
   import DateRange from "../../components/date-range.svelte";
   import Devices from "../../components/stats/devices.svelte";
   import TopPages from "../../components/stats/top-pages.svelte";
@@ -176,13 +177,25 @@
       <div class="bg-white rounded-lg shadow px-5 py-6 sm:px-6">
         {#if isReadyToDisplayStats}
           <DateRange />
-          <UniqueVisitors />
-          <TotalPageviews />
-          <Visitors />
-          <TopPages />
-          <TopReferrers />
-          <Devices />
-          <WorldMap />
+          <Card>
+            <UniqueVisitors />
+            <TotalPageviews />
+          </Card>
+          <Card>
+            <Visitors />
+          </Card>
+          <Card>
+            <TopPages />
+          </Card>
+          <Card>
+            <TopReferrers />
+          </Card>
+          <Card>
+            <Devices /> 
+          </Card>
+          <Card>
+            <WorldMap />
+          </Card>
         {:else}
           <p>
             <span class="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-bg-gray-800 focus:outline-none transition ease-in-out duration-150 cursor-wait">
