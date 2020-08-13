@@ -73,11 +73,12 @@ app.post("/user/logout", authenticate, async (req, res) => {
 app.get("/user", authenticate, async (req, res) => {
   const dbUser = await users.find(req.user.issuer);
   if (dbUser) {
-    const { email, sites } = dbUser.data;
+    const { firstName, email, sites } = dbUser.data;
     return res
       .status(200)
       .json({
         sites,
+        firstName,
         email,
         emailHash: crypto
           .createHash("md5")
@@ -93,7 +94,8 @@ app.post("/websites", authenticate, async (req, res) => {
   try {
     await users.addNewWebsite(
       req.user.issuer,
-      req.body.websiteUrl,
+      req.body.firstName,
+      req.body.url,
       req.body.timezone
     );
     return res.status(201).end();

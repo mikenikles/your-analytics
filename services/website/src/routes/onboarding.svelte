@@ -9,11 +9,10 @@
   $: snippet = `<script async src="https://your-analytics.org/ya.js" data-domain="${url}"><\/script>`;
 
   const handleSubmit = async (event) => {
+    const firstName = new FormData(event.target).get("firstname");
     const url = new FormData(event.target).get("url");
     const timezone = new FormData(event.target).get("timezone");
-
-    console.log(url, timezone);
-    isSiteAdded = await addNewWebsite(url, timezone)
+    isSiteAdded = await addNewWebsite({firstName, url, timezone});
   };
 </script>
 
@@ -24,6 +23,8 @@
     <p>To collect web analytics, please follow these 3 steps:</p>
 
     <form on:submit|preventDefault={handleSubmit}>
+      <h2>What's your first name?</h2>
+      <input required name="firstname" type="text" />
 
       <h2>What's your website URL?</h2>
       <input bind:value={url} required name="url" type="text" />
