@@ -23,13 +23,13 @@
 
   {#each topTen as [domain, total]}
     <ProgressBar label={domain} value={total} percentage={(total / maxTotal) * 100}>
-      <img slot="icon" src="https://external-content.duckduckgo.com/ip3/{domain}.ico" alt="{domain} favicon" />
+      <img slot="icon" src="https://www.google.com/s2/favicons?domain={domain}" alt="{domain} favicon" />
     </ProgressBar>
   {/each}
   {#if showRest}
     {#each rest as [domain, total]}
       <ProgressBar label={domain} value={total} percentage={(total / maxTotal) * 100}>
-        <img slot="icon" src="https://external-content.duckduckgo.com/ip3/{domain}.ico" alt="{domain} favicon" />
+        <img slot="icon" src="https://www.google.com/s2/favicons?domain={domain}" alt="{domain} favicon" />
       </ProgressBar>
     {/each}
   {:else}
