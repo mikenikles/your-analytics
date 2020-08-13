@@ -14,10 +14,9 @@
             location.hostname +
             location.pathname +
             location.search,
-          // user_id: 1,
           // session_id: 9,
           referrer: document.referrer,
-          screen_size: `${window.innerWidth}x${window.innerHeight}`,
+          screen_size: window.innerWidth,
         }),
         credentials: "omit",
         cache: "no-store",

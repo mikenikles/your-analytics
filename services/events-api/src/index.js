@@ -71,7 +71,8 @@ app.post("/", async (req, res) => {
       os_version: userAgent.os.version,
       path: urlParsed.pathname,
       referrer,
-      screen_size,
+      // FIXME: Persist a number. This requires an ALTER to the DB column
+      screen_size: `${screen_size}`,
       session_id: 0,
       user_id: userId,
     };
