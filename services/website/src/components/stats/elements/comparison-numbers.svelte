@@ -1,6 +1,7 @@
 <script>
   import Loading from "../loading.svelte";
 
+  export let title;
   export let currentValue;
 </script>
 
@@ -8,7 +9,7 @@
   <div class="px-4 py-5 sm:p-6">
     <dl>
       <dt class="text-base leading-6 font-normal text-gray-900">
-        Total Pageviews
+        {title}
       </dt>
       <dd class="mt-1 flex justify-between items-baseline md:block lg:flex">
         <div class="flex items-baseline text-2xl leading-8 font-semibold text-indigo-600">
