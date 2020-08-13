@@ -1,4 +1,5 @@
 const cors = require("cors");
+const crypto = require("crypto");
 const express = require("express");
 const { users } = require("./faunadb");
 
@@ -72,11 +73,16 @@ app.post("/user/logout", authenticate, async (req, res) => {
 app.get("/user", authenticate, async (req, res) => {
   const dbUser = await users.find(req.user.issuer);
   if (dbUser) {
-    const { sites } = dbUser.data;
+    const { email, sites } = dbUser.data;
     return res
       .status(200)
       .json({
         sites,
+        email,
+        emailHash: crypto
+          .createHash("md5")
+          .update(dbUser.data.email)
+          .digest("hex"),
       })
       .end();
   }
