@@ -7,6 +7,10 @@ const fetchStats = async (path, store) => {
   if (!get(userTokenStore)) {
     return;
   }
+  if (get(dateRange).from === -1 && get(dateRange).to === -1) {
+    return;
+  }
+
   const { page } = stores();
   const site = get(page).params.site;
 

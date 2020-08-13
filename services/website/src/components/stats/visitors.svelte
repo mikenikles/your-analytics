@@ -1,44 +1,49 @@
 <script>
   import Chart from "chart.js";
-  import { onMount } from "svelte";
   import { visitors } from "../../api/stats";
+  import Loading from "./loading.svelte";
 
   let chartElement;
   let chart;
 
-  $: if (chart && $visitors) {
-    chart.data.datasets[0].data = Object.values($visitors);
-    chart.data.labels = Object.keys($visitors);
-    chart.update();
-  }
-
-  onMount(() => {
-    chart = new Chart(chartElement, {
-      data: {
-        datasets: [{
-          data: Object.values($visitors)
-        }],
-        labels: Object.keys($visitors)
-      },
-      options: {
-        legend: {
-          display: false
+  $: if ($visitors && chartElement) {
+    if (chart) {
+      chart.data.datasets[0].data = Object.values($visitors);
+      chart.data.labels = Object.keys($visitors);
+      chart.update();
+    } else {
+      chart = new Chart(chartElement, {
+        data: {
+          datasets: [{
+            data: Object.values($visitors)
+          }],
+          labels: Object.keys($visitors)
         },
-        scales: {
-          xAxes: [{
-            gridLines: {
-              display: false
-            }
-          }]
-        }
-      },
-      type: "line"
-    });
-  });
+        options: {
+          legend: {
+            display: false
+          },
+          scales: {
+            xAxes: [{
+              gridLines: {
+                display: false
+              }
+            }]
+          }
+        },
+        type: "line"
+      });
+    }
+  }
 </script>
 
-<h2>Visitors</h2>
-<div
-  style="position: relative; height:20vh; width:100%">
-  <canvas bind:this={chartElement} />
+<div class="px-4 py-5 sm:p-6">
+  {#if $visitors}
+    <div
+      style="position: relative; width:100%">
+      <canvas bind:this={chartElement} />
+    </div>
+  {:else}
+    <Loading />
+  {/if}
 </div>
