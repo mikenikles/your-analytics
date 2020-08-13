@@ -56,7 +56,7 @@ const setLastLoginAt = (serverClient) => (issuer, lastLoginAt) => serverClient.q
 );
 
 // prettier-ignore
-const addNewWebsite = (serverClient) => (issuer, url, timezone) => serverClient.query(
+const addNewWebsite = (serverClient) => (issuer, firstName, url, timezone) => serverClient.query(
   q.Update(
     q.Select(["data", 0],
       q.Paginate(q.Match(
@@ -65,6 +65,7 @@ const addNewWebsite = (serverClient) => (issuer, url, timezone) => serverClient.
     ),
     {
       data: {
+        firstName,
         sites: {
           [url]: {
             timezone

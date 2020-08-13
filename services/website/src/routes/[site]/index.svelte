@@ -14,9 +14,10 @@
 
   const { page } = stores();
 
+  $: userFirstName = ($userMetadataStore && $userMetadataStore.firstName) || "";
   $: userEmail = ($userMetadataStore && $userMetadataStore.email) || "";
   $: userEmailHash = $userMetadataStore && $userMetadataStore.emailHash;
-  $: hasMultipleSites = $userMetadataStore && Object.keys($userMetadataStore.sites).length > 1;
+  $: hasMultipleSites = $userMetadataStore && Object.keys($userMetadataStore.sites || {}).length > 1;
 
   let isMobileMenuOpen = false;
   let isProfileMenuOpen = false;
@@ -166,7 +167,7 @@
                 <img class="h-10 w-10 rounded-full" src="https://www.gravatar.com/avatar/{userEmailHash}.jpg?d=identicon" alt="Profile avatar">
               </div>
               <div class="ml-3">
-                <div class="text-base font-medium leading-none text-white">Tom Cook</div>
+                <div class="text-base font-medium leading-none text-white">{userFirstName}</div>
                 <div class="mt-1 text-sm font-medium leading-none text-gray-400">{userEmail}</div>
               </div>
             </div>

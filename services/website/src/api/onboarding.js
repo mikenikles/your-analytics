@@ -3,7 +3,7 @@ import { get } from "svelte/store";
 import { ADMIN_API_BASE_URL } from "../config";
 import { userTokenStore } from "../auth/magic";
 
-export const addNewWebsite = async (websiteUrl, timezone) => {
+export const addNewWebsite = async (info) => {
   if (!get(userTokenStore)) {
     return;
   }
@@ -14,10 +14,7 @@ export const addNewWebsite = async (websiteUrl, timezone) => {
       Authorization: "Bearer " + get(userTokenStore),
       "Content-Type": "application/json",
     }),
-    body: JSON.stringify({
-      websiteUrl,
-      timezone,
-    }),
+    body: JSON.stringify(info),
     method: "POST",
   });
 
