@@ -187,18 +187,30 @@
           <Card>
             <Visitors />
           </Card>
-          <Card>
-            <TopPages />
-          </Card>
-          <Card>
-            <TopReferrers />
-          </Card>
-          <Card>
-            <Devices /> 
-          </Card>
-          <Card>
-            <WorldMap />
-          </Card>
+          <div class="md:flex md:justify-between">
+            <div class="md:w-1/2">
+              <Card>
+                <TopPages />
+              </Card>
+            </div>
+            <div class="md:w-1/2 md:ml-5">
+              <Card>
+                <TopReferrers />
+              </Card>
+            </div>
+          </div>
+          <div class="md:flex md:justify-between">
+            <div class="md:w-1/2">
+              <Card>
+                <Devices />
+              </Card>
+            </div>
+            <div class="md:w-1/2 md:ml-5">
+              <Card>
+                <WorldMap />
+              </Card>
+            </div>
+          </div>
         {:else}
           <p>
             <span class="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-bg-gray-800 focus:outline-none transition ease-in-out duration-150 cursor-wait">
