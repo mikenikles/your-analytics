@@ -3,4 +3,4 @@
   import ComparisonNumbers from "./elements/comparison-numbers.svelte";
 </script>
 
-<ComparisonNumbers currentValue={$totalPageviews} />
+<ComparisonNumbers title="Total Pageviews" currentValue={$totalPageviews} />

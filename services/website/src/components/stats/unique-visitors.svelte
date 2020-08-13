@@ -3,4 +3,4 @@
   import ComparisonNumbers from "./elements/comparison-numbers.svelte";
 </script>
 
-<ComparisonNumbers currentValue={$uniqueVisitors} />
+<ComparisonNumbers title="Unique Visitors" currentValue={$uniqueVisitors} />

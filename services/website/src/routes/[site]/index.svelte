@@ -16,6 +16,7 @@
 
   $: userEmail = ($userMetadataStore && $userMetadataStore.email) || "";
   $: userEmailHash = $userMetadataStore && $userMetadataStore.emailHash;
+  $: hasMultipleSites = $userMetadataStore && Object.keys($userMetadataStore.sites).length > 1;
 
   let isMobileMenuOpen = false;
   let isProfileMenuOpen = false;
@@ -75,10 +76,12 @@
                 <img class="h-8 w-8" src="https://tailwindui.com/img/logos/workflow-mark-on-dark.svg" alt="Workflow logo">
               </div>
               <div class="hidden md:block">
-                {#if false}
+                {#if hasMultipleSites}
                 <div class="ml-10 flex items-baseline">
-                  <a href="/TODO" class="px-3 py-2 rounded-md text-sm font-medium text-white bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700">Dashboard</a>
-                  <a href="/TODO" class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700">Team</a>
+                  <a href="/websites" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700">Your websites</a>
+                  {#if false}
+                  <a href="/TODO" class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-white bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700">Team</a>
+                  {/if}
                 </div>
                 {/if}
               </div>
@@ -149,10 +152,12 @@
       -->
       {#if isMobileMenuOpen}
         <div class="block border-b border-gray-700 md:hidden">
-          {#if false}
+          {#if hasMultipleSites}
           <div class="px-2 py-3 sm:px-3">
-            <a href="/TODO" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700">Dashboard</a>
-            <a href="/TODO" class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700">Team</a>
+            <a href="/websites" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700">Your websites</a>
+            {#if false}
+            <a href="/TODO" class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-white bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700">Team</a>
+            {/if}
           </div>
           {/if}
           <div class="pt-4 pb-3 border-t border-gray-700">
