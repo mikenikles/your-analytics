@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS youranalytics.events (
   os_version LowCardinality(String),
   path String,
   referrer String,
-  screen_size LowCardinality(String),
+  screen_size UInt16,
   session_id UInt64,
   timestamp DateTime,
   user_id UInt64
