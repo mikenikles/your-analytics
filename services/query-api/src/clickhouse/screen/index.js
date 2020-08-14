@@ -36,7 +36,7 @@ const fetchScreen = (ch) => async (dateRange, domain, timezone) => {
       for (let screenCategory in result) {
         sorted.push([screenCategory, result[screenCategory]]);
       }
-      sorted.sort((a, b) => a[1] - b[1]);
+      sorted.sort((a, b) => b[1] - a[1]);
       resolve(sorted);
     });
   });
