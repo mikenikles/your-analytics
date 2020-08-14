@@ -18,6 +18,8 @@
 
   let isReadyToDisplayStats = false;
 
+  $: pageTitle = $page.params.site === "dashboard" ? "Dashboard" : `Dashboard - ${$page.params.site}`;
+
   onMount(async () => {
     await init();
     if (!$userMetadataStore) {
@@ -57,7 +59,7 @@
 </script>
 
 <div>
-  <Header title="Dashboard - {$page.params.site}" />
+  <Header title={pageTitle} />
   <MainContent>
     {#if isReadyToDisplayStats}
       <DateRange />
