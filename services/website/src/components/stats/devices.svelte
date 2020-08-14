@@ -31,9 +31,9 @@
           {/each}
         </td>
         <td>
-          {#each Object.entries($screen) as [width, total]}
+          {#each $screen as [category, total]}
             <div>
-              <p>{width}: {total}</p>
+              <p>{category}: {total}</p>
             </div>
           {/each}
         </td>
