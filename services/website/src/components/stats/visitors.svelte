@@ -28,6 +28,11 @@
               gridLines: {
                 display: false
               }
+            }],
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
             }]
           }
         },
