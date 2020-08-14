@@ -92,12 +92,18 @@ app.get("/user", authenticate, async (req, res) => {
 
 app.post("/websites", authenticate, async (req, res) => {
   try {
-    await users.addNewWebsite(
-      req.user.issuer,
-      req.body.firstName,
-      req.body.url,
-      req.body.timezone
-    );
+    const data = {
+      sites: {
+        [req.body.url]: {
+          timezone: req.body.timezone,
+        },
+      },
+    };
+
+    if (req.body.firstName) {
+      data.firstName = req.body.firstName;
+    }
+    await users.addNewWebsite(req.user.issuer, data);
     return res.status(201).end();
   } catch (error) {
     console.error(error);

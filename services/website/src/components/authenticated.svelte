@@ -1,4 +1,5 @@
 <script>
+  import { goto } from "@sapper/app";
   import { userMetadataStore, init, logout } from "../auth/magic";
   import { onMount } from "svelte";
 

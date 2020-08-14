@@ -611,7 +611,7 @@
   let userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 </script>
 
-<select required {name} bind:value={userTimezone}>
+<select required {name} bind:value={userTimezone} class="form-select relative block w-full rounded-none rounded-t-md bg-transparent focus:z-10 transition ease-in-out duration-150 sm:text-sm sm:leading-5">
   {#each Object.entries(timezones) as [tzName, tzOffset]}
     <option
       value={tzName}>
