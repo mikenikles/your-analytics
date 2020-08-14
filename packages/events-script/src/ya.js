@@ -1,6 +1,9 @@
 (() => {
   try {
     const sendEvent = () => {
+      if (navigator.doNotTrack || navigator.msDoNotTrack || window.doNotTrack) {
+        return;
+      }
       fetch("https://events-api.your-analytics.org", {
         method: "POST",
         body: JSON.stringify({
