@@ -32,7 +32,12 @@ const fetchScreen = (ch) => async (dateRange, domain, timezone) => {
     });
 
     stream.on("end", () => {
-      resolve(result);
+      const sorted = [];
+      for (let screenCategory in result) {
+        sorted.push([screenCategory, result[screenCategory]]);
+      }
+      sorted.sort((a, b) => a[1] - b[1]);
+      resolve(sorted);
     });
   });
 };
