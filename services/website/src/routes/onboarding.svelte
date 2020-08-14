@@ -2,6 +2,8 @@
   import { addNewWebsite } from "../api/onboarding";
   import { userMetadataStore } from "../auth/magic";
   import Authenticated from "../components/authenticated.svelte";
+  import Header from "../components/header.svelte";
+  import MainContent from "../components/main-content.svelte";
   import TimezoneSelect from "../components/timezone-select.svelte";
 
   let url = "";
@@ -17,9 +19,8 @@
 </script>
 
 <Authenticated>
-  <div class="prose">
-    <h1>Onboarding</h1>
-
+  <Header title="Onboarding" />
+  <MainContent>
     <p>To collect web analytics, please follow these 3 steps:</p>
 
     <form on:submit|preventDefault={handleSubmit}>
@@ -45,5 +46,5 @@
       </div>
       <p>Once added, please refresh your website to see the first visit logged below: TBD</p>
     {/if}
-  </div>
+  </MainContent>
 </Authenticated>

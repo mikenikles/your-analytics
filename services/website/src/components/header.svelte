@@ -2,6 +2,8 @@
   import { stores } from "@sapper/app";
   import { userMetadataStore, logout } from "../auth/magic";
 
+  export let title;
+
   const { page } = stores();
 
   $: hasMultipleSites = $userMetadataStore && Object.keys($userMetadataStore.sites || {}).length > 1;
@@ -136,7 +138,7 @@
   <header class="py-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <h1 class="text-3xl leading-9 font-bold text-white">
-        Dashboard - {$page.params.site}
+        {title}
       </h1>
     </div>
   </header>
