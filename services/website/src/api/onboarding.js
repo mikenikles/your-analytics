@@ -8,7 +8,11 @@ export const addNewWebsite = async (info) => {
     return;
   }
 
-  const url = new URL(`${ADMIN_API_BASE_URL}/websites`);
+  const baseUrl = ADMIN_API_BASE_URL.startsWith("/")
+    ? `https://${window.location.hostname}${ADMIN_API_BASE_URL}`
+    : ADMIN_API_BASE_URL;
+  const url = new URL(`${baseUrl}/websites`);
+
   const response = await fetch(url, {
     headers: new Headers({
       Authorization: "Bearer " + get(userTokenStore),
