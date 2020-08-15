@@ -96,6 +96,7 @@ app.post("/websites", authenticate, async (req, res) => {
       sites: {
         [req.body.url]: {
           timezone: req.body.timezone,
+          visibility: "private",
         },
       },
     };

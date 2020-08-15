@@ -64,10 +64,7 @@ const addNewWebsite = (serverClient) => (issuer, data) => serverClient.query(
       ))
     ),
     {
-      data: {
-        ...data,
-        visibility: "private"
-      }
+      data
     }
   )
 );
