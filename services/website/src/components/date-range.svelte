@@ -56,7 +56,7 @@
   }
 </script>
 
-<select bind:value={datePreset}>
+<select bind:value={datePreset} class="mt-1 form-select block w-full pl-3 pr-10 py-2 text-base leading-6 border-gray-300 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5">
   {#each Object.entries(datePresets) as [value, {label}]}
     <option {value}>{label}</option>
   {/each}
