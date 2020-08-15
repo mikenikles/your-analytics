@@ -1,4 +1,5 @@
 <script>
+  import Footer from "../components/footer.svelte";
   import TailwindCSS from '../components/tailwindcss.svelte';
 
   export let segment;
@@ -10,3 +11,4 @@
 <main>
 	<slot></slot>
 </main>
+<Footer />
