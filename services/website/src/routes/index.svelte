@@ -117,7 +117,7 @@
             <strong>Your Analytics</strong> - an open source, privacy-focused web analytics platform. Focus on the basics and respect visitor privacy.
           </p>
 
-          <div class="mt-5 sm:max-w-lg sm:mx-auto sm:text-center lg:text-left lg:mx-0">
+          <div class="mt-12 mx-auto sm:max-w-lg sm:text-center lg:text-left">
             <p class="text-base font-medium text-gray-900">
               Sign up to get notified when it’s ready.
             </p>
