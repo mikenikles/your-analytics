@@ -45,8 +45,6 @@ const isAuthenticated = async (req, res, next) => {
 const createStatsEndpoint = (path, fetcher) => {
   app.get(`/:domain/${path}`, isAuthenticated, async (req, res) => {
     try {
-      // TODO
-      // - Load database query parameters based on who called this endpoint
       const domain = req.params.domain;
 
       const user = await users.find(req.user.issuer);
