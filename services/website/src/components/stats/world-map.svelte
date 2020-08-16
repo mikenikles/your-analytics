@@ -5,6 +5,8 @@
   import { worldMap } from "../../api/stats";
   import Loading from "./loading.svelte";
 
+  export let showTitle = true;
+
   let chartElement;
   let chart;
   let countries;
@@ -53,7 +55,10 @@
 </script>
 
 {#if $worldMap}
-  <h2>World map</h2>
+  {#if showTitle}
+    <h2>World map</h2>
+  {/if}
+
   <div
     style="position: relative; height:20vh; width:100%">
     <canvas bind:this={chartElement} />

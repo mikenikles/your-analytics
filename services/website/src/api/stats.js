@@ -32,7 +32,8 @@ const fetchStats = async (path, store) => {
   }
 
   const { page } = stores();
-  const site = get(page).params.site;
+  const site =
+    get(page).path === "/" ? "your-analytics.org" : get(page).params.site;
 
   const baseUrl = QUERY_API_BASE_URL.startsWith("/")
     ? `https://${window.location.hostname}${QUERY_API_BASE_URL}`

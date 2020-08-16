@@ -1,10 +1,14 @@
 <script>
   import { browser, os, screen } from "../../api/stats";
   import Loading from "./loading.svelte";
+
+  export let showTitle = true;
 </script>
 
 {#if $browser && $os && $screen}
-  <h2>Devices</h2>
+  {#if showTitle}
+    <h2>Devices</h2>
+  {/if}
 
   <table>
     <thead>
