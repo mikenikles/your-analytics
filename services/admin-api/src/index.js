@@ -119,6 +119,20 @@ app.post("/websites", authenticate, async (req, res) => {
   }
 });
 
+app.get("/site-visibility", async (req, res) => {
+  try {
+    const { data } = await websites.getVisibility(req.query.site);
+    return res.status(200).json({ visibility: data.visibility });
+  } catch (error) {
+    console.error(error);
+    // To prevent bad actors from scanning the database for URLs to see whether
+    // they are configured in our database or not. Returning a 500 error would indicate
+    // the req.query.url value does not exist in our database; returning visibility: private
+    // gives the impression the URL is configured, even if it may not be.
+    return res.status(200).json({ visibility: "private" });
+  }
+});
+
 app.post("/beta-email", async (req, res) => {
   try {
     // This triggers Google Cloud's Error Reporting. Email addresses

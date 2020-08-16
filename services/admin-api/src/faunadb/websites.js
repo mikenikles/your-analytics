@@ -31,9 +31,15 @@ const insertSettings = (websiteClient) => (data) =>
     })
   );
 
+const getVisibility = (adminClient) => (url) =>
+  adminClient.query(
+    q.Get(q.Ref(q.Collection("settings", q.Database(url)), "1"))
+  );
+
 module.exports = {
   addNewWebsite,
   createCollection,
   createWebsiteServerKey,
   insertSettings,
+  getVisibility,
 };

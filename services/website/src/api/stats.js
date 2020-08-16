@@ -1,10 +1,27 @@
 import { stores } from "@sapper/app";
 import { get, writable } from "svelte/store";
-import { QUERY_API_BASE_URL } from "../config";
+import { ADMIN_API_BASE_URL, QUERY_API_BASE_URL } from "../config";
 import { userTokenStore } from "../auth/magic";
 
+export const siteVisibility = writable("private");
+export const fetchSiteVisibility = async () => {
+  const { page } = stores();
+  const site = get(page).params.site;
+
+  const baseUrl = ADMIN_API_BASE_URL.startsWith("/")
+    ? `https://${window.location.hostname}${ADMIN_API_BASE_URL}`
+    : ADMIN_API_BASE_URL;
+  const url = new URL(`${baseUrl}/site-visibility`);
+  url.searchParams.append("site", site);
+
+  const response = await fetch(url);
+  if (response.status === 200) {
+    siteVisibility.set((await response.json()).visibility);
+  }
+};
+
 const fetchStats = async (path, store) => {
-  if (!get(userTokenStore)) {
+  if (get(siteVisibility) === "private" && !get(userTokenStore)) {
     return;
   }
   if (get(dateRange).from === -1 && get(dateRange).to === -1) {

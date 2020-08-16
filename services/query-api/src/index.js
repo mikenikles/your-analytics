@@ -31,40 +31,54 @@ process.env.NODE_ENV !== "production" &&
   );
 const port = process.env.PORT || 8081;
 
-const isAuthenticated = async (req, res, next) => {
+const getMagicUser = async (req) => {
   const token = magic.utils.parseAuthorizationHeader(req.headers.authorization);
   try {
     magic.token.validate(token);
-    req.user = await magic.users.getMetadataByToken(token);
-    next();
+    return await magic.users.getMetadataByToken(token);
   } catch (error) {
-    res.status(401).end();
+    return null;
   }
 };
 
 const createStatsEndpoint = (path, fetcher) => {
-  app.get(`/:domain/${path}`, isAuthenticated, async (req, res) => {
+  app.get(`/:domain/${path}`, async (req, res) => {
     try {
       const domain = req.params.domain;
+      const { data: visibilityData } = await websites.getVisibility(domain);
 
-      const user = await users.find(req.user.issuer);
-      if (!user.data.sites[domain]) {
-        console.error(
-          new Error(
-            `User ${req.user.issuer} tried to access domain ${domain} but is not authorized.`
-          )
-        );
-        res.status(401).end();
-        return;
+      let websiteSettings = {};
+      if (visibilityData.visibility === "private") {
+        const magicUser = await getMagicUser(req);
+        if (!magicUser) {
+          res.status(401).end();
+          return;
+        }
+
+        const user = await users.find(magicUser.issuer);
+        if (!user.data.sites[domain]) {
+          console.error(
+            new Error(
+              `User ${magicUser.issuer} tried to access domain ${domain} but is not authorized.`
+            )
+          );
+          res.status(401).end();
+          return;
+        }
+
+        const { data } = await websites.getSettings(
+          user.data.sites[domain].serverKeySecret
+        )();
+        websiteSettings = data;
+      } else {
+        const { data } = await websites.getSettingsPublic(domain);
+        websiteSettings = data;
       }
 
       const dateRange = {
         from: req.query.from ? Math.floor(req.query.from / 1000) : null,
         to: req.query.to ? Math.floor(req.query.to / 1000) : null,
       };
-      const { data: websiteSettings } = await websites.getSettings(
-        user.data.sites[domain].serverKeySecret
-      )();
       const data = await fetcher(dateRange, domain, websiteSettings.timezone);
       res.json({ data });
     } catch (error) {
