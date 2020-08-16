@@ -96,9 +96,9 @@ app.post("/websites", authenticate, async (req, res) => {
       await users.setFirstName(req.body.firstName);
     }
     await websites.addNewWebsite(req.body.url);
-    const { websiteServerKeySecret } = await websites.createWebsiteServerKey(
-      req.body.url
-    );
+    const {
+      secret: websiteServerKeySecret,
+    } = await websites.createWebsiteServerKey(req.body.url);
     await users.addNewWebsiteServerKey(req.user.issuer, {
       sites: {
         [req.body.url]: {
