@@ -1,7 +1,7 @@
 const { Magic } = require("@magic-sdk/admin");
 const cors = require("cors");
 const express = require("express");
-const { users } = require("./faunadb");
+const { users, websites } = require("./faunadb");
 
 const {
   fetchBrowser,
@@ -64,9 +64,10 @@ const createStatsEndpoint = (path, fetcher) => {
         from: req.query.from ? Math.floor(req.query.from / 1000) : null,
         to: req.query.to ? Math.floor(req.query.to / 1000) : null,
       };
-      const siteTimezone = user.data.sites[domain].timezone;
-
-      const data = await fetcher(dateRange, domain, siteTimezone);
+      const { data: websiteSettings } = await websites.getSettings(
+        user.data.sites[domain].serverKeySecret
+      )();
+      const data = await fetcher(dateRange, domain, websiteSettings.timezone);
       res.json({ data });
     } catch (error) {
       console.error(error);
