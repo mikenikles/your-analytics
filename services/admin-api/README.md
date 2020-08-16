@@ -10,6 +10,12 @@ Provides functionality used by the website, e.g. account creation, auth, etc.
 
 #### Server keys
 
+1. Create an admin key
+   ```
+   CreateKey({
+     role: "admin"
+   })
+   ```
 1. Create a server key
    ```
    CreateKey({

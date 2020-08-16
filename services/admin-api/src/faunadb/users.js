@@ -40,6 +40,22 @@ const findUser = (serverClient) => async (issuer) => {
 };
 
 // prettier-ignore
+const setFirstName = (serverClient) => (issuer, firstName) => serverClient.query(
+  q.Update(
+    q.Select(["data", 0],
+      q.Paginate(q.Match(
+        q.Index("user_by_issuer"), issuer
+      ))
+    ),
+    {
+      data: {
+        firstName
+      }
+    }
+  )
+);
+
+// prettier-ignore
 const setLastLoginAt = (serverClient) => (issuer, lastLoginAt) => serverClient.query(
   q.Update(
     q.Select(["data", 0],
@@ -56,7 +72,7 @@ const setLastLoginAt = (serverClient) => (issuer, lastLoginAt) => serverClient.q
 );
 
 // prettier-ignore
-const addNewWebsite = (serverClient) => (issuer, data) => serverClient.query(
+const addNewWebsiteServerKey = (serverClient) => (issuer, data) => serverClient.query(
   q.Update(
     q.Select(["data", 0],
       q.Paginate(q.Match(
@@ -72,6 +88,7 @@ const addNewWebsite = (serverClient) => (issuer, data) => serverClient.query(
 module.exports = {
   createUser,
   findUser,
+  setFirstName,
   setLastLoginAt,
-  addNewWebsite,
+  addNewWebsiteServerKey,
 };
