@@ -31,9 +31,7 @@
       from: sub(new Date(), {
         days: 30
       }).getTime(),
-      to: sub(new Date(), {
-        days: 30
-      }).getTime()
+      to: new Date().getTime()
     })
   });
 </script>
