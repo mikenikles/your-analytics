@@ -2,6 +2,7 @@
   import { goto, stores } from "@sapper/app";
   import { onMount } from "svelte";
   import { userMetadataStore, init } from "../../auth/magic";
+  import { fetchSiteVisibility, siteVisibility } from "../../api/stats";
   import Card from "../../components/card.svelte";
   import DateRange from "../../components/date-range.svelte";
   import Header from "../../components/header.svelte";
@@ -21,6 +22,15 @@
   $: pageTitle = $page.params.site === "dashboard" ? "Dashboard" : `Dashboard - ${$page.params.site}`;
 
   onMount(async () => {
+    await fetchSiteVisibility();
+    if ($siteVisibility === "public") {
+      await goto(`/${$page.params.site}`, {
+        replaceState: true
+      });
+      isReadyToDisplayStats = true;
+      return;
+    }
+
     await init();
     if (!$userMetadataStore) {
       goto("/auth");

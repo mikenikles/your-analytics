@@ -1,7 +1,7 @@
 const cors = require("cors");
 const crypto = require("crypto");
 const express = require("express");
-const { users } = require("./faunadb");
+const { users, websites } = require("./faunadb");
 
 const app = express();
 process.env.NODE_ENV !== "production" &&
@@ -92,22 +92,44 @@ app.get("/user", authenticate, async (req, res) => {
 
 app.post("/websites", authenticate, async (req, res) => {
   try {
-    const data = {
+    if (req.body.firstName) {
+      await users.setFirstName(req.body.firstName);
+    }
+    await websites.addNewWebsite(req.body.url);
+    const {
+      secret: websiteServerKeySecret,
+    } = await websites.createWebsiteServerKey(req.body.url);
+    await users.addNewWebsiteServerKey(req.user.issuer, {
       sites: {
         [req.body.url]: {
-          timezone: req.body.timezone,
+          serverKeySecret: websiteServerKeySecret,
         },
       },
-    };
+    });
+    await websites.createCollection(websiteServerKeySecret)("settings");
+    await websites.insertSettings(websiteServerKeySecret)({
+      timezone: req.body.timezone,
+      visibility: "private",
+    });
 
-    if (req.body.firstName) {
-      data.firstName = req.body.firstName;
-    }
-    await users.addNewWebsite(req.user.issuer, data);
     return res.status(201).end();
   } catch (error) {
     console.error(error);
     return res.status(500).end();
+  }
+});
+
+app.get("/site-visibility", async (req, res) => {
+  try {
+    const { data } = await websites.getVisibility(req.query.site);
+    return res.status(200).json({ visibility: data.visibility });
+  } catch (error) {
+    console.error(error);
+    // To prevent bad actors from scanning the database for URLs to see whether
+    // they are configured in our database or not. Returning a 500 error would indicate
+    // the req.query.url value does not exist in our database; returning visibility: private
+    // gives the impression the URL is configured, even if it may not be.
+    return res.status(200).json({ visibility: "private" });
   }
 });
 
