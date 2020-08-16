@@ -7,6 +7,9 @@ export const siteVisibility = writable("private");
 export const fetchSiteVisibility = async () => {
   const { page } = stores();
   const site = get(page).params.site;
+  if (site === "dashboard") {
+    return;
+  }
 
   const baseUrl = ADMIN_API_BASE_URL.startsWith("/")
     ? `https://${window.location.hostname}${ADMIN_API_BASE_URL}`
