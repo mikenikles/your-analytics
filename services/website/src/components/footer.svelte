@@ -19,7 +19,7 @@
       </a>
     </div>
     <div class="mt-8 md:mt-0 md:order-1">
-      <p class="text-center text-base leading-6 text-gray-400">
+      <p class="text-center text-base leading-6 text-gray-500">
         &copy; 2020 - {currentYear} Your Analytics, Inc. All rights reserved.
       </p>
     </div>
