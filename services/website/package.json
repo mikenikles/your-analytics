@@ -3,7 +3,7 @@
   "description": "The website for www.your-analytics.org",
   "version": "0.0.1",
   "scripts": {
-    "build": "run-s clean && sapper build --legacy",
+    "build": "run-s clean && NODE_ENV=production sapper build --legacy",
     "clean": "rm -fr __sapper__",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
