@@ -90,6 +90,7 @@ export default {
       svelte({
         generate: "ssr",
         dev,
+        hydratable: true,
         preprocess: sveltePreprocessOptions,
       }),
       resolve({
