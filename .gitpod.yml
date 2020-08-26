@@ -1,0 +1,12 @@
+tasks:
+  - init: npm install
+    command: FAUNADB_ADMIN_SECRET=$YA_FAUNADB_ADMIN_SECRET FAUNADB_SERVER_SECRET=$YA_FAUNADB_SERVER_SECRET MAGIC_SECRET_KEY=$YA_MAGIC_SECRET_KEY npm run dev
+ports:
+  - port: 3000
+    onOpen: ignore
+  - port: 10000
+    onOpen: ignore
+
+vscode:
+  extensions:
+    - svelte.svelte-vscode@101.11.0:IeLZ6cWKXa9lffjVILRhEA==
