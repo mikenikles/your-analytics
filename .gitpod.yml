@@ -6,3 +6,7 @@ ports:
     onOpen: ignore
   - port: 10000
     onOpen: ignore
+
+vscode:
+  extensions:
+    - svelte.svelte-vscode@101.11.0:IeLZ6cWKXa9lffjVILRhEA==
