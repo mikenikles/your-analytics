@@ -46,6 +46,7 @@ app.use(
 );
 
 app.post("/", async (req, res) => {
+  let event; // Mutable to make it available for exception handling
   try {
     const { domain, name, referrer, screen_size, url } = req.body;
 
@@ -57,7 +58,7 @@ app.post("/", async (req, res) => {
 
     logDetailsIfUserAgentCannotBeParsed(userAgentHeader, userAgent);
 
-    const event = {
+    event = {
       browser_major: userAgent.browser.major,
       browser_name: userAgent.browser.name,
       browser_version: userAgent.browser.version,
@@ -99,7 +100,13 @@ app.post("/", async (req, res) => {
 
     await recordEvent(event);
   } catch (error) {
-    console.error(error);
+    console.error(
+      new Error(
+        `Cannot record event: ${JSON.stringify(event)}; error: ${JSON.stringify(
+          error
+        )}`
+      )
+    );
   } finally {
     res.status(201).end();
   }
