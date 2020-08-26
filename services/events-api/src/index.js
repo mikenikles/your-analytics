@@ -105,6 +105,16 @@ app.post("/", async (req, res) => {
   }
 });
 
+app.get("/error", (req, res) => {
+  try {
+    console.error(new Error(req.query.m));
+  } catch (error) {
+    console.error(error);
+  } finally {
+    res.status(200).end();
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server started at http://localhost:${port}`);
 });

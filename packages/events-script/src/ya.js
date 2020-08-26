@@ -43,6 +43,8 @@
     }
     sendEvent();
   } catch (error) {
-    // TODO: Capture and send to events-api for troubleshooting
+    new Image().src = `https://events-api.your-analytics.org/error?m=${encodeURIComponent(
+      error.message
+    )}`;
   }
 })();
