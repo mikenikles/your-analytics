@@ -92,7 +92,8 @@ app.post("/", async (req, res) => {
         event.geo_long = geoFromIpResponse.location.longitude;
       } catch (geoFromIpError) {
         console.log(
-          `Could not determine GEO from IP: ${xForwardedFor}`,
+          `Could not determine GEO from IP: %s. Error: %s`,
+          xForwardedFor,
           geoFromIpError
         );
       }
