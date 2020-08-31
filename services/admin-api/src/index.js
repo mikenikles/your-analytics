@@ -4,15 +4,10 @@ const express = require("express");
 const { users, websites } = require("./faunadb");
 
 const app = express();
-process.env.NODE_ENV !== "production" &&
+process.env.NODE_ENV === "development" &&
   app.use(
     cors({
-      origin: [
-        /mikenikles\.vercel\.app$/,
-        /your-analytics\.vercel\.app$/,
-        /your-analytics\.org$/,
-        process.env.FRONTEND_HOST,
-      ],
+      origin: /\.gitpod.io/,
     })
   );
 const port = process.env.PORT || 8082;

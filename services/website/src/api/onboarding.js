@@ -8,10 +8,7 @@ export const addNewWebsite = async (info) => {
     return;
   }
 
-  const baseUrl = ADMIN_API_BASE_URL.startsWith("/")
-    ? `https://${window.location.hostname}${ADMIN_API_BASE_URL}`
-    : ADMIN_API_BASE_URL;
-  const url = new URL(`${baseUrl}/websites`);
+  const url = new URL(`${ADMIN_API_BASE_URL}/websites`);
 
   const response = await fetch(url, {
     headers: new Headers({

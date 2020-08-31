@@ -1,32 +1,29 @@
-const config = {
-  development: {
-    adminApiBaseUrl:
-      "https://8082-fa85e924-90d4-429b-a4b4-fa3bb51b0a3e.ws-eu01.gitpod.io",
-    queryApiBaseUrl:
-      "https://8081-fa85e924-90d4-429b-a4b4-fa3bb51b0a3e.ws-eu01.gitpod.io",
-    magicPublicKey: "pk_test_517AC93805DD89CB",
-  },
-  production: {
-    adminApiBaseUrl: "/api/admin",
-    queryApiBaseUrl: "/api/query",
-    magicPublicKey: "pk_live_BA455263710CC21F",
-  },
-};
-
+// TODO: Figure out a way to deal with SSR. Currently, we return "" for all URLs.
+//       This is ok for the time being since API calls are client-side only.
 const isDevelopment = process.browser
   ? window.location.hostname.endsWith(".gitpod.io")
   : process.env.NODE_ENV === "development";
-const isProduction = process.browser
-  ? window.location.hostname === "your-analytics.org" ||
-    window.location.hostname.endsWith(".vercel.app")
-  : process.env.NODE_ENV === "production";
 
-const getEnvironment = () =>
-  isDevelopment ? "development" : isProduction ? "production" : "";
-const getConfigValue = (key) => config[getEnvironment()][key];
+const getAdminApiUrlDev = () =>
+  process.browser
+    ? `https://${window.location.hostname.replace("3000-", "8082-")}`
+    : "";
+const getAdminApiUrlProd = () =>
+  process.browser ? `https://${window.location.hostname}/api/admin` : "";
 
-export const ADMIN_API_BASE_URL = getConfigValue("adminApiBaseUrl");
+const getQueryApiUrlDev = () =>
+  process.browser
+    ? `https://${window.location.hostname.replace("3000-", "8081-")}`
+    : "";
+const getQueryApiUrlProd = () =>
+  process.browser ? `https://${window.location.hostname}/api/query` : "";
 
-export const QUERY_API_BASE_URL = getConfigValue("queryApiBaseUrl");
-
-export const MAGIC_PUBLIC_KEY = getConfigValue("magicPublicKey");
+export const ADMIN_API_BASE_URL = isDevelopment
+  ? getAdminApiUrlDev()
+  : getAdminApiUrlProd();
+export const QUERY_API_BASE_URL = isDevelopment
+  ? getQueryApiUrlDev()
+  : getQueryApiUrlProd();
+export const MAGIC_PUBLIC_KEY = isDevelopment
+  ? "pk_test_517AC93805DD89CB"
+  : "pk_live_BA455263710CC21F";
