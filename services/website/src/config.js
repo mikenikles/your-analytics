@@ -1,3 +1,5 @@
+// TODO: Figure out a way to deal with SSR. Currently, we return "" for all URLs.
+//       This is ok for the time being since API calls are client-side only.
 const isDevelopment = process.browser
   ? window.location.hostname.endsWith(".gitpod.io")
   : process.env.NODE_ENV === "development";
