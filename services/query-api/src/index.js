@@ -18,17 +18,13 @@ const {
 const magic = new Magic(process.env.MAGIC_SECRET_KEY);
 
 const app = express();
-process.env.NODE_ENV !== "production" &&
+process.env.NODE_ENV === "development" &&
   app.use(
     cors({
-      origin: [
-        /mikenikles\.vercel\.app$/,
-        /your-analytics\.vercel\.app$/,
-        /your-analytics\.org$/,
-        process.env.FRONTEND_HOST,
-      ],
+      origin: /\.gitpod.io/,
     })
   );
+
 const port = process.env.PORT || 8081;
 
 const getMagicUser = async (req) => {
