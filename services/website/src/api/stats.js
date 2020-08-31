@@ -11,10 +11,7 @@ export const fetchSiteVisibility = async () => {
     return;
   }
 
-  const baseUrl = ADMIN_API_BASE_URL.startsWith("/")
-    ? `https://${window.location.hostname}${ADMIN_API_BASE_URL}`
-    : ADMIN_API_BASE_URL;
-  const url = new URL(`${baseUrl}/site-visibility`);
+  const url = new URL(`${ADMIN_API_BASE_URL}/site-visibility`);
   url.searchParams.append("site", site);
 
   const response = await fetch(url);
@@ -35,10 +32,7 @@ const fetchStats = async (path, store) => {
   const site =
     get(page).path === "/" ? "your-analytics.org" : get(page).params.site;
 
-  const baseUrl = QUERY_API_BASE_URL.startsWith("/")
-    ? `https://${window.location.hostname}${QUERY_API_BASE_URL}`
-    : QUERY_API_BASE_URL;
-  const url = new URL(`${baseUrl}/${site}/${path}`);
+  const url = new URL(`${QUERY_API_BASE_URL}/${site}/${path}`);
   url.searchParams.append("from", get(dateRange).from);
   url.searchParams.append("to", get(dateRange).to);
 

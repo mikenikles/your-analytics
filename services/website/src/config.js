@@ -1,32 +1,22 @@
-const config = {
-  development: {
-    adminApiBaseUrl:
-      "https://8082-fa85e924-90d4-429b-a4b4-fa3bb51b0a3e.ws-eu01.gitpod.io",
-    queryApiBaseUrl:
-      "https://8081-fa85e924-90d4-429b-a4b4-fa3bb51b0a3e.ws-eu01.gitpod.io",
-    magicPublicKey: "pk_test_517AC93805DD89CB",
-  },
-  production: {
-    adminApiBaseUrl: "/api/admin",
-    queryApiBaseUrl: "/api/query",
-    magicPublicKey: "pk_live_BA455263710CC21F",
-  },
-};
-
 const isDevelopment = process.browser
   ? window.location.hostname.endsWith(".gitpod.io")
   : process.env.NODE_ENV === "development";
-const isProduction = process.browser
-  ? window.location.hostname === "your-analytics.org" ||
-    window.location.hostname.endsWith(".vercel.app")
-  : process.env.NODE_ENV === "production";
 
-const getEnvironment = () =>
-  isDevelopment ? "development" : isProduction ? "production" : "";
-const getConfigValue = (key) => config[getEnvironment()][key];
+const getAdminApiUrlDev = () =>
+  process.browser
+    ? `https://${window.location.hostname.replace("3000-", "8082-")}`
+    : "";
+const getQueryApiUrlDev = () =>
+  process.browser
+    ? `https://${window.location.hostname.replace("3000-", "8081-")}`
+    : "";
 
-export const ADMIN_API_BASE_URL = getConfigValue("adminApiBaseUrl");
-
-export const QUERY_API_BASE_URL = getConfigValue("queryApiBaseUrl");
-
-export const MAGIC_PUBLIC_KEY = getConfigValue("magicPublicKey");
+export const ADMIN_API_BASE_URL = isDevelopment
+  ? getAdminApiUrlDev()
+  : `https://${window.location.hostname}/api/admin`;
+export const QUERY_API_BASE_URL = isDevelopment
+  ? getQueryApiUrlDev()
+  : `https://${window.location.hostname}/api/query`;
+export const MAGIC_PUBLIC_KEY = isDevelopment
+  ? "pk_test_517AC93805DD89CB"
+  : "pk_live_BA455263710CC21F";
