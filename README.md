@@ -5,7 +5,7 @@
 ## Development
 
 Follow the steps outlined in the chapters below, then click the Gitpod link above.
-This will open your development environment, install dependencies and start all necessary servicse.
+This will open your development environment, install dependencies and start all necessary services.
 The web application is available on port 3000. Use the "Open Ports" tab next to the terminal in Gitpod
 to open a new browser tab on port 3000.
 
