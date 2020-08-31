@@ -16,6 +16,7 @@ Provides functionality used by the website, e.g. account creation, auth, etc.
      role: "admin"
    })
    ```
+   **Important**: Copy the `secret` to a secure location. It is only visible once.
 1. Create a server key
    ```
    CreateKey({
