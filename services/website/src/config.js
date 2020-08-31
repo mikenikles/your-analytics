@@ -6,17 +6,22 @@ const getAdminApiUrlDev = () =>
   process.browser
     ? `https://${window.location.hostname.replace("3000-", "8082-")}`
     : "";
+const getAdminApiUrlProd = () =>
+  process.browser ? `https://${window.location.hostname}/api/admin` : "";
+
 const getQueryApiUrlDev = () =>
   process.browser
     ? `https://${window.location.hostname.replace("3000-", "8081-")}`
     : "";
+const getQueryApiUrlProd = () =>
+  process.browser ? `https://${window.location.hostname}/api/query` : "";
 
 export const ADMIN_API_BASE_URL = isDevelopment
   ? getAdminApiUrlDev()
-  : `https://${window.location.hostname}/api/admin`;
+  : getAdminApiUrlProd();
 export const QUERY_API_BASE_URL = isDevelopment
   ? getQueryApiUrlDev()
-  : `https://${window.location.hostname}/api/query`;
+  : getQueryApiUrlProd();
 export const MAGIC_PUBLIC_KEY = isDevelopment
   ? "pk_test_517AC93805DD89CB"
   : "pk_live_BA455263710CC21F";
