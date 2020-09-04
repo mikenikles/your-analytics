@@ -12,6 +12,7 @@ const {
   createWebsiteServerKey,
   insertSettings,
   getVisibility,
+  setVisibility,
 } = require("./websites");
 
 const adminClient = new faunadb.Client({
@@ -46,6 +47,12 @@ const websites = {
       })
     ),
   getVisibility: getVisibility(adminClient),
+  setVisibility: (websiteServerKeySecret) =>
+    setVisibility(
+      new faunadb.Client({
+        secret: websiteServerKeySecret,
+      })
+    ),
 };
 
 module.exports = {

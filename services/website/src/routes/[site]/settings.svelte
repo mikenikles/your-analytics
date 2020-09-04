@@ -1,6 +1,6 @@
 <script>
   import { stores } from "@sapper/app";
-  import { saveVisibility } from "../../api/settings";
+  import { setVisibility } from "../../api/settings";
   import Authenticated from "../../components/authenticated.svelte";
   import Header from "../../components/header.svelte";
   import MainContent from "../../components/main-content.svelte";
@@ -19,7 +19,7 @@
   let selectedVisibility = "private";
 
   const handleVisibilitySubmit = async () => {
-    await saveVisibility(selectedVisibility);
+    await setVisibility($page.params.site, selectedVisibility);
   };
 </script>
 

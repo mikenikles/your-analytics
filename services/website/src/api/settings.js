@@ -3,7 +3,7 @@ import { get } from "svelte/store";
 import { ADMIN_API_BASE_URL } from "../config";
 import { userTokenStore } from "../auth/magic";
 
-export const saveVisibility = async (website, visibility) => {
+export const setVisibility = async (website, visibility) => {
   if (!get(userTokenStore)) {
     return;
   }
@@ -19,7 +19,7 @@ export const saveVisibility = async (website, visibility) => {
     body: JSON.stringify({
       visibility,
     }),
-    method: "POST",
+    method: "PUT",
   });
 
   return response.status === 200;

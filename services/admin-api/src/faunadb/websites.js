@@ -36,10 +36,20 @@ const getVisibility = (adminClient) => (url) =>
     q.Get(q.Ref(q.Collection("settings", q.Database(url)), "1"))
   );
 
+const setVisibility = (websiteClient) => (visibility) =>
+  websiteClient.query(
+    q.Update(q.Ref(q.Collection("settings"), "1"), {
+      data: {
+        visibility,
+      },
+    })
+  );
+
 module.exports = {
   addNewWebsite,
   createCollection,
   createWebsiteServerKey,
   insertSettings,
   getVisibility,
+  setVisibility,
 };
