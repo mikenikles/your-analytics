@@ -1,5 +1,6 @@
 <script>
   import { stores } from "@sapper/app";
+  import { saveVisibility } from "../../api/settings";
   import Authenticated from "../../components/authenticated.svelte";
   import Header from "../../components/header.svelte";
   import MainContent from "../../components/main-content.svelte";
@@ -17,8 +18,8 @@
 
   let selectedVisibility = "private";
 
-  const saveVisibility = () => {
-    console.log("TODO: Persist visibility setting: %s", selectedVisibility);
+  const handleVisibilitySubmit = async () => {
+    await saveVisibility(selectedVisibility);
   };
 </script>
 
@@ -42,7 +43,7 @@
           </div>
         </div>
         <div class="mt-5 md:mt-0 md:col-span-2">
-          <form on:submit|preventDefault={saveVisibility}>
+          <form on:submit|preventDefault={handleVisibilitySubmit}>
             <div class="shadow overflow-hidden sm:rounded-md">
               <div class="px-4 py-5 bg-white sm:p-6">
                 <fieldset>
