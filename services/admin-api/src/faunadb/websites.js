@@ -31,6 +31,11 @@ const insertSettings = (websiteClient) => (data) =>
     })
   );
 
+// prettier-ignore
+const getSettings = (websiteClient) => () => websiteClient.query(
+  q.Get(q.Ref(q.Collection("settings"), "1"))
+);
+
 const getVisibility = (adminClient) => (url) =>
   adminClient.query(
     q.Get(q.Ref(q.Collection("settings", q.Database(url)), "1"))
@@ -50,6 +55,7 @@ module.exports = {
   createCollection,
   createWebsiteServerKey,
   insertSettings,
+  getSettings,
   getVisibility,
   setVisibility,
 };

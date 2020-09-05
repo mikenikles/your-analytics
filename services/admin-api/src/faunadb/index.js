@@ -11,6 +11,7 @@ const {
   createCollection,
   createWebsiteServerKey,
   insertSettings,
+  getSettings,
   getVisibility,
   setVisibility,
 } = require("./websites");
@@ -42,6 +43,12 @@ const websites = {
   createWebsiteServerKey: createWebsiteServerKey(adminClient),
   insertSettings: (websiteServerKeySecret) =>
     insertSettings(
+      new faunadb.Client({
+        secret: websiteServerKeySecret,
+      })
+    ),
+  getSettings: (websiteServerKeySecret) =>
+    getSettings(
       new faunadb.Client({
         secret: websiteServerKeySecret,
       })

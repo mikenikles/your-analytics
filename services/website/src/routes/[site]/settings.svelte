@@ -1,6 +1,7 @@
 <script>
   import { stores } from "@sapper/app";
-  import { setVisibility } from "../../api/settings";
+  import { getSettings, setVisibility } from "../../api/settings";
+  import { userTokenStore } from "../../auth/magic";
   import Authenticated from "../../components/authenticated.svelte";
   import Header from "../../components/header.svelte";
   import MainContent from "../../components/main-content.svelte";
@@ -14,9 +15,16 @@
     value: "public"
   }];
 
-  $: pageTitle = `Settings - ${$page.params.site}`;
+  let settings = {};
+  let selectedVisibility;
 
-  let selectedVisibility = "private";
+  $: pageTitle = `Settings - ${$page.params.site}`;
+  $: if ($userTokenStore && Object.keys(settings).length === 0) {
+    getSettings($page.params.site).then(serverSettings => {
+      settings = serverSettings;
+      selectedVisibility = settings.visibility;
+    });
+  }
 
   const handleVisibilitySubmit = async () => {
     await setVisibility($page.params.site, selectedVisibility);

@@ -114,6 +114,29 @@ app.post("/websites", authenticate, async (req, res) => {
   }
 });
 
+app.get("/websites/:domain/settings", authenticate, async (req, res) => {
+  try {
+    const domain = req.params.domain;
+    const user = await users.find(req.user.issuer);
+    if (!user.data.sites[domain]) {
+      console.error(
+        new Error(
+          `User ${req.user.issuer} tried to access domain ${domain} but is not authorized.`
+        )
+      );
+      res.status(401).end();
+      return;
+    }
+    const settings = await websites.getSettings(
+      user.data.sites[domain].serverKeySecret
+    )();
+    res.status(200).send(JSON.stringify(settings.data));
+  } catch (error) {
+    console.error(error);
+    return res.status(500).end();
+  }
+});
+
 app.put(
   "/websites/:domain/settings/visibility",
   authenticate,

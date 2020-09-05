@@ -24,3 +24,23 @@ export const setVisibility = async (website, visibility) => {
 
   return response.status === 200;
 };
+
+export const getSettings = async (website) => {
+  if (!get(userTokenStore)) {
+    return {};
+  }
+
+  const url = new URL(`${ADMIN_API_BASE_URL}/websites/${website}/settings`);
+  const response = await fetch(url, {
+    headers: new Headers({
+      Authorization: "Bearer " + get(userTokenStore),
+      "Content-Type": "application/json",
+    }),
+    method: "GET",
+  });
+
+  if (response.status === 200) {
+    return await response.json();
+  }
+  return {};
+};
