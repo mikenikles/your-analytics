@@ -11,9 +11,9 @@ export const fetchSiteVisibility = async () => {
     return;
   }
 
-  const url = new URL(`${ADMIN_API_BASE_URL}/site-visibility`);
-  url.searchParams.append("site", site);
-
+  const url = new URL(
+    `${ADMIN_API_BASE_URL}/website/${site}/settings/visibility`
+  );
   const response = await fetch(url);
   if (response.status === 200) {
     siteVisibility.set((await response.json()).visibility);
