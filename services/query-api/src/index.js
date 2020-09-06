@@ -1,7 +1,7 @@
 const { Magic } = require("@magic-sdk/admin");
 const cors = require("cors");
 const express = require("express");
-const { users, websites } = require("./faunadb");
+const { rootDb, domainDb } = require("@your-analytics/faunadb");
 
 const {
   fetchBrowser,
@@ -41,7 +41,9 @@ const createStatsEndpoint = (path, fetcher) => {
   app.get(`/:domain/${path}`, async (req, res) => {
     try {
       const domain = req.params.domain;
-      const { data: visibilityData } = await websites.getVisibility(domain);
+      const { data: visibilityData } = await domainDb.settings.getVisibility(
+        domain
+      );
 
       let websiteSettings = {};
       if (visibilityData.visibility === "private") {
@@ -51,7 +53,7 @@ const createStatsEndpoint = (path, fetcher) => {
           return;
         }
 
-        const user = await users.find(magicUser.issuer);
+        const user = await rootDb.users.find(magicUser.issuer);
         if (!user.data.sites[domain]) {
           console.error(
             new Error(
@@ -62,12 +64,12 @@ const createStatsEndpoint = (path, fetcher) => {
           return;
         }
 
-        const { data } = await websites.getSettings(
+        const { data } = await domainDb.settings.getSettings(
           user.data.sites[domain].serverKeySecret
         )();
         websiteSettings = data;
       } else {
-        const { data } = await websites.getSettingsPublic(domain);
+        const { data } = await domainDb.settings.getSettingsPublic(domain);
         websiteSettings = data;
       }
 

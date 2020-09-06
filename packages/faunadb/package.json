@@ -1,0 +1,14 @@
+{
+  "name": "@your-analytics/faunadb",
+  "version": "1.0.0",
+  "description": "Contains FaunaDB models and common code.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "faunadb": "^3.0.1"
+  }
+}

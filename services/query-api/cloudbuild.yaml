@@ -1,6 +1,15 @@
 steps:
+  - name: "bash"
+    args: ["mkdir", "local-packages"]
+    dir: "services/query-api"
+  - name: "bash"
+    args: ["cp", "-r", "../../packages/faunadb", "local-packages/"]
+    dir: "services/query-api"
   - name: "gcr.io/cloud-builders/docker"
     args: ["build", "-t", "gcr.io/$PROJECT_ID/query-api:$COMMIT_SHA", "."]
+    dir: "services/query-api"
+  - name: "bash"
+    args: ["rm", "-fr", "local-packages"]
     dir: "services/query-api"
   - name: "gcr.io/cloud-builders/docker"
     args: ["push", "gcr.io/$PROJECT_ID/query-api:$COMMIT_SHA"]
@@ -21,7 +30,7 @@ steps:
       - "cloud-run-vpc-connector"
       - "--allow-unauthenticated"
       - "--set-env-vars"
-      - "FAUNADB_ADMIN_SECRET=$_FAUNADB_ADMIN_SECRET,FAUNADB_SERVER_SECRET=$_FAUNADB_SERVER_SECRET,CH_HOST=$_CH_HOST,CH_PORT=$_CH_PORT,CH_USER=$_CH_USER,CH_PASSWORD=$_CH_PASSWORD,FRONTEND_HOST=$_FRONTEND_HOST,MAGIC_SECRET_KEY=$_MAGIC_SECRET_KEY"
+      - "FAUNADB_ADMIN_SECRET=$_FAUNADB_ADMIN_SECRET,FAUNADB_SERVER_SECRET=$_FAUNADB_SERVER_SECRET,CH_HOST=$_CH_HOST,CH_PORT=$_CH_PORT,CH_USER=$_CH_USER,CH_PASSWORD=$_CH_PASSWORD,MAGIC_SECRET_KEY=$_MAGIC_SECRET_KEY"
     dir: "services/query-api"
 images:
   - "gcr.io/$PROJECT_ID/query-api:$COMMIT_SHA"

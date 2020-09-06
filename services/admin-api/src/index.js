@@ -1,7 +1,7 @@
 const cors = require("cors");
 const crypto = require("crypto");
 const express = require("express");
-const { users, websites } = require("./faunadb");
+const { rootDb, domainDb } = require("@your-analytics/faunadb");
 
 const app = express();
 process.env.NODE_ENV === "development" &&
@@ -20,7 +20,7 @@ const MagicStrategy = require("passport-magic").Strategy;
 const strategy = new MagicStrategy(async function (user, done) {
   const userMetadata = await magic.users.getMetadataByIssuer(user.issuer);
 
-  const dbUser = await users.find(user.issuer);
+  const dbUser = await rootDb.users.find(user.issuer);
   return dbUser ? login(user, done) : signup(user, userMetadata, done);
 });
 
@@ -34,7 +34,7 @@ const signup = async (user, userMetadata, done) => {
     email: userMetadata.email,
     lastLoginAt: user.claim.iat,
   };
-  await users.create(newUser);
+  await rootDb.users.create(newUser);
   return done(null, newUser);
 };
 
@@ -45,7 +45,7 @@ const login = async (user, done) => {
       message: `Replay attack detected for user ${user.issuer}}.`,
     });
   }
-  await users.setLastLoginAt(user.issuer, user.claim.iat);
+  await rootDb.users.setLastLoginAt(user.issuer, user.claim.iat);
   return done(null, user);
 };
 
@@ -66,7 +66,7 @@ app.post("/user/logout", authenticate, async (req, res) => {
 });
 
 app.get("/user", authenticate, async (req, res) => {
-  const dbUser = await users.find(req.user.issuer);
+  const dbUser = await rootDb.users.find(req.user.issuer);
   if (dbUser) {
     const { firstName, email, sites } = dbUser.data;
     return res
@@ -88,21 +88,21 @@ app.get("/user", authenticate, async (req, res) => {
 app.post("/websites", authenticate, async (req, res) => {
   try {
     if (req.body.firstName) {
-      await users.setFirstName(req.body.firstName);
+      await rootDb.users.setFirstName(req.body.firstName);
     }
-    await websites.addNewWebsite(req.body.url);
+    await domainDb.admin.addNewWebsite(req.body.url);
     const {
       secret: websiteServerKeySecret,
-    } = await websites.createWebsiteServerKey(req.body.url);
-    await users.addNewWebsiteServerKey(req.user.issuer, {
+    } = await domainDb.admin.createWebsiteServerKey(req.body.url);
+    await rootDb.users.addNewWebsiteServerKey(req.user.issuer, {
       sites: {
         [req.body.url]: {
           serverKeySecret: websiteServerKeySecret,
         },
       },
     });
-    await websites.createCollection(websiteServerKeySecret)("settings");
-    await websites.insertSettings(websiteServerKeySecret)({
+    await domainDb.admin.createCollection(websiteServerKeySecret)("settings");
+    await domainDb.settings.insertSettings(websiteServerKeySecret)({
       timezone: req.body.timezone,
       visibility: "private",
     });
@@ -117,7 +117,7 @@ app.post("/websites", authenticate, async (req, res) => {
 app.get("/websites/:domain/settings", authenticate, async (req, res) => {
   try {
     const domain = req.params.domain;
-    const user = await users.find(req.user.issuer);
+    const user = await rootDb.users.find(req.user.issuer);
     if (!user.data.sites[domain]) {
       console.error(
         new Error(
@@ -127,7 +127,7 @@ app.get("/websites/:domain/settings", authenticate, async (req, res) => {
       res.status(401).end();
       return;
     }
-    const settings = await websites.getSettings(
+    const settings = await domainDb.settings.getSettings(
       user.data.sites[domain].serverKeySecret
     )();
     res.status(200).send(JSON.stringify(settings.data));
@@ -145,7 +145,7 @@ app.put(
       const domain = req.params.domain;
       const visibility = req.body.visibility;
 
-      const user = await users.find(req.user.issuer);
+      const user = await rootDb.users.find(req.user.issuer);
       if (!user.data.sites[domain]) {
         console.error(
           new Error(
@@ -155,9 +155,9 @@ app.put(
         res.status(401).end();
         return;
       }
-      await websites.setVisibility(user.data.sites[domain].serverKeySecret)(
-        visibility
-      );
+      await domainDb.settings.setVisibility(
+        user.data.sites[domain].serverKeySecret
+      )(visibility);
       return res.status(200).end();
     } catch (error) {
       console.error(error);
@@ -168,7 +168,7 @@ app.put(
 
 app.get("/site-visibility", async (req, res) => {
   try {
-    const { data } = await websites.getVisibility(req.query.site);
+    const { data } = await domainDb.settings.getVisibility(req.query.site);
     return res.status(200).json({ visibility: data.visibility });
   } catch (error) {
     console.error(error);
