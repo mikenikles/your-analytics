@@ -12,6 +12,11 @@ const insertSettings = (websiteClient) => (data) =>
 const getSettings = (websiteClient) => () =>
   websiteClient.query(q.Get(q.Ref(q.Collection("settings"), "1")));
 
+const getSettingsPublic = (adminClient) => (url) =>
+  adminClient.query(
+    q.Get(q.Ref(q.Collection("settings", q.Database(url)), "1"))
+  );
+
 const getVisibility = (adminClient) => (url) =>
   adminClient.query(
     q.Get(q.Ref(q.Collection("settings", q.Database(url)), "1"))
@@ -29,6 +34,7 @@ const setVisibility = (websiteClient) => (visibility) =>
 module.exports = {
   insertSettings,
   getSettings,
+  getSettingsPublic,
   getVisibility,
   setVisibility,
 };

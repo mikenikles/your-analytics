@@ -8,6 +8,7 @@ const {
 
 const {
   getSettings,
+  getSettingsPublic,
   getVisibility,
   insertSettings,
   setVisibility,
@@ -31,6 +32,7 @@ module.exports = (adminClient) => ({
           secret: websiteServerKeySecret,
         })
       ),
+    getSettingsPublic: getSettingsPublic(adminClient),
     getVisibility: getVisibility(adminClient),
     insertSettings: (websiteServerKeySecret) =>
       insertSettings(
