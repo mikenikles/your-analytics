@@ -2,7 +2,7 @@
   import { addNewWebsite } from "../api/onboarding";
   import { userMetadataStore } from "../auth/magic";
   import Authenticated from "../components/authenticated.svelte";
-  import Header from "../components/header.svelte";
+  import Header from "../components/header/index.svelte";
   import MainContent from "../components/main-content.svelte";
   import TimezoneSelect from "../components/timezone-select.svelte";
 
