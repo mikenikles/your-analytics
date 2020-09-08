@@ -8,7 +8,7 @@
   const { page } = stores();
 </script>
 
-<div class="flex justify-between items-center p-4">
+<div class="max-w-7xl mx-auto flex justify-between items-center p-4">
   <img src="/logo-color.svg" alt="Your Analytics logo" class="h-8">
   <Nav>
     <NavItem href="/" label="Home" isActive={$page.path === "/"} />

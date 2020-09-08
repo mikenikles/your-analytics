@@ -5,6 +5,7 @@
   import { dateRange, siteVisibility } from "../api/stats";
   import Card from "../components/card.svelte";
   import Header from "../components/header/index.svelte";
+  import Hero from "../components/landing-page/hero.svelte";
 
   import StatsSection from "../components/landing-page/stats-section/index.svelte";
   import Content from "../components/landing-page/stats-section/content.svelte";
@@ -44,4 +45,4 @@
 </svelte:head>
 
 <Header />
-
+<Hero />
