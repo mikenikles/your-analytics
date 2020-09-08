@@ -7,10 +7,7 @@
   import Features from "../components/landing-page/features.svelte";
   import Header from "../components/header/index.svelte";
   import Hero from "../components/landing-page/hero.svelte";
-
-  import StatsSection from "../components/landing-page/stats-section/index.svelte";
-  import Content from "../components/landing-page/stats-section/content.svelte";
-  import StatsExample from "../components/landing-page/stats-section/stats-example.svelte";
+  import Stats from "../components/landing-page/stats.svelte";
 
   import Devices from "../components/stats/devices.svelte";
   import TopPages from "../components/stats/top-pages.svelte";
@@ -48,3 +45,4 @@
 <Header />
 <Hero />
 <Features />
+<Stats />
