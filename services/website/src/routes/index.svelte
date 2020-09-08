@@ -4,6 +4,7 @@
   import { recordEmail } from "../api/beta";
   import { dateRange, siteVisibility } from "../api/stats";
   import Card from "../components/card.svelte";
+  import Features from "../components/landing-page/features.svelte";
   import Header from "../components/header/index.svelte";
   import Hero from "../components/landing-page/hero.svelte";
 
@@ -46,3 +47,4 @@
 
 <Header />
 <Hero />
+<Features />
