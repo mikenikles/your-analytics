@@ -8,6 +8,7 @@
   import Header from "../components/header/index.svelte";
   import Hero from "../components/landing-page/hero.svelte";
   import Stats from "../components/landing-page/stats.svelte";
+  import FrontendIntegrations from "../components/landing-page/frontend-integrations.svelte";
 
   import Devices from "../components/stats/devices.svelte";
   import TopPages from "../components/stats/top-pages.svelte";
@@ -46,3 +47,4 @@
 <Hero />
 <Features />
 <Stats />
+<FrontendIntegrations />
