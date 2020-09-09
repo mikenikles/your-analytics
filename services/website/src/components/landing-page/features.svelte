@@ -13,4 +13,3 @@
     <FeatureCard title="Email reports" icon="mail" description={`Schedule email reports to be sent to your team members. You decide who receives reports, when they are sent and what they include.`} />
   </div>
 </div>
-
