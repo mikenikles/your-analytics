@@ -26,7 +26,7 @@
       {#each topTen as [domain, total], rowIndex}
         <TableRow {rowIndex}>
           <TableCell isFirst={true}>
-            <div class="w-5 h-5">
+            <div class="w-4 h-4">
               <img src="https://www.google.com/s2/favicons?domain={domain}" alt="{domain} favicon" />
             </div>
           </TableCell>
