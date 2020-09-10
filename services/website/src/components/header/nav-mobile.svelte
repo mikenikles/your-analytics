@@ -13,7 +13,7 @@
   };
 </script>
 
-<div class="-mr-2 flex md:hidden">
+<div class="flex md:hidden">
   {#if $isOpen}
     <div class="block border-b border-gray-700 md:hidden">
       {#if hasMultipleSites}
