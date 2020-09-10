@@ -1,4 +1,7 @@
 <script>
+  import Card from "../card.svelte";
+  import Section from "./section.svelte";
+
   const htmlScript = `<script async defer src="https://your-analytics.org/ya.js" data-domain="YOUR_DOMAIN"><\/script>`;
   const stacks = {
     svelte: {
@@ -41,19 +44,9 @@
   }
 </style>
 
-<div class="py-10 max-w-6xl mx-auto sm:py-32">
-  <div class="px-4 sm:px-12">
-    <h2 class="text-3xl text-center font-extrabold tracking-wide sm:text-5xl">
-      Frontend Integrations
-    </h2>
-    <p class="mt-8 text-xl sm:text-2xl">
-      Select your frontend stack of choice to see how to integrate Your
-      Analytics.
-    </p>
-  </div>
+<Section title="Frontend Integrations" description="Select your frontend stack of choice to see how to integrate Your Analytics.">
   <div class="pt-10">
-    <div
-      class="my-4 mx-2 py-4 w-full bg-white border rounded-lg shadow-md">
+    <Card clazz="py-4">
       <p class="py-4 bg-gray-200 rounded-t-lg font-bold text-2xl text-center">
         Supports your frontend stack of choice
       </p>
@@ -89,6 +82,5 @@
           </div>
         {/if}
       {/if}
-    </div>
-  </div>
-</div>
+    </Card>
+</Section>

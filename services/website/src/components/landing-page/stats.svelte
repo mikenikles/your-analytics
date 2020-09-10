@@ -3,6 +3,7 @@
   import { onMount } from "svelte";
   import { dateRange, siteVisibility } from "../../api/stats";
   import Card from "./stats-card.svelte";
+  import Section from "./section.svelte";
 
   import Devices from "../stats/devices.svelte";
   import TopPages from "../stats/top-pages.svelte";
@@ -24,11 +25,8 @@
   });
 </script>
 
-<div class="py-10 max-w-6xl mx-auto sm:py-32">
-  <div class="px-4 sm:px-12">
-    <h2 class="text-3xl text-center font-extrabold tracking-wide sm:text-5xl">Visibility into what matters</h2>
-    <p class="mt-8 text-xl sm:text-2xl">We keep it simple and focus on web analytics metrics that matter by also respecting your visitor's privacy.</p>
-  </div>
+
+<Section title="Visibility into what matters" description="We keep it simple and focus on web analytics metrics that matter by also respecting your visitor's privacy.">
   <div class="pt-10">
     <Card title="Visitors & page views" description={`See how many unique visitors your website has and how many pages they view.`}>
       <UniqueVisitors />
@@ -50,5 +48,4 @@
       <WorldMap showTitle={false} />
     </Card>
   </div>
-</div>
-
+</Section>

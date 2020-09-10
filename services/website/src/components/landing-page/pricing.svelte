@@ -1,4 +1,6 @@
 <script>
+  import Section from "./section.svelte";
+
   const pricingOptions = [{
     pageViews: "10k",
     price: "$0"
@@ -15,11 +17,7 @@
   let selectedPricingIndex = 0;
 </script>
 
-<div class="py-10 max-w-6xl mx-auto sm:py-32">
-  <div class="px-4 sm:px-12">
-    <h2 class="text-3xl text-center font-extrabold tracking-wide sm:text-5xl">Pay as you grow</h2>
-    <p class="mt-8 text-xl sm:text-2xl">Self-host Your Analytics free of charge or use our hosted service.</p>
-  </div>
+<Section title="Pay as you grow" description="Self-host Your Analytics free of charge or use our hosted service.">
   <div class="pt-10 flex flex-col sm:flex-row">
     <div class="my-4 mx-2 py-4 p-6 w-full bg-pink-600 border rounded-lg shadow-md text-white sm:my-0 sm:w-1/3">
       <p class="p-2 bg-pink-500 rounded-t-md text-center text-2xl font-semibold">Self-hosted</p>
@@ -53,4 +51,4 @@
       </div>
     </div>
   </div>
-</div>
+</Section>
