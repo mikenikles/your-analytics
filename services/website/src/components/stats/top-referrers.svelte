@@ -16,13 +16,6 @@
   let showRest = false;
 </script>
 
-<style>
-  img {
-    height: 16px;
-    width: 16px;
-  }
-</style>
-
 {#if $topReferrers}
   {#if showTitle}
     <h2>Top Referrers</h2>
@@ -32,7 +25,7 @@
     <tbody slot="tbody">
       {#each topTen as [domain, total], rowIndex}
         <TableRow {rowIndex}>
-          <TableCell isFirst={true}><img src="https://www.google.com/s2/favicons?domain={domain}" alt="{domain} favicon" /></TableCell>
+          <TableCell isFirst={true}><img src="https://www.google.com/s2/favicons?domain={domain}" alt="{domain} favicon" class="w-5 h-5" /></TableCell>
           <TableCell>{domain}</TableCell>
           <TableCell isLast={true} clazz="text-right font-bold">{total}</TableCell>
         </TableRow>
