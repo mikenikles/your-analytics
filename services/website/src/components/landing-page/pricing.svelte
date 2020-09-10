@@ -1,4 +1,5 @@
 <script>
+  import Card from "../card.svelte";
   import Section from "./section.svelte";
 
   const pricingOptions = [{
@@ -19,13 +20,13 @@
 
 <Section title="Pay as you grow" description="Self-host Your Analytics free of charge or use our hosted service.">
   <div class="pt-10 flex flex-col sm:flex-row">
-    <div class="my-4 mx-2 py-4 p-6 w-full bg-pink-600 border rounded-lg shadow-md text-white sm:my-0 sm:w-1/3">
+    <Card clazz="py-4 p-6 bg-pink-600 text-white sm:my-0 sm:w-1/3">
       <p class="p-2 bg-pink-500 rounded-t-md text-center text-2xl font-semibold">Self-hosted</p>
       <p class="mt-12"><strong>Your Analytics</strong> is open source and available for you to host on your own servers.<strong>For Free!</strong></p>
       <p class="py-20 text-center text-6xl font-semibold">$0</p>
       <button class="p-2 w-full bg-white rounded-md text-black text-lg font-bold">Find out more</button>
-    </div>
-    <div class="my-4 mx-2 py-4 p-6 w-full bg-white border rounded-lg shadow-md sm:my-0 sm:w-2/3">
+    </Card>
+    <Card clazz="py-4 p-6 sm:my-0 sm:w-2/3">
       <p class="p-2 bg-gray-200 rounded-t-md text-center text-2xl font-semibold">Hosted</p>
       <div class="mt-12 flex">
         <div class="mx-2 w-1/2">
@@ -49,6 +50,6 @@
           <p>For 10M+ page views, please get in touch with us. <a href="/contact" class="text-pink-600 hover:underline">Contact us.</a></p>
         </div>
       </div>
-    </div>
+    </Card>
   </div>
 </Section>
