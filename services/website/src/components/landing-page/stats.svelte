@@ -28,8 +28,10 @@
 <Section title="Visibility into what matters" description="We keep it simple and focus on web analytics metrics that matter by also respecting your visitor's privacy.">
   <div class="pt-10">
     <StatsCard title="Visitors & page views" description={`See how many unique visitors your website has and how many pages they view.`}>
-      <UniqueVisitors />
-      <TotalPageviews />
+      <div class="flex">
+        <UniqueVisitors />
+        <TotalPageviews />
+      </div>
     </StatsCard>
     <StatsCard title="Charts" description={`Visualize visitors, page views, bounce rate and time spent over a given time period.`}>
       <Card>
