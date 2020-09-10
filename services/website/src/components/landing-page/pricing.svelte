@@ -49,10 +49,14 @@
               </div>
             {/each}
           </div>
+          {#if false}
           <p>For 10M+ page views, please get in touch with us. <a href="/contact" class="text-pink-600 hover:underline">Contact us.</a></p>
+          {/if}
         </div>
       </div>
+      {#if false}
       <button class="mt-32 p-2 w-full bg-blue-600 rounded-md text-white text-lg font-bold">Start your free trial</button>
+      {/if}
     </Card>
   </div>
 </Section>
