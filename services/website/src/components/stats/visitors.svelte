@@ -15,7 +15,9 @@
       chart = new Chart(chartElement, {
         data: {
           datasets: [{
-            data: Object.values($visitors)
+            data: Object.values($visitors),
+            backgroundColor: "#f6f6f6",
+            pointBackgroundColor: "#d61f69"
           }],
           labels: Object.keys($visitors)
         },

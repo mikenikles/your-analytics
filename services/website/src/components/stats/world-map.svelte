@@ -14,7 +14,7 @@
   $: if ($worldMap && countries && chartElement) {
     if (chart) {
       chart.data.datasets[0].data = countries.map((d) => {
-        return ({feature: d, value: $worldMap[d.properties.name] || 0})
+        return ({feature: d, value: $worldMap[d.properties.name] || "0"})
       });
       chart.update();
     } else {
@@ -23,7 +23,7 @@
           datasets: [{
             label: 'Countries',
             data: countries.map((d) => {
-              return ({feature: d, value: $worldMap[d.properties.name] || 0})
+              return ({feature: d, value: $worldMap[d.properties.name] || "0"})
             }),
           }],
           labels: countries.map((d) => d.properties.name)
@@ -38,7 +38,8 @@
           },
           geo: {
             colorScale: {
-              display: true,
+              interpolate: "RdPu",
+              missing: "white"
             },
           },
         },

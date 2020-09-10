@@ -5,7 +5,7 @@
   import { fetchSiteVisibility, siteVisibility } from "../../api/stats";
   import Card from "../../components/card.svelte";
   import DateRange from "../../components/date-range.svelte";
-  import Header from "../../components/header.svelte";
+  import Header from "../../components/header/index.svelte";
   import MainContent from "../../components/main-content.svelte";
   import Devices from "../../components/stats/devices.svelte";
   import TopPages from "../../components/stats/top-pages.svelte";

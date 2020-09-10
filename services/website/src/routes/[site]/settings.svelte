@@ -3,7 +3,7 @@
   import { getSettings, setVisibility } from "../../api/settings";
   import { userTokenStore } from "../../auth/magic";
   import Authenticated from "../../components/authenticated.svelte";
-  import Header from "../../components/header.svelte";
+  import Header from "../../components/header/index.svelte";
   import MainContent from "../../components/main-content.svelte";
 
   const { page } = stores();

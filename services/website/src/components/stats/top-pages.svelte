@@ -1,6 +1,8 @@
 <script>
   import { topPages } from "../../api/stats";
-  import ProgressBar from "./elements/progress-bar.svelte";
+  import Table from "../table/index.svelte";
+  import TableCell from "../table/cell.svelte";
+  import TableRow from "../table/row.svelte";
   import Loading from "./loading.svelte";
 
   export let showTitle = true;
@@ -19,17 +21,27 @@
     <h2>Top Pages</h2>
   {/if}
 
-  {#each topTen as [page, total]}
-    <ProgressBar label={page} value={total} percentage={(total / maxTotal) * 100} />
-  {/each}
-  {#if showShowMore}
-    {#if showRest}
-      {#each rest as [page, total]}
-        <ProgressBar label={page} value={total} percentage={(total / maxTotal) * 100} />
+  <Table>
+    <tbody slot="tbody">
+      {#each topTen as [page, total], rowIndex}
+        <TableRow {rowIndex}>
+          <TableCell isFirst={true}>{page}</TableCell>
+          <TableCell isLast={true} clazz="text-right font-bold">{total}</TableCell>
+        </TableRow>
       {/each}
-    {:else}
-      <button on:click={() => showRest = true}>Show more</button>
-    {/if}
+      {#if showRest}
+        {#each rest as [page, total], rowIndex}
+          <TableRow {rowIndex}>
+            <TableCell isFirst={true}>{page}</TableCell>
+            <TableCell isLast={true} clazz="text-right font-bold">{total}</TableCell>
+          </TableRow>
+        {/each}
+      {/if}
+    </tbody>
+  </Table>
+
+  {#if showShowMore && !showRest}
+    <button on:click={() => showRest = true}>Show more</button>
   {/if}
 {:else}
   <Loading />
