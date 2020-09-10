@@ -25,7 +25,11 @@
     <tbody slot="tbody">
       {#each topTen as [domain, total], rowIndex}
         <TableRow {rowIndex}>
-          <TableCell isFirst={true}><img src="https://www.google.com/s2/favicons?domain={domain}" alt="{domain} favicon" class="w-5 h-5" /></TableCell>
+          <TableCell isFirst={true}>
+            <div class="w-5 h-5">
+              <img src="https://www.google.com/s2/favicons?domain={domain}" alt="{domain} favicon" />
+            </div>
+          </TableCell>
           <TableCell>{domain}</TableCell>
           <TableCell isLast={true} clazz="text-right font-bold">{total}</TableCell>
         </TableRow>
