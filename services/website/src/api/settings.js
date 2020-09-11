@@ -9,7 +9,7 @@ export const setVisibility = async (website, visibility) => {
   }
 
   const url = new URL(
-    `${ADMIN_API_BASE_URL}/websites/${website}/settings/visibility`
+    `${ADMIN_API_BASE_URL}/website/${website}/settings/visibility`
   );
   const response = await fetch(url, {
     headers: new Headers({
@@ -30,7 +30,7 @@ export const getSettings = async (website) => {
     return {};
   }
 
-  const url = new URL(`${ADMIN_API_BASE_URL}/websites/${website}/settings`);
+  const url = new URL(`${ADMIN_API_BASE_URL}/website/${website}/settings`);
   const response = await fetch(url, {
     headers: new Headers({
       Authorization: "Bearer " + get(userTokenStore),
