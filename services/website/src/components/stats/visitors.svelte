@@ -17,6 +17,7 @@
           datasets: [{
             data: Object.values($visitors),
             backgroundColor: "#f6f6f6",
+            borderColor: "#f8b4d9",
             pointBackgroundColor: "#d61f69",
             pointHoverRadius: 6,
             pointRadius: 8
