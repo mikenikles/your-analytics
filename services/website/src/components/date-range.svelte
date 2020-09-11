@@ -56,20 +56,30 @@
   }
 </script>
 
-<select bind:value={datePreset} class="mt-1 form-select block w-full pl-3 pr-10 py-2 text-base leading-6 border-gray-300 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5">
-  {#each Object.entries(datePresets) as [value, {label}]}
-    <option {value}>{label}</option>
-  {/each}
-</select>
+<div class="mx-2 flex flex-col sm:flex-row sm:items-end">
+  <div class="mt-4 sm:py-0">
+    <select bind:value={datePreset} class="form-select text-base leading-6 border-gray-300 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5">
+      {#each Object.entries(datePresets) as [value, {label}]}
+        <option {value}>{label}</option>
+      {/each}
+    </select>
+  </div>
 
-{#if datePreset === "custom"}
-  <label for="fromDate">
-    From:
-    <input bind:value={fromDate} id="fromDate" type="date">
-  </label>
-  <label for="toDate">
-    To:
-    <input bind:value={toDate} id="toDate" type="date">
-  </label>
-  <button on:click={applyCustomDateRange}>Apply</button>
-{/if}
+  {#if datePreset === "custom"}
+    <div class="mt-4 sm:py-0 sm:pl-4">
+      <label for="fromDate" class="block text-sm font-medium leading-5 text-gray-700">From</label>
+      <div class="mt-1 relative rounded-md shadow-sm">
+        <input bind:value={fromDate} id="fromDate" type="date" class="form-input block w-full sm:text-sm sm:leading-5">
+      </div>
+    </div>
+    <div class="mt-4 sm:py-0 sm:pl-4">
+      <label for="toDate" class="block text-sm font-medium leading-5 text-gray-700">To</label>
+      <div class="mt-1 relative rounded-md shadow-sm">
+        <input bind:value={toDate} id="toDate" type="date" class="form-input block w-full sm:text-sm sm:leading-5">
+      </div>
+    </div>
+    <div class="mt-4 sm:py-0 sm:pl-4">
+      <button on:click={applyCustomDateRange} class="py-2 px-3 w-full bg-pink-300 rounded-full font-bold">Apply</button>
+    </div>
+  {/if}
+</div>
