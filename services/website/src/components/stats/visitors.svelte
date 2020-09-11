@@ -17,7 +17,9 @@
           datasets: [{
             data: Object.values($visitors),
             backgroundColor: "#f6f6f6",
-            pointBackgroundColor: "#d61f69"
+            pointBackgroundColor: "#d61f69",
+            pointHoverRadius: 6,
+            pointRadius: 8
           }],
           labels: Object.keys($visitors)
         },
