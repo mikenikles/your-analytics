@@ -5,6 +5,7 @@
   import { fetchSiteVisibility, siteVisibility } from "../../api/stats";
   import Card from "../../components/card.svelte";
   import DateRange from "../../components/date-range.svelte";
+  import WebsiteSelect from "../../components/website-select.svelte";
   import Header from "../../components/header/index.svelte";
   import MainContent from "../../components/main-content.svelte";
   import Devices from "../../components/stats/devices.svelte";
@@ -72,6 +73,7 @@
   <Header title={pageTitle} />
   <MainContent>
     {#if isReadyToDisplayStats}
+      <WebsiteSelect />
       <DateRange />
       <Card>
         <div class="flex">
