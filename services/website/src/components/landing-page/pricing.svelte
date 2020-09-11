@@ -31,15 +31,17 @@
     </Card>
     <Card clazz="py-4 p-6 sm:my-0 sm:w-2/3">
       <p class="p-2 bg-gray-200 rounded-t-md text-center text-2xl font-semibold">Hosted</p>
-      <div class="mt-12 flex">
-        <div class="mx-2 w-1/2">
+      <p class="mt-12">Hassle-free, hosted by the team who develops <strong>Your Analytics</strong>. Pay based on how many pages your visitors look at on your website.</p>
+      <div class="flex flex flex-col sm:flex-row">
+        <div class="mx-2 sm:w-1/2">
           <p class="pt-20 text-center text-6xl font-semibold">{pricingOptions[selectedPricingIndex].price}/<span class="text-4xl">m</span></p>
           <p class="text-center">
             <span class="py-2 px-4 bg-gray-300 rounded-full text-sm">{pricingOptions[selectedPricingIndex].pageViews} page views</span>
           </p>
         </div>
-        <div class="mx-2 w-1/2">
+        <div class="mx-2 sm:w-1/2">
           <div class="pt-10">
+            <p>Page views per month:</p>
             {#each pricingOptions as {pageViews, price}, index}
               <div class="my-4 flex items-center">
                 <input bind:group={selectedPricingIndex} value={index} id="pricing_{pageViews}" name="pricing_{pageViews}" type="radio" class="form-radio h-4 w-4 text-indigo-600 transition duration-150 ease-in-out">
