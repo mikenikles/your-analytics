@@ -74,8 +74,10 @@
     {#if isReadyToDisplayStats}
       <DateRange />
       <Card>
-        <UniqueVisitors />
-        <TotalPageviews />
+        <div class="flex">
+          <UniqueVisitors />
+          <TotalPageviews />
+        </div>
       </Card>
       <Card>
         <Visitors />

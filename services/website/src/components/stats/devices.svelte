@@ -24,7 +24,7 @@
 
 {#if $browser && $os && $screen}
   {#if showTitle}
-    <h2>Devices</h2>
+    <h2 class="p-4 font-bold">Devices</h2>
   {/if}
 
   <div class="py-4">

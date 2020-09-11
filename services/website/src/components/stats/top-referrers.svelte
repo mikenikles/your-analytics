@@ -17,8 +17,15 @@
 </script>
 
 {#if $topReferrers}
-  {#if showTitle}
-    <h2>Top Referrers</h2>
+  {#if showTitle || showShowMore}
+    <div class="flex justify-between">
+      {#if showTitle}
+        <h2 class="p-4 font-bold">Top Referrers</h2>
+      {/if}
+      {#if showShowMore && !showRest}
+        <button on:click={() => showRest = true} class="m-4 py-1 px-3 text-pink-600 rounded-full">Show more</button>
+      {/if}
+    </div>
   {/if}
 
   <Table>
@@ -45,10 +52,6 @@
       {/if}
     </tbody>
   </Table>
-
-  {#if showShowMore && !showRest}
-    <button on:click={() => showRest = true}>Show more</button>
-  {/if}
 {:else}
   <Loading />
 {/if}
