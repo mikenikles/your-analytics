@@ -8,7 +8,7 @@ export const addNewWebsite = async (info) => {
     return;
   }
 
-  const url = new URL(`${ADMIN_API_BASE_URL}/websites`);
+  const url = new URL(`${ADMIN_API_BASE_URL}/website`);
 
   const response = await fetch(url, {
     headers: new Headers({
