@@ -1,8 +1,8 @@
 {
-  "background_color": "#ffffff",
-  "theme_color": "#333333",
-  "name": "TODO",
-  "short_name": "TODO",
+  "background_color": "#d61f69",
+  "theme_color": "#ffffff",
+  "name": "Your Analytics",
+  "short_name": "YourAnalytics",
   "display": "minimal-ui",
   "start_url": "/",
   "icons": [
