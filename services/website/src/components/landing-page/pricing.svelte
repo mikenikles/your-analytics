@@ -31,7 +31,7 @@
     </Card>
     <Card clazz="py-4 p-6 sm:my-0 sm:w-2/3">
       <p class="p-2 bg-gray-200 rounded-t-md text-center text-2xl font-semibold">Hosted</p>
-      <p class="mt-12">Hassle-free, hosted by the team who develops <strong>Your Analytics</strong>. Pay based on how many pages visitors look at on your website.</p>
+      <p class="mt-12">Hassle-free, hosted by the team who develops <strong>Your Analytics</strong>. Pay based on how many pages your visitors look at on your website.</p>
       <div class="flex flex flex-col sm:flex-row">
         <div class="mx-2 sm:w-1/2">
           <p class="pt-20 text-center text-6xl font-semibold">{pricingOptions[selectedPricingIndex].price}/<span class="text-4xl">m</span></p>
