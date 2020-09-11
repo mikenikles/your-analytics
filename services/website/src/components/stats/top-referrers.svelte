@@ -11,7 +11,6 @@
   $: topEntries = Object.entries($topReferrers || {});
   $: topTen = topEntries.length > 10 ? topEntries.slice(0, 10) : topEntries;
   $: rest = topEntries.length > 10 ? topEntries.slice(10) : [];
-  $: maxTotal = Math.max(...Object.values($topReferrers || {}));
 
   let showRest = false;
 </script>
@@ -22,7 +21,7 @@
       {#if showTitle}
         <h2 class="p-4 font-bold">Top Referrers</h2>
       {/if}
-      {#if showShowMore && !showRest}
+      {#if showShowMore && !showRest && rest.length > 0}
         <button on:click={() => showRest = true} class="m-4 py-1 px-3 text-pink-600 rounded-full">Show more</button>
       {/if}
     </div>
