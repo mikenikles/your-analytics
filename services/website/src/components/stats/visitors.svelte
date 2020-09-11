@@ -39,6 +39,17 @@
                 beginAtZero: true
               }
             }]
+          },
+          tooltips: {
+            callbacks: {
+              label: (tooltipItem, data) => {
+                return `${tooltipItem.value} Visitors`;
+              }
+            },
+            titleFontSize: 16,
+            titleMarginBottom: 8,
+            xPadding: 10,
+            yPadding: 10
           }
         },
         type: "line"
