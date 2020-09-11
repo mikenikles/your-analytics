@@ -77,7 +77,20 @@ export const fetchVisitors = () => fetchStats("visitors", visitors);
 export const worldMap = writable(null);
 export const fetchWorldMap = () => fetchStats("world-map", worldMap);
 
-export const fetchAllStats = () =>
+const resetAllStats = () => {
+  browser.set(null);
+  os.set(null);
+  screen.set(null);
+  topPages.set(null);
+  topReferrers.set(null);
+  totalPageviews.set(null);
+  uniqueVisitors.set(null);
+  visitors.set({});
+  worldMap.set({});
+};
+
+export const fetchAllStats = () => {
+  resetAllStats();
   Promise.allSettled([
     fetchBrowser(),
     fetchOs(),
@@ -89,6 +102,7 @@ export const fetchAllStats = () =>
     fetchVisitors(),
     fetchWorldMap(),
   ]);
+};
 
 export const dateRange = writable({
   from: -1,
