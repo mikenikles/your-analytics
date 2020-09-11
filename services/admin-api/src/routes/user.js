@@ -12,7 +12,10 @@ module.exports = (authenticate) => {
       return res
         .status(200)
         .json({
-          sites,
+          sites: Object.keys(sites).reduce((result, site) => {
+            result[site] = {};
+            return result;
+          }, {}),
           firstName,
           email,
           emailHash: crypto
