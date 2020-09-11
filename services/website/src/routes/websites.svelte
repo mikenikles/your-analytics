@@ -10,7 +10,7 @@
   <Header />
   <MainContent>
     <h1 class="mx-2 text-4xl">Websites</h1>
-    {#each Object.entries($userMetadataStore.sites) as [url, settings]}
+    {#each Object.entries($userMetadataStore.sites) as [url]}
       <Card>
         <div class="p-4 flex justify-between items-center">
           <a href="/{url}" class="text-pink-600 hover:underline">{url}</a>
