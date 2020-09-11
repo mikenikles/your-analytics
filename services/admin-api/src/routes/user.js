@@ -12,7 +12,11 @@ module.exports = (authenticate) => {
       return res
         .status(200)
         .json({
-          sites,
+          sites: Object.keys(sites).reduce((result, site) => {
+            result[site] = {};
+            // Extend the empty object with site values that are meant to be public
+            return result;
+          }, {}),
           firstName,
           email,
           emailHash: crypto

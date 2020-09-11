@@ -17,7 +17,10 @@
           datasets: [{
             data: Object.values($visitors),
             backgroundColor: "#f6f6f6",
-            pointBackgroundColor: "#d61f69"
+            borderColor: "#f8b4d9",
+            pointBackgroundColor: "#d61f69",
+            pointHoverRadius: 6,
+            pointRadius: 8
           }],
           labels: Object.keys($visitors)
         },
@@ -36,6 +39,17 @@
                 beginAtZero: true
               }
             }]
+          },
+          tooltips: {
+            callbacks: {
+              label: (tooltipItem, data) => {
+                return `${tooltipItem.value} Visitors`;
+              }
+            },
+            titleFontSize: 16,
+            titleMarginBottom: 8,
+            xPadding: 10,
+            yPadding: 10
           }
         },
         type: "line"

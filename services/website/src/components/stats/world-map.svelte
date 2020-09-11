@@ -57,7 +57,7 @@
 
 {#if $worldMap}
   {#if showTitle}
-    <h2>World map</h2>
+    <h2 class="p-4 font-bold">World map</h2>
   {/if}
 
   <div

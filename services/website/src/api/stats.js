@@ -77,12 +77,21 @@ export const fetchVisitors = () => fetchStats("visitors", visitors);
 export const worldMap = writable(null);
 export const fetchWorldMap = () => fetchStats("world-map", worldMap);
 
-export const dateRange = writable({
-  from: -1,
-  to: -1,
-});
-dateRange.subscribe(async () => {
-  await Promise.allSettled([
+const resetAllStats = () => {
+  browser.set(null);
+  os.set(null);
+  screen.set(null);
+  topPages.set(null);
+  topReferrers.set(null);
+  totalPageviews.set(null);
+  uniqueVisitors.set(null);
+  visitors.set({}); // `null` destroys the chart
+  worldMap.set({}); // `null` destroys the chart
+};
+
+export const fetchAllStats = () => {
+  resetAllStats();
+  Promise.allSettled([
     fetchBrowser(),
     fetchOs(),
     fetchScreen(),
@@ -93,4 +102,12 @@ dateRange.subscribe(async () => {
     fetchVisitors(),
     fetchWorldMap(),
   ]);
+};
+
+export const dateRange = writable({
+  from: -1,
+  to: -1,
+});
+dateRange.subscribe(async () => {
+  await fetchAllStats();
 });
