@@ -77,12 +77,8 @@ export const fetchVisitors = () => fetchStats("visitors", visitors);
 export const worldMap = writable(null);
 export const fetchWorldMap = () => fetchStats("world-map", worldMap);
 
-export const dateRange = writable({
-  from: -1,
-  to: -1,
-});
-dateRange.subscribe(async () => {
-  await Promise.allSettled([
+export const fetchAllStats = () =>
+  Promise.allSettled([
     fetchBrowser(),
     fetchOs(),
     fetchScreen(),
@@ -93,4 +89,11 @@ dateRange.subscribe(async () => {
     fetchVisitors(),
     fetchWorldMap(),
   ]);
+
+export const dateRange = writable({
+  from: -1,
+  to: -1,
+});
+dateRange.subscribe(async () => {
+  await fetchAllStats();
 });
