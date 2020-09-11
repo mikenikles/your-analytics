@@ -85,8 +85,8 @@ const resetAllStats = () => {
   topReferrers.set(null);
   totalPageviews.set(null);
   uniqueVisitors.set(null);
-  visitors.set({});
-  worldMap.set({});
+  visitors.set({}); // `null` destroys the chart
+  worldMap.set({}); // `null` destroys the chart
 };
 
 export const fetchAllStats = () => {
