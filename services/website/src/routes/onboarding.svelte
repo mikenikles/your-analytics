@@ -39,8 +39,8 @@
   }
 </style>
 
+<Header />
 <Authenticated>
-  <Header />
   <MainContent>
     <div class="flex flex-col justify-center sm:px-6 lg:px-8">
       <div class="sm:mx-auto sm:w-full sm:max-w-md">

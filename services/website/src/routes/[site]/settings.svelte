@@ -9,16 +9,17 @@
   const { page } = stores();
   const visibilities = [{
     label: "Private",
-    value: "private"
+    value: "private",
+    description: "Only authenticated users can see your website analytics."
   }, {
     label: "Public",
-    value: "public"
+    value: "public",
+    description: "Share your website analytics publicly - anyone can see it."
   }];
 
   let settings = {};
   let selectedVisibility;
 
-  $: pageTitle = `Settings - ${$page.params.site}`;
   $: if ($userTokenStore && Object.keys(settings).length === 0) {
     getSettings($page.params.site).then(serverSettings => {
       settings = serverSettings;
@@ -37,10 +38,10 @@
   }
 </style>
 
+<Header />
 <Authenticated>
-  <Header title={pageTitle} />
   <MainContent>
-    <div class="mt-10 sm:mt-0">
+    <div class="mt-10">
       <div class="md:grid md:grid-cols-3 md:gap-6">
         <div class="md:col-span-1">
           <div class="px-4 sm:px-0">
@@ -56,7 +57,6 @@
               <div class="px-4 py-5 bg-white sm:p-6">
                 <fieldset>
                   <legend class="text-base leading-6 font-medium text-gray-900">Visibility</legend>
-                  <p class="text-sm leading-5 text-gray-500">Private: Only authenticated users can see your analytics. Public: Share your analytics publicly.</p>
                   <div class="mt-4">
                     {#each visibilities as visibility, index}
                       <div class:notFirstFormElement={index > 0} class="flex items-center">
@@ -65,6 +65,7 @@
                           <span class="block text-sm leading-5 font-medium text-gray-700">{visibility.label}</span>
                         </label>
                       </div>
+                      <p class="mt-1 ml-7 text-sm font-thin">{visibility.description}</p>
                     {/each}
                   </div>
                 </fieldset>
