@@ -2,6 +2,10 @@
 
 # your-analytics
 
+## Architecture
+
+Please refer to [#1](../../issues/1).
+
 ## Development
 
 Follow the steps outlined in the chapters below, then click the Gitpod link above.
