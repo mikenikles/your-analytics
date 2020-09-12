@@ -9,16 +9,27 @@
 
   let url = "";
   let isSiteAdded = false;
+  let isSiteAlreadyConfiguredGlobally = false;
 
   $: script = `<script async defer src="https://your-analytics.org/ya.js" data-domain="${url}"><\/script>`;
-  $: existingSites = ($userMetadataStore && Object.keys($userMetadataStore.sites || {})) || [];
-  $: isUrlInvalid = existingSites.includes(url)
+  $: existingUserSites = ($userMetadataStore && Object.keys($userMetadataStore.sites || {})) || [];
+  $: hasUserAlreadyConfiguredSite = existingUserSites.includes(url);
+  $: isUrlInvalid = hasUserAlreadyConfiguredSite || isSiteAlreadyConfiguredGlobally;
 
   const handleSubmit = async (event) => {
     const firstName = new FormData(event.target).get("firstname");
     const url = new FormData(event.target).get("url");
     const timezone = new FormData(event.target).get("timezone");
-    isSiteAdded = await addNewWebsite({firstName, url, timezone});
+
+    const responseCode = await addNewWebsite({firstName, url, timezone});
+    switch (responseCode) {
+      case 200:
+        isSiteAdded = true;
+        break;
+      case 400:
+        isSiteAlreadyConfiguredGlobally = true;
+        break;
+    }
   };
 </script>
 
@@ -71,9 +82,13 @@
                       </div>
                     {/if}
                   </div>
-                  {#if isUrlInvalid}
-                    <p class="mt-2 text-sm text-red-600">This website is already configured</p>
-                  {/if}
+                    <p class="mt-2 text-sm text-red-600">
+                    {#if hasUserAlreadyConfiguredSite}
+                      You've already configured this website.
+                    {:else if isSiteAlreadyConfiguredGlobally}
+                      This site has already been configured. If it belongs to you, please contact us.
+                    {/if}
+                    </p>
                 </div>
 
                 <div class="mt-6">

@@ -19,5 +19,5 @@ export const addNewWebsite = async (info) => {
     method: "POST",
   });
 
-  return response.status === 201;
+  return response.status;
 };

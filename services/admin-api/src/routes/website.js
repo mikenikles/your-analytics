@@ -7,9 +7,13 @@ module.exports = (authenticate) => {
   router.post("/", authenticate, async (req, res) => {
     try {
       if (req.body.firstName) {
-        await rootDb.users.setFirstName(req.body.firstName);
+        await rootDb.users.setFirstName(req.user.issuer, req.body.firstName);
       }
-      await domainDb.admin.addNewWebsite(req.body.url);
+      try {
+        await domainDb.admin.addNewWebsite(req.body.url);
+      } catch (error) {
+        return res.status(400).end();
+      }
       const {
         secret: websiteServerKeySecret,
       } = await domainDb.admin.createWebsiteServerKey(req.body.url);
