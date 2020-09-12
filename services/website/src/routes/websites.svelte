@@ -6,8 +6,8 @@
   import MainContent from "../components/main-content.svelte";
 </script>
 
+<Header />
 <Authenticated>
-  <Header />
   <MainContent>
     <h1 class="mx-2 text-4xl">Websites</h1>
     {#each Object.entries($userMetadataStore.sites) as [url]}

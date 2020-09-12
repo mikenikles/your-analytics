@@ -65,7 +65,7 @@
                           <span class="block text-sm leading-5 font-medium text-gray-700">{visibility.label}</span>
                         </label>
                       </div>
-                      <p class="ml-7 text-sm font-thin">{visibility.description}</p>
+                      <p class="mt-1 ml-7 text-sm font-thin">{visibility.description}</p>
                     {/each}
                   </div>
                 </fieldset>
