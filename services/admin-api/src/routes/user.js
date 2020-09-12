@@ -1,7 +1,9 @@
 const { rootDb } = require("@your-analytics/faunadb");
+const { Magic } = require("@magic-sdk/admin");
 const crypto = require("crypto");
 const express = require("express");
 
+const magic = new Magic(process.env.MAGIC_SECRET_KEY);
 const router = express.Router();
 
 module.exports = (authenticate) => {
