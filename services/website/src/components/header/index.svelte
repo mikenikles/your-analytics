@@ -9,7 +9,9 @@
 </script>
 
 <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
-  <img src="/logo-color.svg" alt="Your Analytics logo" class="h-8">
+  <a href="/">
+    <img src="/logo-color.svg" alt="Your Analytics logo" class="h-8">
+  </a>
   {#if false}
   <Nav>
     <NavItem href="/" label="Home" isActive={$page.path === "/"} />

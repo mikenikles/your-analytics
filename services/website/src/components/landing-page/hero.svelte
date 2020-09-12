@@ -17,7 +17,7 @@
       <div class="mt-8 flex justify-center">
         <a href="/your-analytics.org" class="items-center inline-flex justify-center py-4 px-10 bg-blue-600 rounded-lg font-semibold">
           <span class="mr-2 relative flex h-3 w-3">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75"></span>
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
             <span class="relative inline-flex rounded-full h-3 w-3 bg-pink-500"></span>
           </span>
           Live Demo
