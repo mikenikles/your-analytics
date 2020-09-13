@@ -15,34 +15,40 @@ const devProxyOptions = {
 };
 
 const app = polka();
-app
-  .use(
-    dev &&
-      createProxyMiddleware("/api/admin", {
-        ...devProxyOptions,
-        target: "http://localhost:8082",
-      }),
-    dev &&
-      createProxyMiddleware("/api/query", {
-        ...devProxyOptions,
-        target: "http://localhost:8081",
-      }),
-    compression({ threshold: 0 }),
-    sirv("static", { dev }),
-    cookieParser(COOKIE_SECRET),
-    (req, res, next) => {
-      const token = req.signedCookies ? req.signedCookies["jwt"] : "";
-      const { user } = token ? jwt.decode(token) : false;
+app.use(
+  compression({ threshold: 0 }),
+  sirv("static", { dev }),
+  cookieParser(COOKIE_SECRET),
+  (req, res, next) => {
+    const token = req.signedCookies ? req.signedCookies["jwt"] : "";
+    const { user } = token ? jwt.decode(token) : false;
 
-      return sapper.middleware({
-        session: () => ({
-          user,
-        }),
-      })(req, res, next);
-    }
-  )
-  .listen(PORT, (err) => {
-    if (err) console.log("error", err);
-  });
+    return sapper.middleware({
+      ignore: ["/api"],
+      session: () => ({
+        user,
+      }),
+    })(req, res, next);
+  }
+);
+
+if (dev) {
+  app.use(
+    createProxyMiddleware("/api/admin", {
+      ...devProxyOptions,
+      target: "http://localhost:8082",
+    })
+  );
+  app.use(
+    createProxyMiddleware("/api/query", {
+      ...devProxyOptions,
+      target: "http://localhost:8081",
+    })
+  );
+}
+
+app.listen(PORT, (err) => {
+  if (err) console.log("error", err);
+});
 
 export default app;
