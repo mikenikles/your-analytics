@@ -23,12 +23,16 @@ app.use(
     const token = req.signedCookies ? req.signedCookies["jwt"] : "";
     const { user } = token ? jwt.decode(token) : false;
 
-    return sapper.middleware({
-      ignore: ["/api"],
+    const sapperOptions = {
       session: () => ({
         user,
       }),
-    })(req, res, next);
+    };
+    if (dev) {
+      sapperOptions.ignore = ["/api"];
+    }
+
+    return sapper.middleware(sapperOptions)(req, res, next);
   }
 );
 
