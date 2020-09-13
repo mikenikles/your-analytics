@@ -17,14 +17,16 @@ const devProxyOptions = {
 const app = polka();
 app
   .use(
-    createProxyMiddleware("/api/admin", {
-      ...devProxyOptions,
-      target: "http://localhost:8082",
-    }),
-    createProxyMiddleware("/api/query", {
-      ...devProxyOptions,
-      target: "http://localhost:8081",
-    }),
+    dev &&
+      createProxyMiddleware("/api/admin", {
+        ...devProxyOptions,
+        target: "http://localhost:8082",
+      }),
+    dev &&
+      createProxyMiddleware("/api/query", {
+        ...devProxyOptions,
+        target: "http://localhost:8081",
+      }),
     compression({ threshold: 0 }),
     sirv("static", { dev }),
     cookieParser(COOKIE_SECRET),
