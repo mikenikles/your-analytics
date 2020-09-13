@@ -3,10 +3,11 @@
   import isOpen from "../../stores/mobile-menu";
   import { session } from "../../stores/session";
 
-  $: hasMultipleSites = Object.keys($session.user.sites || {}).length > 1;
-  $: userFirstName = ($session.user.firstName) || "";
-  $: userEmail = ($session.user.email) || "";
-  $: userEmailHash = $session.user.emailHash;
+  $: user = $session.user || {};
+  $: hasMultipleSites = Object.keys(user.sites || {}).length > 1;
+  $: userFirstName = user.firstName || "";
+  $: userEmail = user.email || "";
+  $: userEmailHash = user.emailHash;
 
   const handleLogout = async () => {
     await logout();
