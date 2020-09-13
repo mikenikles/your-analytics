@@ -1,8 +1,16 @@
+<script context="module">
+  export async function preload(page, session) {
+    const { user } = session;
+    if (!user) {
+      this.redirect(302, "auth");
+      return;
+    }
+  };
+</script>
+
 <script>
-  import { goto, stores } from "@sapper/app";
-  import { onMount } from "svelte";
-  import { userMetadataStore, init } from "../../auth/magic";
-  import { fetchSiteVisibility, siteVisibility } from "../../api/stats";
+  import { stores } from "@sapper/app";
+  import { fetchAllStats } from "../../api/stats";
   import Card from "../../components/card.svelte";
   import DateRange from "../../components/date-range.svelte";
   import WebsiteSelect from "../../components/website-select.svelte";
@@ -18,55 +26,11 @@
 
   const { page } = stores();
 
-  let isReadyToDisplayStats = false;
+  let isReadyToDisplayStats = true;
 
-  $: pageTitle = $page.params.site === "dashboard" ? "Dashboard" : `Dashboard - ${$page.params.site}`;
+  $: pageTitle = `Dashboard - ${$page.params.site}`;
 
-  onMount(async () => {
-    await fetchSiteVisibility();
-    if ($siteVisibility === "public") {
-      await goto(`/${$page.params.site}`, {
-        replaceState: true
-      });
-      isReadyToDisplayStats = true;
-      return;
-    }
-
-    await init();
-    if (!$userMetadataStore) {
-      goto("/auth");
-      return;
-    }
-
-    if (!$userMetadataStore.sites || Object.keys($userMetadataStore.sites).length === 0) {
-      goto("/onboarding");
-      return;
-    }
-
-    const sites = Object.keys($userMetadataStore.sites);
-    if (sites.length === 1) {
-      await goto(`/${sites[0]}`, {
-        replaceState: true
-      });
-      isReadyToDisplayStats = true;
-      return;
-    }
-
-    if (
-      sites.includes($page.params.site)
-    ) {
-      await goto(`/${$page.params.site}`, {
-        replaceState: true
-      });
-      isReadyToDisplayStats = true;
-      return;
-    }
-
-    if (sites.length >= 2) {
-      goto("/websites");
-      return;
-    }
-  });
+  fetchAllStats();
 </script>
 
 <div>

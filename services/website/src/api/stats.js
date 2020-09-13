@@ -1,29 +1,8 @@
 import { stores } from "@sapper/app";
 import { get, writable } from "svelte/store";
-import { ADMIN_API_BASE_URL, QUERY_API_BASE_URL } from "../config";
-import { userTokenStore } from "../auth/magic";
-
-export const siteVisibility = writable("private");
-export const fetchSiteVisibility = async () => {
-  const { page } = stores();
-  const site = get(page).params.site;
-  if (site === "dashboard") {
-    return;
-  }
-
-  const url = new URL(
-    `${ADMIN_API_BASE_URL}/website/${site}/settings/visibility`
-  );
-  const response = await fetch(url);
-  if (response.status === 200) {
-    siteVisibility.set((await response.json()).visibility);
-  }
-};
+import { QUERY_API_BASE_URL } from "../config";
 
 const fetchStats = async (path, store) => {
-  if (get(siteVisibility) === "private" && !get(userTokenStore)) {
-    return;
-  }
   if (get(dateRange).from === -1 && get(dateRange).to === -1) {
     return;
   }
@@ -32,16 +11,10 @@ const fetchStats = async (path, store) => {
   const site =
     get(page).path === "/" ? "your-analytics.org" : get(page).params.site;
 
-  const url = new URL(`${QUERY_API_BASE_URL}/${site}/${path}`);
-  url.searchParams.append("from", get(dateRange).from);
-  url.searchParams.append("to", get(dateRange).to);
-
-  const response = await fetch(url, {
-    headers: new Headers({
-      Authorization: "Bearer " + get(userTokenStore),
-    }),
-  });
-
+  const url = `${QUERY_API_BASE_URL}/${site}/${path}?from=${
+    get(dateRange).from
+  }&to=${get(dateRange).to}`;
+  const response = await fetch(url);
   if (response.status === 200) {
     store.set((await response.json()).data);
   }
@@ -108,6 +81,6 @@ export const dateRange = writable({
   from: -1,
   to: -1,
 });
-dateRange.subscribe(async () => {
-  await fetchAllStats();
+dateRange.subscribe(() => {
+  fetchAllStats();
 });

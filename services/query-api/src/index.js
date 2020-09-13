@@ -1,6 +1,7 @@
-const { Magic } = require("@magic-sdk/admin");
+const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const express = require("express");
+const jwt = require("jsonwebtoken");
 const { rootDb, domainDb } = require("@your-analytics/faunadb");
 
 const {
@@ -15,8 +16,6 @@ const {
   fetchWorldMap,
 } = require("./clickhouse");
 
-const magic = new Magic(process.env.MAGIC_SECRET_KEY);
-
 const app = express();
 process.env.NODE_ENV === "development" &&
   app.use(
@@ -27,15 +26,7 @@ process.env.NODE_ENV === "development" &&
 
 const port = process.env.PORT || 8081;
 
-const getMagicUser = async (req) => {
-  const token = magic.utils.parseAuthorizationHeader(req.headers.authorization);
-  try {
-    magic.token.validate(token);
-    return await magic.users.getMetadataByToken(token);
-  } catch (error) {
-    return null;
-  }
-};
+app.use(cookieParser(process.env.COOKIE_SECRET));
 
 const createStatsEndpoint = (path, fetcher) => {
   app.get(`/:domain/${path}`, async (req, res) => {
@@ -47,25 +38,34 @@ const createStatsEndpoint = (path, fetcher) => {
 
       let websiteSettings = {};
       if (visibilityData.visibility === "private") {
-        const magicUser = await getMagicUser(req);
-        if (!magicUser) {
+        const jwtCookie = req.signedCookies["jwt"];
+
+        let reqUser;
+        try {
+          const { user } = jwt.verify(jwtCookie, process.env.JWT_SECRET);
+          reqUser = user;
+        } catch (jwtError) {
           res.status(401).end();
           return;
         }
 
-        const user = await rootDb.users.find(magicUser.issuer);
-        if (!user.data.sites[domain]) {
+        const user = await rootDb.users.find(reqUser.issuer);
+        if (!user.sites[domain]) {
           console.error(
             new Error(
-              `User ${magicUser.issuer} tried to access domain ${domain} but is not authorized.`
+              `User ${user.issuer} tried to access domain ${domain} but is not authorized.`
             )
           );
           res.status(401).end();
           return;
         }
 
+        const domainServerKeySecret = await rootDb.users.getDomainServerKeySecret(
+          user.issuer,
+          domain
+        );
         const { data } = await domainDb.settings.getSettings(
-          user.data.sites[domain].serverKeySecret
+          domainServerKeySecret
         )();
         websiteSettings = data;
       } else {

@@ -1,6 +1,9 @@
+const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const express = require("express");
 const passport = require("passport");
+const passportCookie = require("passport-cookie");
+const jwt = require("jsonwebtoken");
 const { magic } = require("./middlewares");
 const { user, website } = require("./routes");
 
@@ -10,22 +13,39 @@ const port = process.env.PORT || 8082;
 process.env.NODE_ENV === "development" &&
   app.use(
     cors({
+      credentials: true,
       origin: /\.gitpod.io/,
     })
   );
 
 app.use(express.json());
-app.use(passport.initialize());
+app.use(cookieParser(process.env.COOKIE_SECRET));
 passport.use(magic);
+passport.use(
+  new passportCookie.Strategy(
+    {
+      cookieName: "jwt",
+      signed: true,
+    },
+    (token, done) => {
+      const payload = jwt.verify(token, process.env.JWT_SECRET);
+      return done(null, payload.user);
+    }
+  )
+);
+app.use(passport.initialize());
 
-const authenticate = passport.authenticate("magic", { session: false });
+const authenticateMagic = passport.authenticate("magic", { session: false });
+const authenticateJwtCookieCombo = passport.authenticate("cookie", {
+  session: false,
+});
 
 app.get("/", async (req, res) => {
   res.status(200).end();
 });
 
-app.use("/user", user(authenticate));
-app.use("/website", website(authenticate));
+app.use("/user", user(authenticateMagic, authenticateJwtCookieCombo));
+app.use("/website", website(authenticateJwtCookieCombo));
 
 app.post("/beta-email", async (req, res) => {
   try {

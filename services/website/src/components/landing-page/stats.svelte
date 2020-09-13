@@ -1,7 +1,7 @@
 <script>
   import { sub } from "date-fns";
   import { onMount } from "svelte";
-  import { dateRange, siteVisibility } from "../../api/stats";
+  import { dateRange } from "../../api/stats";
   import Card from "../card.svelte";
   import StatsCard from "./stats-card.svelte";
   import Section from "./section.svelte";
@@ -15,7 +15,6 @@
   import WorldMap from "../stats/world-map.svelte";
 
   onMount(() => {
-    siteVisibility.set("public");
     dateRange.set({
       from: sub(new Date(), {
         days: 30

@@ -1,11 +1,12 @@
 <script>
-  import { userMetadataStore, logout } from "../../auth/magic";
+  import { logout } from "../../auth/magic";
   import isOpen from "../../stores/mobile-menu";
+  import { session } from "../../stores/session";
 
-  $: hasMultipleSites = $userMetadataStore && Object.keys($userMetadataStore.sites || {}).length > 1;
-  $: userFirstName = ($userMetadataStore && $userMetadataStore.firstName) || "";
-  $: userEmail = ($userMetadataStore && $userMetadataStore.email) || "";
-  $: userEmailHash = $userMetadataStore && $userMetadataStore.emailHash;
+  $: hasMultipleSites = Object.keys($session.user.sites || {}).length > 1;
+  $: userFirstName = ($session.user.firstName) || "";
+  $: userEmail = ($session.user.email) || "";
+  $: userEmailHash = $session.user.emailHash;
 
   const handleLogout = async () => {
     await logout();

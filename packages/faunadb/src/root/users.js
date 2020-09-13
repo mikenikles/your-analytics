@@ -1,6 +1,22 @@
+const crypto = require("crypto");
 const faunadb = require("faunadb");
 
 const q = faunadb.query;
+
+const prepareUserForPublic = async (user) => {
+  const { firstName, email, issuer, sites } = user;
+  return {
+    sites: Object.keys(sites).reduce((result, site) => {
+      result[site] = {};
+      // Extend the empty object with site values that are meant to be public
+      return result;
+    }, {}),
+    issuer,
+    firstName,
+    email,
+    emailHash: crypto.createHash("md5").update(email).digest("hex"),
+  };
+};
 
 const createUser = (serverClient) => (user) =>
   serverClient.query(
@@ -24,7 +40,12 @@ const findUser = (serverClient) => async (issuer) => {
     return null;
   }
 
-  return serverClient.query(q.Get(response.data[0]));
+  const user = await serverClient.query(q.Get(response.data[0]));
+  if (!user) {
+    return null;
+  }
+
+  return prepareUserForPublic(user.data);
 };
 
 const setFirstName = (serverClient) => (issuer, firstName) =>
@@ -70,10 +91,42 @@ const addNewWebsiteServerKey = (serverClient) => (issuer, data) =>
     )
   );
 
+const getDomainServerKeySecret = (serverClient) => async (issuer, domain) => {
+  const response = await serverClient.query(
+    q.Paginate(q.Match(q.Index("user_by_issuer"), issuer))
+  );
+
+  if (response.data.length > 1) {
+    const error = new Error(`More than one user found for issuer: ${issuer}`);
+    console.error(error);
+    throw error;
+  }
+
+  if (response.data.length === 0) {
+    return null;
+  }
+
+  const user = await serverClient.query(q.Get(response.data[0]));
+  if (!user) {
+    return null;
+  }
+
+  if (!user.data.sites) {
+    return null;
+  }
+
+  if (!user.data.sites[domain]) {
+    return null;
+  }
+
+  return user.data.sites[domain].serverKeySecret;
+};
+
 module.exports = {
   createUser,
   findUser,
   setFirstName,
   setLastLoginAt,
   addNewWebsiteServerKey,
+  getDomainServerKeySecret,
 };
