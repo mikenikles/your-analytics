@@ -10,7 +10,7 @@
   };
 
   let selectedWebsite = $page.params.site;
-  $: websites = $session.user.sites;
+  $: websites = $session.user ? $session.user.sites : null;
   $: if (selectedWebsite !== $page.params.site) {
     navigateAndFetchStats();
   }

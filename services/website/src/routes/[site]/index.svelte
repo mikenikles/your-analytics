@@ -1,7 +1,10 @@
 <script context="module">
   export async function preload(page, session) {
     const { user } = session;
-    if (!user) {
+    const response = await this.fetch(`api/admin/website/${page.path.substring(1)}/settings/visibility`);
+    const siteVisibility = (await response.json()).visibility;
+
+    if (!user && siteVisibility === "private") {
       this.redirect(302, "auth");
       return;
     }
