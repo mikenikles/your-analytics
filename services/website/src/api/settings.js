@@ -1,19 +1,9 @@
-import { stores } from "@sapper/app";
-import { get } from "svelte/store";
 import { ADMIN_API_BASE_URL } from "../config";
-import { userTokenStore } from "../auth/magic";
 
 export const setVisibility = async (website, visibility) => {
-  if (!get(userTokenStore)) {
-    return;
-  }
-
-  const url = new URL(
-    `${ADMIN_API_BASE_URL}/website/${website}/settings/visibility`
-  );
+  const url = `${ADMIN_API_BASE_URL}/website/${website}/settings/visibility`;
   const response = await fetch(url, {
     headers: new Headers({
-      Authorization: "Bearer " + get(userTokenStore),
       "Content-Type": "application/json",
     }),
     body: JSON.stringify({
@@ -25,22 +15,32 @@ export const setVisibility = async (website, visibility) => {
   return response.status === 200;
 };
 
-export const getSettings = async (website) => {
-  if (!get(userTokenStore)) {
-    return {};
-  }
+export const getVisibility = async (fetch, host, website) => {
+  const url = new URL(
+    `https://${host}/${ADMIN_API_BASE_URL}/website/${website}/settings/visibility`
+  );
+  const response = await fetch(url);
 
-  const url = new URL(`${ADMIN_API_BASE_URL}/website/${website}/settings`);
+  if (response.status === 200) {
+    return await response.json();
+  }
+  return null;
+};
+
+export const getSettings = async (fetch, host, website) => {
+  const url = new URL(
+    `https://${host}/${ADMIN_API_BASE_URL}/website/${website}/settings`
+  );
   const response = await fetch(url, {
-    headers: new Headers({
-      Authorization: "Bearer " + get(userTokenStore),
+    headers: {
       "Content-Type": "application/json",
-    }),
+    },
     method: "GET",
+    credentials: "include",
   });
 
   if (response.status === 200) {
     return await response.json();
   }
-  return {};
+  return null;
 };

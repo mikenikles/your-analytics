@@ -1,9 +1,3 @@
-<script>
-  import { stores } from "@sapper/app";
-
-  const { page } = stores();
-</script>
-
 <div class="hidden md:block">
   <nav>
     <ul class="flex font-semibold tracking-wide">

@@ -1,21 +1,24 @@
+<script context="module">
+  export function preload(page, session) {
+    const { user } = session;
+    if (user) {
+      this.redirect(302, "dashboard");
+    }
+  };
+</script>
+
 <script>
-  import { goto } from '@sapper/app';
+  import { stores } from '@sapper/app';
   import { onMount } from "svelte";
-  import { userMetadataStore, init, login } from "../auth/magic";
+  import { login } from "../auth/magic";
   import Card from "../components/card.svelte";
   import Header from "../components/header/index.svelte";
   import MainContent from "../components/main-content.svelte";
 
-  $: if ($userMetadataStore) {
-    goto("/dashboard");
-  }
-
-  onMount(() => {
-    init();
-  });
+  const { session } = stores();
 </script>
 
-{#if !$userMetadataStore}
+{#if !$session.user}
   <Header />
   <MainContent>
     <div class="sm:mx-auto sm:w-full sm:max-w-md">

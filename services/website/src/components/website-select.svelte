@@ -1,16 +1,16 @@
 <script>
   import { goto, stores } from '@sapper/app';
   import { fetchAllStats } from "../api/stats";
-  import { userMetadataStore } from "../auth/magic";	
+  import { session } from "../stores/session";
 
   const { page } = stores();
   const navigateAndFetchStats = async () => {
     await goto(`/${selectedWebsite}`);
-    await fetchAllStats();
+    // fetchAllStats();
   };
 
   let selectedWebsite = $page.params.site;
-  $: websites = $userMetadataStore && $userMetadataStore.sites;
+  $: websites = $session.user ? $session.user.sites : null;
   $: if (selectedWebsite !== $page.params.site) {
     navigateAndFetchStats();
   }

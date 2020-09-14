@@ -4,6 +4,16 @@ const express = require("express");
 const router = express.Router();
 
 module.exports = (authenticate) => {
+  router.get("/", authenticate, async (req, res) => {
+    try {
+      const user = await rootDb.users.find(req.user.issuer);
+      return res.status(200).json(user.sites);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).end();
+    }
+  });
+
   router.post("/", authenticate, async (req, res) => {
     try {
       if (req.body.firstName) {
@@ -41,7 +51,7 @@ module.exports = (authenticate) => {
     try {
       const domain = req.params.domain;
       const user = await rootDb.users.find(req.user.issuer);
-      if (!user.data.sites[domain]) {
+      if (!user.sites[domain]) {
         console.error(
           new Error(
             `User ${req.user.issuer} tried to access domain ${domain} but is not authorized.`
@@ -50,8 +60,13 @@ module.exports = (authenticate) => {
         res.status(401).end();
         return;
       }
+
+      const domainServerKeySecret = await rootDb.users.getDomainServerKeySecret(
+        user.issuer,
+        domain
+      );
       const settings = await domainDb.settings.getSettings(
-        user.data.sites[domain].serverKeySecret
+        domainServerKeySecret
       )();
       res.status(200).send(JSON.stringify(settings.data));
     } catch (error) {

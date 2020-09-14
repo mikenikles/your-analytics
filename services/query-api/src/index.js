@@ -1,7 +1,10 @@
-const { Magic } = require("@magic-sdk/admin");
+const { rootDb, domainDb } = require("@your-analytics/faunadb");
+const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const express = require("express");
-const { rootDb, domainDb } = require("@your-analytics/faunadb");
+const helmet = require("helmet");
+const jwt = require("jsonwebtoken");
+const { RateLimiterMemory } = require("rate-limiter-flexible");
 
 const {
   fetchBrowser,
@@ -15,9 +18,25 @@ const {
   fetchWorldMap,
 } = require("./clickhouse");
 
-const magic = new Magic(process.env.MAGIC_SECRET_KEY);
+const rateLimiter = new RateLimiterMemory({
+  points: 10, // 10 requests
+  duration: 1, // per 1 second by IP
+});
+
+const rateLimiterMiddleware = (req, res, next) => {
+  rateLimiter
+    .consume(req.ip)
+    .then(() => {
+      next();
+    })
+    .catch(() => {
+      res.status(429).send("Too Many Requests");
+    });
+};
 
 const app = express();
+const port = process.env.PORT || 8081;
+
 process.env.NODE_ENV === "development" &&
   app.use(
     cors({
@@ -25,17 +44,9 @@ process.env.NODE_ENV === "development" &&
     })
   );
 
-const port = process.env.PORT || 8081;
-
-const getMagicUser = async (req) => {
-  const token = magic.utils.parseAuthorizationHeader(req.headers.authorization);
-  try {
-    magic.token.validate(token);
-    return await magic.users.getMetadataByToken(token);
-  } catch (error) {
-    return null;
-  }
-};
+app.use(helmet());
+app.use(rateLimiterMiddleware);
+app.use(cookieParser(process.env.COOKIE_SECRET));
 
 const createStatsEndpoint = (path, fetcher) => {
   app.get(`/:domain/${path}`, async (req, res) => {
@@ -47,25 +58,34 @@ const createStatsEndpoint = (path, fetcher) => {
 
       let websiteSettings = {};
       if (visibilityData.visibility === "private") {
-        const magicUser = await getMagicUser(req);
-        if (!magicUser) {
+        const jwtCookie = req.signedCookies["jwt"];
+
+        let reqUser;
+        try {
+          const { user } = jwt.verify(jwtCookie, process.env.JWT_SECRET);
+          reqUser = user;
+        } catch (jwtError) {
           res.status(401).end();
           return;
         }
 
-        const user = await rootDb.users.find(magicUser.issuer);
-        if (!user.data.sites[domain]) {
+        const user = await rootDb.users.find(reqUser.issuer);
+        if (!user.sites[domain]) {
           console.error(
             new Error(
-              `User ${magicUser.issuer} tried to access domain ${domain} but is not authorized.`
+              `User ${user.issuer} tried to access domain ${domain} but is not authorized.`
             )
           );
           res.status(401).end();
           return;
         }
 
+        const domainServerKeySecret = await rootDb.users.getDomainServerKeySecret(
+          user.issuer,
+          domain
+        );
         const { data } = await domainDb.settings.getSettings(
-          user.data.sites[domain].serverKeySecret
+          domainServerKeySecret
         )();
         websiteSettings = data;
       } else {

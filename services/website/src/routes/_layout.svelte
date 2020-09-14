@@ -1,10 +1,13 @@
 <script>
   import Footer from "../components/footer.svelte";
   import TailwindCSS from '../components/tailwindcss.svelte';
+  import { session } from "../stores/session";
 
   export let segment;
 
   $: segment; // Gets rid of the "<Laout> was created with unknown prop 'segment'" browser console warning
+
+  session.init();
 </script>
 
 <style>

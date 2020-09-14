@@ -4,6 +4,7 @@ const {
   setFirstName,
   setLastLoginAt,
   addNewWebsiteServerKey,
+  getDomainServerKeySecret,
 } = require("./users");
 
 module.exports = (serverClient) => ({
@@ -13,5 +14,6 @@ module.exports = (serverClient) => ({
     setFirstName: setFirstName(serverClient),
     setLastLoginAt: setLastLoginAt(serverClient),
     addNewWebsiteServerKey: addNewWebsiteServerKey(serverClient),
+    getDomainServerKeySecret: getDomainServerKeySecret(serverClient),
   },
 });
