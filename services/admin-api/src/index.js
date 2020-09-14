@@ -1,6 +1,7 @@
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const express = require("express");
+const helmet = require("helmet");
 const passport = require("passport");
 const passportCookie = require("passport-cookie");
 const jwt = require("jsonwebtoken");
@@ -18,6 +19,7 @@ process.env.NODE_ENV === "development" &&
     })
   );
 
+app.use(helmet());
 app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_SECRET));
 passport.use(magic);

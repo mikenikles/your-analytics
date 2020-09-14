@@ -1,6 +1,7 @@
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const express = require("express");
+const helmet = require("helmet");
 const jwt = require("jsonwebtoken");
 const { rootDb, domainDb } = require("@your-analytics/faunadb");
 
@@ -17,6 +18,8 @@ const {
 } = require("./clickhouse");
 
 const app = express();
+const port = process.env.PORT || 8081;
+
 process.env.NODE_ENV === "development" &&
   app.use(
     cors({
@@ -24,8 +27,7 @@ process.env.NODE_ENV === "development" &&
     })
   );
 
-const port = process.env.PORT || 8081;
-
+app.use(helmet());
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
 const createStatsEndpoint = (path, fetcher) => {
