@@ -15,6 +15,18 @@ export const setVisibility = async (website, visibility) => {
   return response.status === 200;
 };
 
+export const getVisibility = async (fetch, host, website) => {
+  const url = new URL(
+    `https://${host}/${ADMIN_API_BASE_URL}/website/${website}/settings/visibility`
+  );
+  const response = await fetch(url);
+
+  if (response.status === 200) {
+    return await response.json();
+  }
+  return null;
+};
+
 export const getSettings = async (fetch, host, website) => {
   const url = new URL(
     `https://${host}/${ADMIN_API_BASE_URL}/website/${website}/settings`

@@ -1,8 +1,9 @@
 <script context="module">
+  import { getVisibility } from "../../api/settings";
+
   export async function preload(page, session) {
     const { user } = session;
-    const response = await this.fetch(`https://${page.host}/api/admin/website/${page.path.substring(1)}/settings/visibility`);
-    const siteVisibility = (await response.json()).visibility;
+    const siteVisibility = await getVisibility(this.fetch, page.host, page.path.substring(1));
 
     if (!user && siteVisibility === "private") {
       this.redirect(302, "auth");
