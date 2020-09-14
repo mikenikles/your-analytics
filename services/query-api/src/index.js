@@ -1,9 +1,10 @@
+const { rootDb, domainDb } = require("@your-analytics/faunadb");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const express = require("express");
 const helmet = require("helmet");
 const jwt = require("jsonwebtoken");
-const { rootDb, domainDb } = require("@your-analytics/faunadb");
+const { RateLimiterMemory } = require("rate-limiter-flexible");
 
 const {
   fetchBrowser,
@@ -17,6 +18,22 @@ const {
   fetchWorldMap,
 } = require("./clickhouse");
 
+const rateLimiter = new RateLimiterMemory({
+  points: 10, // 10 requests
+  duration: 1, // per 1 second by IP
+});
+
+const rateLimiterMiddleware = (req, res, next) => {
+  rateLimiter
+    .consume(req.ip)
+    .then(() => {
+      next();
+    })
+    .catch(() => {
+      res.status(429).send("Too Many Requests");
+    });
+};
+
 const app = express();
 const port = process.env.PORT || 8081;
 
@@ -28,6 +45,7 @@ process.env.NODE_ENV === "development" &&
   );
 
 app.use(helmet());
+app.use(rateLimiterMiddleware);
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
 const createStatsEndpoint = (path, fetcher) => {
