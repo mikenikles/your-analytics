@@ -6,7 +6,7 @@
   const { page } = stores();
   const navigateAndFetchStats = async () => {
     await goto(`/${selectedWebsite}`);
-    fetchAllStats();
+    // fetchAllStats();
   };
 
   let selectedWebsite = $page.params.site;

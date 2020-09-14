@@ -1,5 +1,6 @@
 <script context="module">
   import { getVisibility } from "../../api/settings";
+  import { fetchAllStats } from "../../api/stats";
 
   export async function preload(page, session) {
     const { user } = session;
@@ -9,11 +10,26 @@
       this.redirect(302, "auth");
       return;
     }
+
+    const statsResults = await fetchAllStats(this.fetch, page.host, page.params.site);
+    const stats = {};
+
+    statsResults.forEach(({status, value}) => {
+      if (status === "fulfilled") {
+        stats[value.storeName] = value.data;
+      } else {
+        stats[value.storeName] = {};
+      }
+    });
+
+    return {
+      stats
+    };
   };
 </script>
 
 <script>
-  import { fetchAllStats } from "../../api/stats";
+  import { statsStores } from "../../api/stats";
   import Card from "../../components/card.svelte";
   import DateRange from "../../components/date-range.svelte";
   import WebsiteSelect from "../../components/website-select.svelte";
@@ -27,7 +43,11 @@
   import Visitors from "../../components/stats/visitors.svelte";
   import WorldMap from "../../components/stats/world-map.svelte";
 
-  fetchAllStats();
+  export let stats;
+
+  Object.entries(stats).forEach(([storeName, data]) => {
+    statsStores[storeName].set(data);
+  });
 </script>
 
 <div>
