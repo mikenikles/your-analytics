@@ -13,8 +13,8 @@
   <a href="/">
     <img src="/logo-color.svg" alt="Your Analytics logo" class="h-8">
   </a>
-  <button on:click={logout}>Logout</button>
   {#if false}
+  <button on:click={logout}>Logout</button>
   <Nav>
     <NavItem href="/" label="Home" isActive={$page.path === "/"} />
     <NavItem href="/privacy" label="Privacy" isActive={$page.path === "/privacy"} />
