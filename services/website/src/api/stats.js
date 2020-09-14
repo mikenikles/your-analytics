@@ -7,8 +7,7 @@ const fetchStats = (fetch, host, site) => async (path, storeName) => {
     return;
   }
 
-  const siteToUse = site === "/" ? "your-analytics.org" : site;
-  const url = `https://${host}/${QUERY_API_BASE_URL}/${siteToUse}/${path}?from=${
+  const url = `https://${host}/${QUERY_API_BASE_URL}/${site}/${path}?from=${
     get(dateRange).from
   }&to=${get(dateRange).to}`;
 
