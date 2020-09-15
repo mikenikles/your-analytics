@@ -3,7 +3,9 @@
   import { initFilters } from "../stores/stats-filters-query";
 
   export async function preload(page) {
-    initFilters(page.query);
+    initFilters({
+      preset: "30days"
+    });
     const statsResults = await fetchAllStats(this.fetch, page.host, "your-analytics.org");
     const stats = {};
 
