@@ -1,7 +1,9 @@
 <script context="module">
   import { fetchAllStats } from "../api/stats";
+  import { initFilters } from "../stores/stats-filters-query";
 
   export async function preload(page) {
+    initFilters(page.query);
     const statsResults = await fetchAllStats(this.fetch, page.host, "your-analytics.org");
     const stats = {};
 
