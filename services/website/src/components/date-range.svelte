@@ -1,58 +1,26 @@
 <script>
-  import { endOfDay, startOfDay, startOfYear, sub } from "date-fns";
-  import { dateRange } from "../api/stats";
+  import { goto, stores } from '@sapper/app';
+  import dateRange, { datePresets } from "../stores/date-range";
+  import statsFiltersQueryString from "../stores/stats-filters-query-string";
 
-  let fromDate;
-  let toDate;
+  const { page } = stores();
 
-  const datePresets = {
-    today: {
-      label: "Today",
-      calculateFromDate: () => new Date(),
-      calculateToDate: () => new Date()
-    },
-    "7days": {
-      label: "Last 7 days",
-      calculateFromDate: () =>
-        sub(new Date(), {
-          days: 7
-        }),
-      calculateToDate: () => new Date()
-    },
-    "30days": {
-      label: "Last 30 days",
-      calculateFromDate: () =>
-        sub(new Date(), {
-          days: 30
-        }),
-      calculateToDate: () => new Date()
-    },
-    thisyear: {
-      label: "This year",
-      calculateFromDate: () => startOfYear(new Date()),
-      calculateToDate: () => new Date()
-    },
-    custom: {
-      label: "Custom",
-      calculateFromDate: () => new Date(fromDate),
-      calculateToDate: () => new Date(toDate)
+  let datePreset = $page.query.preset || null;
+  let fromDate = $page.query.from || null;
+  let toDate = $page.query.to || null;
+
+  const applyCustomDateRange = () => {
+    dateRange.setCustomRange(fromDate, toDate);
+    if (fromDate !== $page.query.from || toDate !== $page.query.to) {
+      goto(`${$page.path}?${$statsFiltersQueryString}`);
     }
   };
 
-  let datePreset;
-
-  const applyCustomDateRange = () => {
-    dateRange.set({
-      from: startOfDay(datePresets.custom.calculateFromDate()).getTime(),
-      to: endOfDay(datePresets.custom.calculateToDate()).getTime()
-    });
-  };
-
   $: if (datePreset && datePreset !== "custom") {
-    dateRange.set({
-      from: startOfDay(datePresets[datePreset].calculateFromDate()).getTime(),
-      to: endOfDay(datePresets[datePreset].calculateToDate()).getTime()
-    });
+    dateRange.setPreset(datePreset);
+    if (datePreset !== $page.query.preset) {
+      goto(`${$page.path}?${$statsFiltersQueryString}`);
+    }
   }
 </script>
 

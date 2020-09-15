@@ -1,7 +1,4 @@
 <script>
-  import { sub } from "date-fns";
-  import { onMount } from "svelte";
-  import { dateRange } from "../../api/stats";
   import Card from "../card.svelte";
   import StatsCard from "./stats-card.svelte";
   import Section from "./section.svelte";
@@ -13,15 +10,6 @@
   import UniqueVisitors from "../stats/unique-visitors.svelte";
   import Visitors from "../stats/visitors.svelte";
   import WorldMap from "../stats/world-map.svelte";
-
-  onMount(() => {
-    dateRange.set({
-      from: sub(new Date(), {
-        days: 30
-      }).getTime(),
-      to: new Date().getTime()
-    })
-  });
 </script>
 
 <Section title="Visibility into what matters" description="We keep it simple and focus on web analytics metrics that matter by also respecting your visitor's privacy.">

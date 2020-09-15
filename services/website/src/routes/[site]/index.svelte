@@ -1,6 +1,7 @@
 <script context="module">
   import { getVisibility } from "../../api/settings";
   import { fetchAllStats } from "../../api/stats";
+  import { initFilters } from "../../stores/stats-filters-query";
 
   export async function preload(page, session) {
     const { user } = session;
@@ -11,9 +12,9 @@
       return;
     }
 
+    initFilters(page.query);
     const statsResults = await fetchAllStats(this.fetch, page.host, page.params.site);
     const stats = {};
-
     statsResults.forEach(({status, value}) => {
       if (status === "fulfilled") {
         stats[value.storeName] = value.data;
@@ -29,6 +30,7 @@
 </script>
 
 <script>
+  import { stores } from "@sapper/app";
   import { statsStores } from "../../api/stats";
   import Card from "../../components/card.svelte";
   import DateRange from "../../components/date-range.svelte";
@@ -44,6 +46,10 @@
   import WorldMap from "../../components/stats/world-map.svelte";
 
   export let stats;
+
+  const { page } = stores();
+
+  initFilters($page.query);
 
   Object.entries(stats).forEach(([storeName, data]) => {
     statsStores[storeName].set(data);

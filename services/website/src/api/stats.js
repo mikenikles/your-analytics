@@ -1,15 +1,26 @@
-import { endOfDay, startOfDay } from "date-fns";
 import { get, writable } from "svelte/store";
 import { QUERY_API_BASE_URL } from "../config";
+import { convertPresetToFromAndToRange } from "../stores/date-range";
+import statsFiltersQuery from "../stores/stats-filters-query";
 
 const fetchStats = (fetch, host, site) => async (path, storeName) => {
-  if (get(dateRange).from === -1 && get(dateRange).to === -1) {
-    return;
-  }
+  let dateRangeParams = convertPresetToFromAndToRange(
+    get(statsFiltersQuery).preset,
+    get(statsFiltersQuery).from,
+    get(statsFiltersQuery).to
+  );
 
-  const url = `https://${host}/${QUERY_API_BASE_URL}/${site}/${path}?from=${
-    get(dateRange).from
-  }&to=${get(dateRange).to}`;
+  const apiQueryParams = Object.assign(
+    {},
+    get(statsFiltersQuery),
+    dateRangeParams
+  );
+  delete apiQueryParams.preset; // Not needed by the API. This is mainly for user experience in the browser URL
+
+  const filterQueryString = Object.entries(apiQueryParams)
+    .map(([key, value]) => `${key}=${value}`)
+    .join("&");
+  const url = `https://${host}/${QUERY_API_BASE_URL}/${site}/${path}?${filterQueryString}`;
 
   const response = await fetch(url, {
     credentials: "include",
@@ -80,12 +91,3 @@ export const fetchAllStats = (fetch, host, site) => {
     fetcher("world-map", "worldMap"),
   ]);
 };
-
-// TODO: Use query parameters and load the date range based on that
-export const dateRange = writable({
-  from: startOfDay(new Date()).getTime(),
-  to: endOfDay(new Date()).getTime(),
-});
-dateRange.subscribe(() => {
-  // fetchAllStats(); // TODO: Figure this out. It's likely time to use query params to trigger a fetch
-});
