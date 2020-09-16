@@ -5,9 +5,17 @@
 
   const { page } = stores();
 
-  let datePreset = $page.query.preset || null;
-  let fromDate = $page.query.from || null;
-  let toDate = $page.query.to || null;
+  let datePreset = null;
+  let fromDate = null;
+  let toDate = null;
+
+  $: if ($page.query.preset && $page.query.preset === "custom" &&
+    ($page.query.from !== fromDate) &&
+    ($page.query.to !== toDate)) {
+      datePreset = $page.query.preset;
+      fromDate = $page.query.from;
+      toDate = $page.query.to;
+  }
 
   const applyCustomDateRange = () => {
     dateRange.setCustomRange(fromDate, toDate);
@@ -21,7 +29,7 @@
     if (datePreset !== $page.query.preset) {
       goto(`${$page.path}?${$statsFiltersQueryString}`);
     }
-  }
+  };
 </script>
 
 <div class="mx-2 flex flex-col sm:flex-row sm:items-end">

@@ -1,7 +1,12 @@
 <script>
+  import { goto, stores } from '@sapper/app';
   import Chart from "chart.js";
   import { visitors } from "../../api/stats";
+  import dateRange from "../../stores/date-range";
+  import statsFiltersQueryString from "../../stores/stats-filters-query-string";
   import Loading from "./loading.svelte";
+
+  const { page } = stores();
 
   let chartElement;
   let chart;
@@ -27,6 +32,15 @@
         options: {
           legend: {
             display: false
+          },
+          onClick: (event, item) => {
+            if (item && item.length > 0) {
+              const dateClicked = item[0]._chart.config.data.labels[item[0]._index];
+              if (dateClicked.match(/\d{4}-\d{2}-\d{2}/)) {
+                dateRange.setCustomRange(dateClicked, dateClicked);
+                goto(`${$page.path}?${$statsFiltersQueryString}`);
+              }
+            }
           },
           scales: {
             xAxes: [{
