@@ -19,8 +19,8 @@ const {
 } = require("./clickhouse");
 
 const rateLimiter = new RateLimiterMemory({
-  points: 10, // 10 requests
-  duration: 1, // per 1 second by IP
+  points: 20, // # of requests
+  duration: 1, // per x second by IP
 });
 
 const rateLimiterMiddleware = (req, res, next) => {
