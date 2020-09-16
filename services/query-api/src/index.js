@@ -20,7 +20,7 @@ const {
 
 const rateLimiter = new RateLimiterMemory({
   points: 20, // # of requests
-  duration: 1, // per x second by IP
+  duration: 1, // per x seconds by IP
 });
 
 const rateLimiterMiddleware = (req, res, next) => {
