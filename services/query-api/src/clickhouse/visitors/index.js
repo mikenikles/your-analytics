@@ -32,7 +32,7 @@ const dateRangeGranularities = [
     getLabel: (value) =>
       value < 12
         ? `${value === 0 ? 12 : value}am`
-        : `${value === 0 ? 12 : value - 12}pm`,
+        : `${value === 12 ? 12 : value - 12}pm`,
   },
   {
     test: ({ from, to }) =>
