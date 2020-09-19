@@ -6,6 +6,8 @@
   import statsFiltersQueryString from "../../stores/stats-filters-query-string";
   import Loading from "./loading.svelte";
 
+  const REGEX_DAY = /\d{4}-\d{2}-\d{2}/;
+  const REGEX_YEAR = /\d{4}/;
   const { page } = stores();
 
   let chartElement;
@@ -35,11 +37,13 @@
           },
           onClick: (event, item) => {
             if (item && item.length > 0) {
-              const dateClicked = item[0]._chart.config.data.labels[item[0]._index];
-              if (dateClicked.match(/\d{4}-\d{2}-\d{2}/)) {
-                dateRange.setCustomRange(dateClicked, dateClicked);
-                goto(`${$page.path}?${$statsFiltersQueryString}`);
+              const labelClicked = item[0]._chart.config.data.labels[item[0]._index];
+              if (labelClicked.match(REGEX_DAY)) {
+                dateRange.setCustomRange(labelClicked, labelClicked);
+              } else if (labelClicked.match(REGEX_YEAR)) {
+                dateRange.setCustomRange(`${labelClicked}-01-01`, `${labelClicked}-12-31`);
               }
+              goto(`${$page.path}?${$statsFiltersQueryString}`);
             }
           },
           scales: {
