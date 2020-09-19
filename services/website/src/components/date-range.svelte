@@ -10,13 +10,14 @@
   let toDate = null;
   let isLocalCustomDateChange = false;
 
-  $: if (!isLocalCustomDateChange && $page.query.preset && $page.query.preset === "custom" &&
-    ($page.query.from !== fromDate) &&
-    ($page.query.to !== toDate)) {
+  $: if (!isLocalCustomDateChange && $page.query.preset &&
+    $page.query.preset !== datePreset &&
+    $page.query.from !== fromDate &&
+    $page.query.to !== toDate) {
       datePreset = $page.query.preset;
       fromDate = $page.query.from;
       toDate = $page.query.to;
-  }
+  };
 
   const applyCustomDateRange = async () => {
     dateRange.setCustomRange(fromDate, toDate);
