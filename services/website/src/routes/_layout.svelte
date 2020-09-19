@@ -16,6 +16,10 @@
   }
 </style>
 
+<svelte:head>
+  <meta name="description" content="An open source web analytis platform with a focus on privacy and simplicity.">
+</svelte:head>
+
 <TailwindCSS />
 <main>
 	<slot></slot>

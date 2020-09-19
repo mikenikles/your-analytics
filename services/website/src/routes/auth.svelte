@@ -18,6 +18,10 @@
   const { session } = stores();
 </script>
 
+<svelte:head>
+  <title>Register / login | Your Analytics</title>
+</svelte:head>
+
 {#if !$session.user}
   <Header />
   <MainContent>

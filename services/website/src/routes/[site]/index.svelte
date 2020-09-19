@@ -56,6 +56,10 @@
   });
 </script>
 
+<svelte:head>
+  <title>Web analytics for {$page.params.site} | Your Analytics</title>
+</svelte:head>
+
 <div>
   <Header />
   <MainContent>
