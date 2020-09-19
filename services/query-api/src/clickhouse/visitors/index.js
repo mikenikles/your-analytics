@@ -78,7 +78,7 @@ const fetchVisitors = (ch) => async (dateRange, domain, timezone) => {
 
     stream.on("data", (row) => {
       // row: [label, total]
-      result[getLabel(row[0])] = row[1];
+      result[getLabel(row[0])] = row[1] * 1;
     });
 
     stream.on("end", () => {

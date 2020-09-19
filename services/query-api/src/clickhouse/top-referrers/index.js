@@ -14,7 +14,7 @@ const fetchTopReferrers = (ch) => async (dateRange, domain, timezone) => {
 
     stream.on("data", (row) => {
       // row: [referrer_domain, total]
-      result[row[0]] = row[1];
+      result[row[0]] = row[1] * 1;
     });
 
     stream.on("end", () => {

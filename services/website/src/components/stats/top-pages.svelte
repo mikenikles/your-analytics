@@ -1,5 +1,6 @@
 <script>
   import { topPages } from "../../api/stats";
+  import Number from "../stats/elements/number.svelte";
   import Table from "../table/index.svelte";
   import TableCell from "../table/cell.svelte";
   import TableRow from "../table/row.svelte";
@@ -32,14 +33,14 @@
       {#each topTen as [page, total], rowIndex}
         <TableRow {rowIndex}>
           <TableCell isFirst={true}>{page}</TableCell>
-          <TableCell isLast={true} clazz="text-right font-bold">{total}</TableCell>
+          <TableCell isLast={true} clazz="text-right font-bold"><Number number={total}/></TableCell>
         </TableRow>
       {/each}
       {#if showRest}
         {#each rest as [page, total], rowIndex}
           <TableRow {rowIndex}>
             <TableCell isFirst={true}>{page}</TableCell>
-            <TableCell isLast={true} clazz="text-right font-bold">{total}</TableCell>
+            <TableCell isLast={true} clazz="text-right font-bold"><Number number={total}/></TableCell>
           </TableRow>
         {/each}
       {/if}
