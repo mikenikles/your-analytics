@@ -13,7 +13,7 @@ const fetchUniqueVisitors = (ch) => async (dateRange, domain, timezone) => {
 
     stream.on("data", (row) => {
       // row: [total]
-      result = row[0];
+      result = row[0] * 1;
     });
 
     stream.on("end", () => {

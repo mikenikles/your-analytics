@@ -14,7 +14,7 @@ const fetchTopPages = (ch) => async (dateRange, domain, timezone) => {
 
     stream.on("data", (row) => {
       // row: [path, total]
-      result[row[0]] = row[1];
+      result[row[0]] = row[1] * 1;
     });
 
     stream.on("end", () => {

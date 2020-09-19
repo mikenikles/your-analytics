@@ -25,7 +25,7 @@ const fetchWorldMap = (ch) => async (dateRange, domain, timezone) => {
       const countryName = countryCodeToNameMap[row[0]]
         ? countryCodeToNameMap[row[0]]
         : row[0];
-      result[countryName] = parseInt(row[1], 10);
+      result[countryName] = row[1] * 1;
     });
 
     stream.on("end", () => {
