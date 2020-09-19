@@ -1,5 +1,6 @@
 <script>
   import { browser, os, screen } from "../../api/stats";
+  import Number from "../stats/elements/number.svelte";
   import Table from "../table/index.svelte";
   import TableCell from "../table/cell.svelte";
   import TableRow from "../table/row.svelte";
@@ -28,9 +29,9 @@
   {/if}
 
   <div class="py-4">
-    <button on:click={() => selectedTabIndex = 0} class:active={selectedTabIndex === 0} class="ml-2 py-1 px-3 rounded-full font-bold">Operating System</button>
-    <button on:click={() => selectedTabIndex = 1} class:active={selectedTabIndex === 1} class="py-1 px-3 rounded-full font-bold">Browser</button>
-    <button on:click={() => selectedTabIndex = 2} class:active={selectedTabIndex === 2} class="py-1 px-3 rounded-full font-bold">Screen</button>
+    <button on:click={() => selectedTabIndex = 0} class:active={selectedTabIndex === 0} class="py-1 px-2 rounded-full font-bold sm:ml-2 sm:px-3">Operating System</button>
+    <button on:click={() => selectedTabIndex = 1} class:active={selectedTabIndex === 1} class="py-1 px-2 rounded-full font-bold sm:px-3">Browser</button>
+    <button on:click={() => selectedTabIndex = 2} class:active={selectedTabIndex === 2} class="py-1 px-2 rounded-full font-bold sm:px-3">Screen</button>
   </div>
 
   <Table>
@@ -38,7 +39,7 @@
       {#each tabData[selectedTabIndex] as [label, total], rowIndex}
         <TableRow {rowIndex}>
           <TableCell isFirst={true}>{label}</TableCell>
-          <TableCell isLast={true} clazz="text-right font-bold">{total}</TableCell>
+          <TableCell isLast={true} clazz="text-right font-bold"><Number number={total}/></TableCell>
         </TableRow>
       {/each}
     </tbody>
