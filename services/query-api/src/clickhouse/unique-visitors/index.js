@@ -1,6 +1,6 @@
 const IS_DEV = process.env.NODE_ENV === "development";
 
-const fetchUniqueVisitorsDev = () => () => 14;
+const fetchUniqueVisitorsDev = () => () => 14233;
 
 const fetchUniqueVisitors = (ch) => async (dateRange, domain, timezone) => {
   const sql = `SELECT COUNT(DISTINCT user_id) AS total FROM youranalytics.events WHERE toUnixTimestamp(timestamp, '${timezone}') >= ${dateRange.from} AND toUnixTimestamp(timestamp, '${timezone}') <= ${dateRange.to} AND domain = '${domain}'`;
