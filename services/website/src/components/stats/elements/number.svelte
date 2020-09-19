@@ -8,10 +8,4 @@
   });
 </script>
 
-<style>
-  span {
-    font-variant-numeric: tabular-nums;
-  }
-</style>
-
 <span class="tabular-nums">{formattedNumber}</span>
