@@ -62,7 +62,7 @@
     <WebsiteSelect />
     <DateRange />
     <Card>
-      <div class="flex">
+      <div class="sm:flex">
         <UniqueVisitors />
         <TotalPageviews />
       </div>

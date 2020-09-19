@@ -1,5 +1,6 @@
 <script>
   import { topReferrers } from "../../api/stats";
+  import Number from "../stats/elements/number.svelte";
   import Table from "../table/index.svelte";
   import TableCell from "../table/cell.svelte";
   import TableRow from "../table/row.svelte";
@@ -37,7 +38,7 @@
             </div>
           </TableCell>
           <TableCell>{domain}</TableCell>
-          <TableCell isLast={true} clazz="text-right font-bold">{total}</TableCell>
+          <TableCell isLast={true} clazz="text-right font-bold"><Number number={total}/></TableCell>
         </TableRow>
       {/each}
       {#if showRest}
@@ -45,7 +46,7 @@
           <TableRow {rowIndex}>
             <TableCell isFirst={true}><img src="https://www.google.com/s2/favicons?domain={domain}" alt="{domain} favicon" /></TableCell>
             <TableCell>{domain}</TableCell>
-            <TableCell isLast={true} clazz="text-right font-bold">{total}</TableCell>
+            <TableCell isLast={true} clazz="text-right font-bold"><Number number={total}/></TableCell>
           </TableRow>
         {/each}
       {/if}

@@ -1,4 +1,5 @@
 <script>
+  import Number from "./number.svelte";
   import Loading from "../loading.svelte";
 
   export let title;
@@ -14,7 +15,7 @@
       <dd>
         <div class="font-extrabold text-6xl text-pink-600">
           {#if currentValue}
-            {currentValue}
+            <Number number={currentValue}/>
           {:else}
             <Loading />
           {/if}
