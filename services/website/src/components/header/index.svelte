@@ -11,7 +11,7 @@
 
 <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
   <a href="/">
-    <img src="/logo-color.svg" alt="Your Analytics logo" class="h-8">
+    <img src="/logo-color.svg" alt="Your Analytics logo" width="200" height="32" class="h-8">
   </a>
   {#if false}
   <button on:click={logout}>Logout</button>
