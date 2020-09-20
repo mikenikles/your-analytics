@@ -91,3 +91,9 @@ export const fetchAllStats = (fetch, host, site) => {
     fetcher("world-map", "worldMap"),
   ]);
 };
+
+export const fetchUniqueVisitorsOnOnboardingPage = (fetch, host, site) => {
+  uniqueVisitors.set(null);
+  const fetcher = fetchStats(fetch, host, site);
+  return fetcher("unique-visitors", "uniqueVisitors");
+};
