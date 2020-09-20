@@ -135,18 +135,19 @@
           <Card clazz="p-4">
             <p>Add the following script to all pages you want to track on your website.</p>
             <div class="relative mt-6">
-              <textarea id="script" value={script} rows="2" readonly class="w-full p-2 bg-gray-100 resize-none"></textarea>
+              <textarea id="script" value={script} rows="3" readonly class="w-full p-2 bg-gray-100 resize-none"></textarea>
               <a onclick="var textarea = document.getElementById('script'); textarea.focus(); textarea.select(); document.execCommand('copy');" href="javascript:void(0)" class="no-underline">
                 <svg class="absolute" style="top: 24px; right: 12px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
               </a>
             </div>
             <p class="mt-6">Once added, please visit <a href="https://{url}" target="_blank" rel="noopener" class="text-pink-600 hover:underline">{url}</a> to see the first visit logged below.</p>
-            <div class="relative mt-6">
-              <span class="flex absolute h-3 w-3 top-0 -mt-1 ml-1">
+            <div class="relative mt-6 pb-6 flex justify-center">
+              <span class="flex absolute h-6 w-6 top-0 -mt-1 ml-1">
                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-3 w-3 bg-pink-500"></span>
+                <span class="relative inline-flex rounded-full h-6 w-6 bg-pink-500"></span>
               </span>
             </div>
+            <p class="mt-6">Don't want to wait? <a href="/{url}" class="text-pink-600 hover:underline">Go to your dashboard.</a></p>
           </Card>
         {/if}
       </div>
