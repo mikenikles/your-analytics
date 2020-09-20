@@ -12,17 +12,22 @@
 </script>
 
 <script>
+  import { onDestroy } from "svelte";
   import { addNewWebsite } from "../api/onboarding";
+  import { fetchUniqueVisitorsOnOnboardingPage } from "../api/stats";
+  import dateRange from "../stores/date-range";
   import Card from "../components/card.svelte";
   import Header from "../components/header/index.svelte";
   import MainContent from "../components/main-content.svelte";
   import TimezoneSelect from "../components/timezone-select.svelte";
+  import UniqueVisitors from "../components/stats/unique-visitors.svelte";
 
   export let user;
 
   let url = "";
   let isSiteAdded = false;
   let isSiteAlreadyConfiguredGlobally = false;
+  let fetchUniqueVisitorsInterval;
 
   $: script = `<script async defer src="https://your-analytics.org/ya.js" data-domain="${url}"><\/script>`;
   $: existingUserSites = Object.keys(user.sites || {}) || [];
@@ -38,12 +43,22 @@
     switch (responseCode) {
       case 201:
         isSiteAdded = true;
+        dateRange.setPreset("today");
+        fetchUniqueVisitorsInterval = setInterval(() => {
+          fetchUniqueVisitorsOnOnboardingPage(window.fetch, window.location.hostname, url);
+        }, 10000);
         break;
       case 400:
         isSiteAlreadyConfiguredGlobally = true;
         break;
     }
   };
+
+  onDestroy(() => {
+    if (fetchUniqueVisitorsInterval) {
+      window.clearInterval(fetchUniqueVisitorsInterval);
+    }
+  });
 </script>
 
 <style>
@@ -118,7 +133,7 @@
 
               <div class="mt-6">
                 <span class="w-full rounded-md shadow-sm">
-                  <button type="submit" disabled={isUrlInvalid} class="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
+                  <button type="submit" disabled={isUrlInvalid} class="w-full flex justify-center mt-4 py-4 px-10 bg-blue-600 rounded-lg font-semibold text-white sm:mt-0">
                     Let's go
                   </button>
                 </span>
@@ -140,12 +155,9 @@
                 <svg class="absolute" style="top: 24px; right: 12px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
               </a>
             </div>
-            <p class="mt-6">Once added, please visit <a href="https://{url}" target="_blank" rel="noopener" class="text-pink-600 hover:underline">{url}</a> to see the first visit logged below.</p>
+            <p class="mt-6">Once added, please visit <a href="https://{url}" target="_blank" rel="noopener" class="text-pink-600 hover:underline">{url}</a> to see the first few visits logged below.</p>
             <div class="relative mt-6 pb-6 flex justify-center">
-              <span class="flex absolute h-6 w-6 top-0 -mt-1 ml-1">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-6 w-6 bg-pink-500"></span>
-              </span>
+              <UniqueVisitors />
             </div>
             <p class="mt-6">Don't want to wait? <a href="/{url}" class="text-pink-600 hover:underline">Go to your dashboard.</a></p>
           </Card>
