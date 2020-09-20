@@ -52,6 +52,10 @@
   }
 </style>
 
+<svelte:head>
+  <title>Onboarding | Your Analytics</title>
+</svelte:head>
+
 <Header />
 <MainContent>
   <div class="flex flex-col justify-center sm:px-6 lg:px-8">

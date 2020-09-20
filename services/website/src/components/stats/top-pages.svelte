@@ -32,14 +32,14 @@
     <tbody slot="tbody">
       {#each topTen as [page, total], rowIndex}
         <TableRow {rowIndex}>
-          <TableCell isFirst={true}>{page}</TableCell>
+          <TableCell isFirst={true} clazz="break-all">{page}</TableCell>
           <TableCell isLast={true} clazz="text-right font-bold"><Number number={total}/></TableCell>
         </TableRow>
       {/each}
       {#if showRest}
         {#each rest as [page, total], rowIndex}
           <TableRow {rowIndex}>
-            <TableCell isFirst={true}>{page}</TableCell>
+            <TableCell isFirst={true} clazz="break-all">{page}</TableCell>
             <TableCell isLast={true} clazz="text-right font-bold"><Number number={total}/></TableCell>
           </TableRow>
         {/each}

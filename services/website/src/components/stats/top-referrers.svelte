@@ -34,18 +34,18 @@
         <TableRow {rowIndex}>
           <TableCell isFirst={true}>
             <div class="w-4 h-4">
-              <img src="https://www.google.com/s2/favicons?domain={domain}" alt="{domain} favicon" />
+              <img src="https://www.google.com/s2/favicons?domain={domain}" alt="{domain} favicon" width="16" height="16" />
             </div>
           </TableCell>
-          <TableCell>{domain}</TableCell>
+          <TableCell clazz="break-all">{domain}</TableCell>
           <TableCell isLast={true} clazz="text-right font-bold"><Number number={total}/></TableCell>
         </TableRow>
       {/each}
       {#if showRest}
         {#each rest as [domain, total], rowIndex}
           <TableRow {rowIndex}>
-            <TableCell isFirst={true}><img src="https://www.google.com/s2/favicons?domain={domain}" alt="{domain} favicon" /></TableCell>
-            <TableCell>{domain}</TableCell>
+            <TableCell isFirst={true}><img src="https://www.google.com/s2/favicons?domain={domain}" alt="{domain} favicon" width="16" height="16" /></TableCell>
+            <TableCell clazz="break-all">{domain}</TableCell>
             <TableCell isLast={true} clazz="text-right font-bold"><Number number={total}/></TableCell>
           </TableRow>
         {/each}

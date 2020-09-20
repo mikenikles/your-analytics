@@ -49,6 +49,10 @@
   }
 </style>
 
+<svelte:head>
+  <title>Settings for {$page.params.site} | Your Analytics</title>
+</svelte:head>
+
 <Header />
 <MainContent>
   <div class="mt-10">

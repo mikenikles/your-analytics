@@ -29,6 +29,10 @@
   export let sites;
 </script>
 
+<svelte:head>
+  <title>Your websites | Your Analytics</title>
+</svelte:head>
+
 <Header />
 <MainContent>
   <h1 class="mx-2 text-4xl">Websites</h1>
