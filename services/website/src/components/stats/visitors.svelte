@@ -2,7 +2,7 @@
   import { goto, stores } from '@sapper/app';
   import Chart from "chart.js";
   import { visitors } from "../../api/stats";
-  import dateRange from "../../stores/date-range";
+  import dateRange, { isLocalDateChange } from "../../stores/date-range";
   import statsFiltersQueryString from "../../stores/stats-filters-query-string";
   import Loading from "./loading.svelte";
 
@@ -35,7 +35,7 @@
           legend: {
             display: false
           },
-          onClick: (event, item) => {
+          onClick: async (event, item) => {
             if (item && item.length > 0) {
               const labelClicked = item[0]._chart.config.data.labels[item[0]._index];
               if (labelClicked.match(REGEX_DAY)) {
@@ -43,7 +43,8 @@
               } else if (labelClicked.match(REGEX_YEAR)) {
                 dateRange.setCustomRange(`${labelClicked}-01-01`, `${labelClicked}-12-31`);
               }
-              goto(`${$page.path}?${$statsFiltersQueryString}`);
+              await goto(`${$page.path}?${$statsFiltersQueryString}`);
+              $isLocalDateChange = false;
             }
           },
           scales: {

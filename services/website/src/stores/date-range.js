@@ -76,4 +76,6 @@ export const convertPresetToFromAndToRange = (preset, from, to) =>
         to: endOfDay(datePresets[preset].calculateToDate()).getTime(),
       };
 
+export const isLocalDateChange = writable(false);
+
 export default create();
