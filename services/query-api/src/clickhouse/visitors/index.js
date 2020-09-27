@@ -58,9 +58,6 @@ const dateRangeGranularities = [
   },
 ];
 
-const isDateRangeOneDay = (dateRange) =>
-  dateRange.to - dateRange.from + 1 === 86400;
-
 const fetchVisitors = (ch) => async (dateRange, domain, timezone) => {
   const {
     granularity,
