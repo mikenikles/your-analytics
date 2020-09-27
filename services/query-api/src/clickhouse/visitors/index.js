@@ -29,7 +29,7 @@ const dateRangeOptions = [
   {
     test: ({ from, to }) => to - from + 1 === ONE_DAY,
     format: "%I%p",
-    getLabel: (value) => value,
+    getLabel: (value) => (value.startsWith("0") ? value.substring(1) : value),
   },
   {
     test: ({ from, to }) =>
