@@ -25,47 +25,41 @@ const fetchVisitorsDev = () => () => devData;
  * Each `dateRange.to` value represents 23:59:59 on a given day.
  * The `+ 1` in the calculations below are there to represent a full day.
  */
-const dateRangeGranularities = [
+const dateRangeOptions = [
   {
     test: ({ from, to }) => to - from + 1 === ONE_DAY,
-    granularity: "Hour",
-    getLabel: (value) =>
-      value < 12
-        ? `${value === 0 ? 12 : value}am`
-        : `${value === 12 ? 12 : value - 12}pm`,
+    format: "%I%p",
+    getLabel: (value) => value,
   },
   {
     test: ({ from, to }) =>
       to - from + 1 > ONE_DAY && to - from + 1 <= ONE_MONTH,
-    granularity: "Date",
+    format: "%F",
     getLabel: (value) => value,
   },
   {
     test: ({ from, to }) =>
       to - from + 1 > ONE_MONTH && to - from + 1 <= ONE_YEAR,
-    granularity: "Month",
-    getLabel: (value) => MONTHS[value],
+    format: "%m %Y",
+    getLabel: (value) => MONTHS[value * 1], // `* 1` to convert "01" to 1
   },
   {
     test: ({ from, to }) => to - from + 1 > ONE_YEAR,
-    granularity: "Year",
+    format: "%Y",
     getLabel: (value) => value,
   },
   {
     test: () => true,
-    granularity: "Date",
+    format: "%F",
     getLabel: (value) => value,
   },
 ];
 
 const fetchVisitors = (ch) => async (dateRange, domain, timezone) => {
-  const {
-    granularity,
-    getLabel,
-  } = dateRangeGranularities.find((dateRangeGranularity) =>
-    dateRangeGranularity.test(dateRange)
+  const { format, getLabel } = dateRangeOptions.find((dateRangeOption) =>
+    dateRangeOption.test(dateRange)
   );
-  const sql = `SELECT to${granularity}(timestamp, '${timezone}') AS day, COUNT(DISTINCT user_id) AS total FROM youranalytics.events WHERE toUnixTimestamp(timestamp, '${timezone}') >= ${dateRange.from} AND toUnixTimestamp(timestamp, '${timezone}') <= ${dateRange.to} AND domain = '${domain}' GROUP BY day`;
+  const sql = `SELECT formatDateTime(timestamp, ${format}, '${timezone}') AS daterange, COUNT(DISTINCT user_id) AS total FROM youranalytics.events WHERE toUnixTimestamp(timestamp, '${timezone}') >= ${dateRange.from} AND toUnixTimestamp(timestamp, '${timezone}') <= ${dateRange.to} AND domain = '${domain}' GROUP BY daterange`;
 
   const stream = ch.query(sql);
 
