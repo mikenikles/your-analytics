@@ -43,8 +43,8 @@
               } else if (labelClicked.match(REGEX_YEAR)) {
                 dateRange.setCustomRange(`${labelClicked}-01-01`, `${labelClicked}-12-31`);
               }
-              await goto(`${$page.path}?${$statsFiltersQueryString}`);
               $isLocalDateChange = false;
+              await goto(`${$page.path}?${$statsFiltersQueryString}`);
             }
           },
           scales: {

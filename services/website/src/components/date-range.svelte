@@ -8,10 +8,9 @@
   let datePreset = null;
   let fromDate = null;
   let toDate = null;
-//   let isLocalDateChange = false;
 
   $: if (!$isLocalDateChange && $page.query.preset &&
-    $page.query.preset !== datePreset &&
+    (($page.query.preset !== datePreset) || $page.query.preset === "custom") &&
     $page.query.from !== fromDate &&
     $page.query.to !== toDate) {
       datePreset = $page.query.preset;
