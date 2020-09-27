@@ -41,7 +41,11 @@ const dateRangeOptions = [
     test: ({ from, to }) =>
       to - from + 1 > ONE_MONTH && to - from + 1 <= ONE_YEAR,
     format: "%m %Y",
-    getLabel: (value) => MONTHS[value * 1], // `* 1` to convert "01" to 1
+    getLabel: (value) =>
+      `${MONTHS[value.substring(0, 2) * 1]} ${value.substring(
+        value.length,
+        3
+      )}`, // `* 1` to convert "01" to 1
   },
   {
     test: ({ from, to }) => to - from + 1 > ONE_YEAR,
