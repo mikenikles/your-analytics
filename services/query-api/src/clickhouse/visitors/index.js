@@ -24,6 +24,10 @@ const fetchVisitorsDev = () => () => devData;
 /**
  * Each `dateRange.to` value represents 23:59:59 on a given day.
  * The `+ 1` in the calculations below are there to represent a full day.
+ *
+ * Note: Use a `format` that can be used in an `ORDER BY` query to naturally
+ * sort the results, e.g. "2020 08". Use `getLabel` to turn that into a label
+ * that is displayed in the UI.
  */
 const dateRangeOptions = [
   {
