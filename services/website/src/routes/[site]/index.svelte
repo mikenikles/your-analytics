@@ -5,9 +5,9 @@
 
   export async function preload(page, session) {
     const { user } = session;
-    const siteVisibility = await getVisibility(this.fetch, page.host, page.path.substring(1));
+    const { visibility } = await getVisibility(this.fetch, page.host, page.path.substring(1));
 
-    if (!user && siteVisibility === "private") {
+    if (!user && visibility === "private") {
       this.redirect(302, "auth");
       return;
     }
