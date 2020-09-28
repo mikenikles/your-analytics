@@ -1,4 +1,4 @@
-import { endOfDay, startOfDay, startOfYear, sub } from "date-fns";
+import { endOfDay, parseISO, startOfDay, startOfYear, sub } from "date-fns";
 import { writable } from "svelte/store";
 
 export const datePresets = {
@@ -30,8 +30,8 @@ export const datePresets = {
   },
   custom: {
     label: "Custom",
-    calculateFromDate: (fromDate) => new Date(fromDate),
-    calculateToDate: (toDate) => new Date(toDate),
+    calculateFromDate: (fromDate) => parseISO(fromDate),
+    calculateToDate: (toDate) => parseISO(toDate),
   },
 };
 
