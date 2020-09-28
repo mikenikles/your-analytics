@@ -1,5 +1,6 @@
 <script>
   import { goto, stores } from '@sapper/app';
+  import { endOfMonth, formatISO, parseISO } from "date-fns";
   import Chart from "chart.js";
   import { visitors } from "../../api/stats";
   import dateRange, { isLocalDateChange } from "../../stores/date-range";
@@ -7,7 +8,24 @@
   import Loading from "./loading.svelte";
 
   const REGEX_DAY = /\d{4}-\d{2}-\d{2}/;
+  const REGEX_MONTH = /\s\d{4}$/;
   const REGEX_YEAR = /\d{4}/;
+  const MONTHS = {
+    "January": "01",
+    "February": "02",
+    "March": "03",
+    "April": "04",
+    "May": "05",
+    "June": "06",
+    "July": "07",
+    "August": "08",
+    "September": "09",
+    "October": "10",
+    "November": "11",
+    "December": "12",
+  };
+
+
   const { page } = stores();
 
   let chartElement;
@@ -40,6 +58,12 @@
               const labelClicked = item[0]._chart.config.data.labels[item[0]._index];
               if (labelClicked.match(REGEX_DAY)) {
                 dateRange.setCustomRange(labelClicked, labelClicked);
+              } else if (labelClicked.match(REGEX_MONTH)) {
+                const monthNumber = MONTHS[labelClicked.substring(0, labelClicked.length - 5)];
+                const year = labelClicked.substring(labelClicked.length - 4);
+                const firstOfMonth = parseISO(`${year}-${monthNumber}-01`);
+                const lastOfMonth = endOfMonth(firstOfMonth);
+                dateRange.setCustomRange(formatISO(firstOfMonth, { representation: 'date' }), formatISO(lastOfMonth, { representation: 'date' }));
               } else if (labelClicked.match(REGEX_YEAR)) {
                 dateRange.setCustomRange(`${labelClicked}-01-01`, `${labelClicked}-12-31`);
               }
