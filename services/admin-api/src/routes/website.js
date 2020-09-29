@@ -3,6 +3,9 @@ const express = require("express");
 
 const router = express.Router();
 
+const isValidWebsite = (domain) =>
+  !!domain.match(/^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/);
+
 module.exports = (authenticate) => {
   router.get("/", authenticate, async (req, res) => {
     try {
@@ -20,6 +23,9 @@ module.exports = (authenticate) => {
         await rootDb.users.setFirstName(req.user.issuer, req.body.firstName);
       }
       try {
+        if (!isValidWebsite(req.body.url)) {
+          throw new Error(`Invalid website provided: ${req.body.url}`);
+        }
         await domainDb.admin.addNewWebsite(req.body.url);
       } catch (error) {
         return res.status(400).end();
