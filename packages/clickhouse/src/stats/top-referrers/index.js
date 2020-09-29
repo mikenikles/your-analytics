@@ -9,8 +9,8 @@ const fetchTopReferrers = (ch) => async (
   domain,
   websiteSettings
 ) => {
-  const { timezone } = websiteSettings;
-  const sql = `SELECT extract(referrer, '^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n?]+)') AS referrer_domain, COUNT(*) AS total FROM youranalytics.events WHERE referrer != '' AND toUnixTimestamp(timestamp, '${timezone}') >= ${dateRange.from} AND toUnixTimestamp(timestamp, '${timezone}') <= ${dateRange.to} AND domain = '${domain}' GROUP BY referrer_domain ORDER BY total DESC`;
+  const { chDbName, timezone } = websiteSettings;
+  const sql = `SELECT extract(referrer, '^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n?]+)') AS referrer_domain, COUNT(*) AS total FROM ${chDbName}.events WHERE referrer != '' AND toUnixTimestamp(timestamp, '${timezone}') >= ${dateRange.from} AND toUnixTimestamp(timestamp, '${timezone}') <= ${dateRange.to} AND domain = '${domain}' GROUP BY referrer_domain ORDER BY total DESC`;
   const stream = ch.query(sql);
 
   return new Promise((resolve, reject) => {

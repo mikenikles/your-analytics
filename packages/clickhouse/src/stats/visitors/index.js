@@ -66,11 +66,11 @@ const dateRangeOptions = [
 ];
 
 const fetchVisitors = (ch) => async (dateRange, domain, websiteSettings) => {
-  const { timezone } = websiteSettings;
+  const { chDbName, timezone } = websiteSettings;
   const { format, getLabel } = dateRangeOptions.find((dateRangeOption) =>
     dateRangeOption.test(dateRange)
   );
-  const sql = `SELECT formatDateTime(timestamp, '${format}', '${timezone}') AS daterange, COUNT(DISTINCT user_id) AS total FROM youranalytics.events WHERE toUnixTimestamp(timestamp, '${timezone}') >= ${dateRange.from} AND toUnixTimestamp(timestamp, '${timezone}') <= ${dateRange.to} AND domain = '${domain}' GROUP BY daterange ORDER BY daterange`;
+  const sql = `SELECT formatDateTime(timestamp, '${format}', '${timezone}') AS daterange, COUNT(DISTINCT user_id) AS total FROM ${chDbName}.events WHERE toUnixTimestamp(timestamp, '${timezone}') >= ${dateRange.from} AND toUnixTimestamp(timestamp, '${timezone}') <= ${dateRange.to} AND domain = '${domain}' GROUP BY daterange ORDER BY daterange`;
 
   const stream = ch.query(sql);
 

@@ -7,8 +7,8 @@ const fetchUniqueVisitors = (ch) => async (
   domain,
   websiteSettings
 ) => {
-  const { timezone } = websiteSettings;
-  const sql = `SELECT COUNT(DISTINCT user_id) AS total FROM youranalytics.events WHERE toUnixTimestamp(timestamp, '${timezone}') >= ${dateRange.from} AND toUnixTimestamp(timestamp, '${timezone}') <= ${dateRange.to} AND domain = '${domain}'`;
+  const { chDbName, timezone } = websiteSettings;
+  const sql = `SELECT COUNT(DISTINCT user_id) AS total FROM ${chDbName}.events WHERE toUnixTimestamp(timestamp, '${timezone}') >= ${dateRange.from} AND toUnixTimestamp(timestamp, '${timezone}') <= ${dateRange.to} AND domain = '${domain}'`;
 
   const stream = ch.query(sql);
 
