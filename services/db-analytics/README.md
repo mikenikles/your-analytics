@@ -19,12 +19,13 @@ The database is seeded with all SQL scripts located in `dev/sql`.
 
 ## Transfer prod data to local DB
 
-1. On prod: `clickhouse-client --password <PASSWORD> --query="SELECT * FROM youranalytics.events FORMAT Native" > events.native`
+1. Replace `[DB_NAME]` in all commands below with the correct DB name depending on which domain events you want to export
+1. On prod: `clickhouse-client --password <PASSWORD> --query="SELECT * FROM [DB_NAME].events FORMAT Native" > events.native`
 1. Download `events.native`
 1. Upload `events.native` to GCP shell
 1. In GCP shell
    1. Start DB
-   1. Run: `cat ~/events.native | curl 'http://localhost:8123/?query=INSERT%20INTO%20youranalytics.events%20FORMAT%20Native' --data-binary @-`
+   1. Run: `cat ~/events.native | curl 'http://localhost:8123/?query=INSERT%20INTO%20[DB_NAME].events%20FORMAT%20Native' --data-binary @-`
 
 ## Ubuntu 18.04 installation instructions
 
@@ -47,4 +48,5 @@ sudo apt-get install -y clickhouse-server clickhouse-client
 
 ### DB & tables creation script
 
-Please refer to the `dev/sql` scripts.
+Each domain has its own database, with at least an `events` table. This is created at runtime
+when a new domain is configured.

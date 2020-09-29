@@ -3,7 +3,14 @@ steps:
     args: ["mkdir", "local-packages"]
     dir: "services/admin-api"
   - name: "bash"
-    args: ["cp", "-r", "../../packages/faunadb", "local-packages/"]
+    args:
+      [
+        "cp",
+        "-r",
+        "../../packages/clickhouse",
+        "../../packages/faunadb",
+        "local-packages/",
+      ]
     dir: "services/admin-api"
   - name: "gcr.io/cloud-builders/docker"
     args: ["build", "-t", "gcr.io/$PROJECT_ID/admin-api:$COMMIT_SHA", "."]

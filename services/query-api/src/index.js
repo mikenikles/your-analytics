@@ -5,18 +5,7 @@ const express = require("express");
 const helmet = require("helmet");
 const jwt = require("jsonwebtoken");
 const { RateLimiterMemory } = require("rate-limiter-flexible");
-
-const {
-  fetchBrowser,
-  fetchOs,
-  fetchScreen,
-  fetchTopPages,
-  fetchTopReferrers,
-  fetchTotalPageviews,
-  fetchUniqueVisitors,
-  fetchVisitors,
-  fetchWorldMap,
-} = require("./clickhouse");
+const { stats } = require("@your-analytics/clickhouse");
 
 const rateLimiter = new RateLimiterMemory({
   points: 20, // # of requests
@@ -97,7 +86,7 @@ const createStatsEndpoint = (path, fetcher) => {
         from: req.query.from ? Math.floor(req.query.from / 1000) : null,
         to: req.query.to ? Math.floor(req.query.to / 1000) : null,
       };
-      const data = await fetcher(dateRange, domain, websiteSettings.timezone);
+      const data = await fetcher(dateRange, domain, websiteSettings);
       res.json({ data });
     } catch (error) {
       console.error(error);
@@ -106,15 +95,15 @@ const createStatsEndpoint = (path, fetcher) => {
   });
 };
 
-createStatsEndpoint("browser", fetchBrowser);
-createStatsEndpoint("os", fetchOs);
-createStatsEndpoint("screen", fetchScreen);
-createStatsEndpoint("top-pages", fetchTopPages);
-createStatsEndpoint("top-referrers", fetchTopReferrers);
-createStatsEndpoint("total-pageviews", fetchTotalPageviews);
-createStatsEndpoint("unique-visitors", fetchUniqueVisitors);
-createStatsEndpoint("visitors", fetchVisitors);
-createStatsEndpoint("world-map", fetchWorldMap);
+createStatsEndpoint("browser", stats.fetchBrowser);
+createStatsEndpoint("os", stats.fetchOs);
+createStatsEndpoint("screen", stats.fetchScreen);
+createStatsEndpoint("top-pages", stats.fetchTopPages);
+createStatsEndpoint("top-referrers", stats.fetchTopReferrers);
+createStatsEndpoint("total-pageviews", stats.fetchTotalPageviews);
+createStatsEndpoint("unique-visitors", stats.fetchUniqueVisitors);
+createStatsEndpoint("visitors", stats.fetchVisitors);
+createStatsEndpoint("world-map", stats.fetchWorldMap);
 
 app.listen(port, () => {
   console.log(`query-api started at http://localhost:${port}`);

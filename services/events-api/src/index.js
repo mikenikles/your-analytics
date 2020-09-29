@@ -2,7 +2,7 @@ const express = require("express");
 const userAgentParser = require("ua-parser-js");
 const urlParse = require("url-parse");
 const Geo2IpReader = require("@maxmind/geoip2-node").Reader;
-const { recordEvent } = require("./clickhouse");
+const { recordEvent } = require("@your-analytics/clickhouse");
 
 /**
  * @see https://github.com/darkskyapp/string-hash/blob/master/index.js

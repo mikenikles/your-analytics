@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@magic-sdk/admin": "^1.2.2",
+    "@your-analytics/clickhouse": "file:../../packages/clickhouse",
     "@your-analytics/faunadb": "file:../../packages/faunadb",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",

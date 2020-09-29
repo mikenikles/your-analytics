@@ -1,17 +1,11 @@
-const ClickHouse = require("@apla/clickhouse");
+const { convertUrlToDbName } = require("./setup");
 
-const ch = new ClickHouse({
-  host: process.env.CH_HOST,
-  port: process.env.CH_PORT,
-  user: process.env.CH_USER,
-  password: process.env.CH_PASSWORD,
-});
-
-const recordEvent = (event) =>
+const recordEvent = (ch) => (event) =>
   new Promise((resolve, reject) => {
     // console.log("Recording event:", JSON.stringify(event));
+    const dbName = convertUrlToDbName(event.domain);
     const writableStream = ch.query(
-      `INSERT INTO youranalytics.events`,
+      `INSERT INTO ${dbName}.events`,
       {
         format: "JSONEachRow",
         queryOptions: {
