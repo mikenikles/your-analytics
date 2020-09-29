@@ -2,6 +2,7 @@ const IS_DEV = process.env.NODE_ENV === "development";
 
 const createDb = (ch, dbName) =>
   ch.querying(`CREATE DATABASE IF NOT EXISTS ${dbName}`);
+
 const createEventsTable = (ch, dbName) =>
   ch.querying(`CREATE TABLE IF NOT EXISTS ${dbName}.events (
   browser_major LowCardinality(String),
@@ -50,4 +51,5 @@ const addNewWebsite = (ch) => async (url) => {
 
 module.exports = {
   addNewWebsite: IS_DEV ? addNewWebsiteDev : addNewWebsite,
+  convertUrlToDbName,
 };

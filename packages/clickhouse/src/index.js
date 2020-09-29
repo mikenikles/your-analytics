@@ -1,6 +1,6 @@
 const ClickHouse = require("@apla/clickhouse");
 const { recordEvent } = require("./events");
-const { addNewWebsite } = require("./setup");
+const { addNewWebsite, convertUrlToDbName } = require("./setup");
 const stats = require("./stats");
 
 const ch = new ClickHouse({
@@ -12,6 +12,7 @@ const ch = new ClickHouse({
 
 module.exports = {
   addNewWebsite: addNewWebsite(ch),
+  convertUrlToDbName,
   recordEvent: recordEvent(ch),
   stats: stats(ch),
 };
