@@ -31,7 +31,7 @@ PARTITION BY toYYYYMM(timestamp)
 ORDER BY (name, user_id, timestamp)
 SETTINGS index_granularity = 8192;`);
 
-const convertUrlToDbName = (url) => url.replace(/\./g, "_");
+const convertUrlToDbName = (url) => url.replace(/\./g, "__").replace(/-/g, "_");
 
 const addNewWebsiteDev = () => (url) =>
   new Promise((resolve, reject) => {
