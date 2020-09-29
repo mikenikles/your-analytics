@@ -1,13 +1,4 @@
-const ClickHouse = require("@apla/clickhouse");
-
-const ch = new ClickHouse({
-  host: process.env.CH_HOST,
-  port: process.env.CH_PORT,
-  user: process.env.CH_USER,
-  password: process.env.CH_PASSWORD,
-});
-
-const recordEvent = (event) =>
+const recordEvent = (ch) => (event) =>
   new Promise((resolve, reject) => {
     // console.log("Recording event:", JSON.stringify(event));
     const writableStream = ch.query(

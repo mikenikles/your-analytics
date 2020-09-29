@@ -1,0 +1,14 @@
+{
+  "name": "@your-analytics/clickhouse",
+  "version": "1.0.0",
+  "description": "Contains ClickHouse models and common code.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@apla/clickhouse": "^1.6.4"
+  }
+}
