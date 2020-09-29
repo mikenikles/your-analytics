@@ -4,7 +4,8 @@ const IS_DEV = process.env.NODE_ENV === "development";
 
 const fetchBrowserDev = () => () => devData;
 
-const fetchBrowser = (ch) => async (dateRange, domain, timezone) => {
+const fetchBrowser = (ch) => async (dateRange, domain, websiteSettings) => {
+  const { timezone } = websiteSettings;
   const sql = `SELECT browser_name, COUNT(*) AS total FROM youranalytics.events WHERE toUnixTimestamp(timestamp, '${timezone}') >= ${dateRange.from} AND toUnixTimestamp(timestamp, '${timezone}') <= ${dateRange.to} AND domain = '${domain}' GROUP BY browser_name ORDER BY total DESC`;
   const stream = ch.query(sql);
 

@@ -86,7 +86,7 @@ const createStatsEndpoint = (path, fetcher) => {
         from: req.query.from ? Math.floor(req.query.from / 1000) : null,
         to: req.query.to ? Math.floor(req.query.to / 1000) : null,
       };
-      const data = await fetcher(dateRange, domain, websiteSettings.timezone);
+      const data = await fetcher(dateRange, domain, websiteSettings);
       res.json({ data });
     } catch (error) {
       console.error(error);

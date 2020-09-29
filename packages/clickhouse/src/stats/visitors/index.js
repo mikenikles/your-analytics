@@ -65,7 +65,8 @@ const dateRangeOptions = [
   },
 ];
 
-const fetchVisitors = (ch) => async (dateRange, domain, timezone) => {
+const fetchVisitors = (ch) => async (dateRange, domain, websiteSettings) => {
+  const { timezone } = websiteSettings;
   const { format, getLabel } = dateRangeOptions.find((dateRangeOption) =>
     dateRangeOption.test(dateRange)
   );
