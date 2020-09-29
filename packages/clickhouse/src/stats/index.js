@@ -1,5 +1,3 @@
-const ClickHouse = require("@apla/clickhouse");
-
 const { fetchBrowser } = require("./browser");
 const { fetchOs } = require("./os");
 const { fetchScreen } = require("./screen");
@@ -10,14 +8,7 @@ const { fetchUniqueVisitors } = require("./unique-visitors");
 const { fetchVisitors } = require("./visitors");
 const { fetchWorldMap } = require("./world-map");
 
-const ch = new ClickHouse({
-  host: process.env.CH_HOST,
-  port: process.env.CH_PORT,
-  user: process.env.CH_USER,
-  password: process.env.CH_PASSWORD,
-});
-
-module.exports = {
+module.exports = (ch) => ({
   fetchBrowser: fetchBrowser(ch),
   fetchOs: fetchOs(ch),
   fetchScreen: fetchScreen(ch),
@@ -27,4 +18,4 @@ module.exports = {
   fetchUniqueVisitors: fetchUniqueVisitors(ch),
   fetchVisitors: fetchVisitors(ch),
   fetchWorldMap: fetchWorldMap(ch),
-};
+});

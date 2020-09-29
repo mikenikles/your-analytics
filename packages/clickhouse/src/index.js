@@ -1,5 +1,6 @@
 const ClickHouse = require("@apla/clickhouse");
 const { recordEvent } = require("./events");
+const stats = require("./stats");
 
 const ch = new ClickHouse({
   host: process.env.CH_HOST,
@@ -10,4 +11,5 @@ const ch = new ClickHouse({
 
 module.exports = {
   recordEvent: recordEvent(ch),
+  stats: stats(ch),
 };
