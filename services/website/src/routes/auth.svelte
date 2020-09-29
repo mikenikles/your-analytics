@@ -29,7 +29,7 @@
       <h2 class="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
         Get started and see your analytics within minutes
       </h2>
-      <p class="mt-2 p-2 text-center">Whether you already have an account or not, simply provide your email address and we'll figure of the rest.</p>
+      <p class="mt-2 p-2 text-center">Whether you already have an account or not, simply provide your email address and we'll figure out the rest.</p>
     </div>
 
     <Card clazz="max-w-xl mx-auto p-4">
