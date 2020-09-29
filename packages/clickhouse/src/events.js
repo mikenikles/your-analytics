@@ -1,8 +1,11 @@
+const { convertUrlToDbName } = require("./setup");
+
 const recordEvent = (ch) => (event) =>
   new Promise((resolve, reject) => {
     // console.log("Recording event:", JSON.stringify(event));
+    const dbName = convertUrlToDbName(event.domain);
     const writableStream = ch.query(
-      `INSERT INTO youranalytics.events`,
+      `INSERT INTO ${dbName}.events`,
       {
         format: "JSONEachRow",
         queryOptions: {
