@@ -1,3 +1,4 @@
+const { addNewWebsite } = require("@your-analytics/clickhouse");
 const { domainDb, rootDb } = require("@your-analytics/faunadb");
 const express = require("express");
 
@@ -27,7 +28,9 @@ module.exports = (authenticate) => {
           throw new Error(`Invalid website provided: ${req.body.url}`);
         }
         await domainDb.admin.addNewWebsite(req.body.url);
+        await addNewWebsite(req.body.url);
       } catch (error) {
+        console.error(error);
         return res.status(400).end();
       }
       const {
