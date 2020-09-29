@@ -1,4 +1,7 @@
-const { addNewWebsite } = require("@your-analytics/clickhouse");
+const {
+  addNewWebsite,
+  convertUrlToDbName,
+} = require("@your-analytics/clickhouse");
 const { domainDb, rootDb } = require("@your-analytics/faunadb");
 const express = require("express");
 
@@ -45,6 +48,7 @@ module.exports = (authenticate) => {
       });
       await domainDb.admin.createCollection(websiteServerKeySecret)("settings");
       await domainDb.settings.insertSettings(websiteServerKeySecret)({
+        chDbName: convertUrlToDbName(req.body.url),
         timezone: req.body.timezone,
         visibility: "private",
       });
