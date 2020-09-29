@@ -46,7 +46,7 @@ const addNewWebsiteDev = () => (url) =>
 const addNewWebsite = (ch) => async (url) => {
   const dbName = convertUrlToDbName(url);
   await createDb(ch, dbName);
-  await createEventsTable(ch);
+  await createEventsTable(ch, dbName);
 };
 
 module.exports = {
