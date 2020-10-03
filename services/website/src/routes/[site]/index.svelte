@@ -29,7 +29,7 @@
   };
 </script>
 
-<script>
+<script lang="ts">
   import { stores } from "@sapper/app";
   import { statsStores } from "../../api/stats";
   import Card from "../../components/card.svelte";

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import FeatureCard from "./feature-card.svelte";
   import Section from "./section.svelte";
 </script>

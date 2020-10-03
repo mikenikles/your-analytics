@@ -21,7 +21,7 @@
   };
 </script>
 
-<script>
+<script lang="ts">
   import Card from "../components/card.svelte";
   import Header from "../components/header/index.svelte";
   import MainContent from "../components/main-content.svelte";

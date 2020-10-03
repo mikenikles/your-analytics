@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { goto, stores } from '@sapper/app';
   import { endOfMonth, formatISO, parseISO } from "date-fns";
   import Chart from "chart.js";

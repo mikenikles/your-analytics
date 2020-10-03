@@ -7,7 +7,7 @@
   };
 </script>
 
-<script>
+<script lang="ts">
   import { stores } from '@sapper/app';
   import { onMount } from "svelte";
   import { login } from "../auth/magic";

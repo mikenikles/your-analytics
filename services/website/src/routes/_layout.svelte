@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import Footer from "../components/footer.svelte";
   import TailwindCSS from '../components/tailwindcss.svelte';
   import { session } from "../stores/session";

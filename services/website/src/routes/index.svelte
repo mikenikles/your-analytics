@@ -24,7 +24,7 @@
 </script>
 
 
-<script>
+<script lang="ts">
   import { statsStores } from "../api/stats";
   import Features from "../components/landing-page/features.svelte";
   import Header from "../components/header/index.svelte";

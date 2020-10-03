@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import Number from "./number.svelte";
   import Loading from "../loading.svelte";
 

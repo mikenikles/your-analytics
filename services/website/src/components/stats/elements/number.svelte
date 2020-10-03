@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   export let number;
   export let locale = "en";
 

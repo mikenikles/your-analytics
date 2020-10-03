@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import Card from "../card.svelte";
 
   export let title;

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { recordEmail } from "../../api/beta";
 
   let isEmailAdded;

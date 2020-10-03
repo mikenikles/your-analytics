@@ -11,7 +11,7 @@
   };
 </script>
 
-<script>
+<script lang="ts">
   import { onDestroy } from "svelte";
   import { addNewWebsite } from "../api/onboarding";
   import { fetchUniqueVisitorsOnOnboardingPage } from "../api/stats";

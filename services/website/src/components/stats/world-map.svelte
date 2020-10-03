@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import Chart from "chart.js";
   import { topojson } from "chartjs-chart-geo"
   import { onMount } from "svelte";

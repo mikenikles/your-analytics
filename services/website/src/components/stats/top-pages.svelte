@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { topPages } from "../../api/stats";
   import Number from "../stats/elements/number.svelte";
   import Table from "../table/index.svelte";

@@ -17,7 +17,7 @@
   };
 </script>
 
-<script>
+<script lang="ts">
   import { stores } from "@sapper/app";
   import { setVisibility } from "../../api/settings";
   import Header from "../../components/header/index.svelte";

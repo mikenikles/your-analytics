@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   export let clazz = "";
   export let isFirst = false;
   export let isLast = false;

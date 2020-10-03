@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { goto, stores } from '@sapper/app';
   import { fetchAllStats } from "../api/stats";
   import { session } from "../stores/session";
