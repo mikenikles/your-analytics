@@ -3,7 +3,7 @@
   import Loading from "../loading.svelte";
 
   export let title: string;
-  export let currentValue: string;
+  export let currentValue: number;
 </script>
 
 <div>
