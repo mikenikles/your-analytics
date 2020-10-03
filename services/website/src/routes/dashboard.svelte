@@ -1,5 +1,13 @@
 <script context="module" lang="ts">
-  export async function preload(page, session) {
+  import type sapperCommon from "@sapper/common";
+
+  interface ISession {
+    user?: {
+      sites?: {}
+    };
+  };
+
+  export async function preload(_page: sapperCommon.Page, session: ISession) {
     const { user } = session;
 
     if (!user) {
