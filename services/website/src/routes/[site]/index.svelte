@@ -1,9 +1,14 @@
 <script context="module" lang="ts">
+  import type sapperCommon from "@sapper/common";
   import { getVisibility } from "../../api/settings";
   import { fetchAllStats } from "../../api/stats";
   import { initFilters } from "../../stores/stats-filters-query";
 
-  export async function preload(page, session) {
+  interface ISession {
+    user?: {}
+  };
+
+  export async function preload(page: sapperCommon.Page, session: ISession) {
     const { user } = session;
     const { visibility } = await getVisibility(this.fetch, page.host, page.path.substring(1));
 
@@ -15,11 +20,9 @@
     initFilters(page.query);
     const statsResults = await fetchAllStats(this.fetch, page.host, page.params.site);
     const stats = {};
-    statsResults.forEach(({status, value}) => {
-      if (status === "fulfilled") {
-        stats[value.storeName] = value.data;
-      } else {
-        stats[value.storeName] = {};
+    statsResults.forEach((statsResultPromise) => {
+      if (statsResultPromise.status === "fulfilled") {
+        stats[statsResultPromise.value.storeName] = statsResultPromise.value.data;
       }
     });
 
@@ -45,7 +48,10 @@
   import Visitors from "../../components/stats/visitors.svelte";
   import WorldMap from "../../components/stats/world-map.svelte";
 
-  export let stats;
+  export let stats: {
+    storeName: string;
+    data: any;
+  };;
 
   const { page } = stores();
 
