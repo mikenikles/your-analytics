@@ -1,12 +1,9 @@
 <script context="module" lang="ts">
   import type sapperCommon from "@sapper/common";
+  import type { ISession } from "../../stores/session";
   import { getVisibility } from "../../api/settings";
   import { fetchAllStats } from "../../api/stats";
   import { initFilters } from "../../stores/stats-filters-query";
-
-  interface ISession {
-    user?: {}
-  };
 
   export async function preload(page: sapperCommon.Page, session: ISession) {
     const { user } = session;

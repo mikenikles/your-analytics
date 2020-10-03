@@ -1,18 +1,24 @@
 import { writable } from "svelte/store";
 import { stores } from "@sapper/app";
 
+export interface ISession {
+  user?: {
+    sites?: any;
+  };
+}
+
 export const session = (() => {
-  const { subscribe, set } = writable(false);
+  const { subscribe, set } = writable<ISession>({});
 
   let sapperSession;
   return {
     init() {
       sapperSession = stores().session;
-      sapperSession.subscribe((val) => {
+      sapperSession.subscribe((val: ISession) => {
         set(val);
       });
     },
-    set(val) {
+    set(val: ISession) {
       sapperSession.set(val);
     },
     subscribe,

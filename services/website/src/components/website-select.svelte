@@ -1,12 +1,10 @@
 <script lang="ts">
   import { goto, stores } from '@sapper/app';
-  import { fetchAllStats } from "../api/stats";
   import { session } from "../stores/session";
 
   const { page } = stores();
   const navigateAndFetchStats = async () => {
     await goto(`/${selectedWebsite}`);
-    // fetchAllStats();
   };
 
   let selectedWebsite = $page.params.site;
