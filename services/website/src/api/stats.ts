@@ -1,18 +1,23 @@
 import { get, writable } from "svelte/store";
 import { QUERY_API_BASE_URL } from "../config";
 import { convertPresetToFromAndToRange } from "../stores/date-range";
-import statsFiltersQuery from "../stores/stats-filters-query";
+import statsFiltersQuery, {
+  IStatsFilterQueryStore,
+} from "../stores/stats-filters-query";
 
 const fetchStats = (fetch, host, site) => async (path, storeName) => {
+  const statsFiltersQueryStore = get(
+    statsFiltersQuery
+  ) as IStatsFilterQueryStore;
   let dateRangeParams = convertPresetToFromAndToRange(
-    get(statsFiltersQuery).preset,
-    get(statsFiltersQuery).from,
-    get(statsFiltersQuery).to
+    statsFiltersQueryStore.preset,
+    statsFiltersQueryStore.from,
+    statsFiltersQueryStore.to
   );
 
   const apiQueryParams = Object.assign(
     {},
-    get(statsFiltersQuery),
+    statsFiltersQueryStore,
     dateRangeParams
   );
   delete apiQueryParams.preset; // Not needed by the API. This is mainly for user experience in the browser URL

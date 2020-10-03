@@ -23,7 +23,7 @@ app.use(
     const token = req.signedCookies ? req.signedCookies["jwt"] : "";
     const { user } = token ? jwt.decode(token) : false;
 
-    const sapperOptions = {
+    const sapperOptions: sapper.MiddlewareOptions = {
       session: () => ({
         user,
       }),
