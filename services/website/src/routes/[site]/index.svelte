@@ -1,4 +1,4 @@
-<script context="module">
+<script context="module" lang="ts">
   import { getVisibility } from "../../api/settings";
   import { fetchAllStats } from "../../api/stats";
   import { initFilters } from "../../stores/stats-filters-query";

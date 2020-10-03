@@ -1,4 +1,4 @@
-<script context="module">
+<script context="module" lang="ts">
   export function preload(page, session) {
     const { user } = session;
     if (user) {

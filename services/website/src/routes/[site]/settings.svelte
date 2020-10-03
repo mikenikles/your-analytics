@@ -1,4 +1,4 @@
-<script context="module">
+<script context="module" lang="ts">
   import { getSettings } from "../../api/settings";
 
   export async function preload(page, session) {
