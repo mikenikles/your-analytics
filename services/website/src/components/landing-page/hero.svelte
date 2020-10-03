@@ -1,10 +1,12 @@
 <script lang="ts">
   import { recordEmail } from "../../api/beta";
 
-  let isEmailAdded;
+  let isEmailAdded: boolean;
+  let betaSignUpForm: HTMLFormElement;
 
-  const handleSubmit = async (event) => {
-    const email = new FormData(event.target).get("email");
+  const handleSubmit = async () => {
+    const formData = new FormData(betaSignUpForm);
+    const email = formData.get("email");
     isEmailAdded = await recordEmail(email);
   };
 </script>
@@ -27,7 +29,7 @@
     <div class="pb-32 px-4 sm:px-20">
       <div class="shadow-2xl">
         <div class="p-4 bg-pink-500 text-xl font-bold sm:text-2xl">Follow us for updates and early access</div>
-        <form on:submit|preventDefault={handleSubmit} class="bg-white">
+        <form bind:this={betaSignUpForm} on:submit|preventDefault={handleSubmit} class="bg-white">
           <div class="p-4 flex flex-col sm:flex-row">
             <div class="mt-1 flex flex-1 rounded-md shadow-sm">
               <span class="inline-flex items-center px-4 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">

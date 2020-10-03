@@ -3,6 +3,9 @@ import { stores } from "@sapper/app";
 
 export interface ISession {
   user?: {
+    firstName?: string;
+    email?: string;
+    emailHash?: string;
     sites?: any;
   };
 }

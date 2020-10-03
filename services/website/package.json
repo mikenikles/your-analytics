@@ -11,7 +11,7 @@
     "export": "run-s clean && NODE_ENV=production sapper export --legacy --entry '/ /auth /dashboard'",
     "start": "node __sapper__/build",
     "test": "run-p --race dev cy:run",
-    "validate": "svelte-check --ignore src/node_modules/@sapper"
+    "validate": "svelte-check --ignore src/node_modules/@sapper,**/tailwindcss.svelte,**/world-map.svelte"
   },
   "dependencies": {
     "chart.js": "^2.9.3",

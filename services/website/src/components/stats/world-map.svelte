@@ -1,19 +1,19 @@
 <script lang="ts">
   import Chart from "chart.js";
-  import { topojson } from "chartjs-chart-geo"
+  import { topojson } from "chartjs-chart-geo";
   import { onMount } from "svelte";
   import { worldMap } from "../../api/stats";
   import Loading from "./loading.svelte";
 
   export let showTitle: boolean = true;
 
-  let chartElement;
-  let chart;
-  let countries;
+  let chartElement: HTMLCanvasElement;
+  let chart: Chart;
+  let countries: any;
 
   $: if ($worldMap && countries && chartElement) {
     if (chart) {
-      chart.data.datasets[0].data = countries.map((d) => {
+      chart.data.datasets[0].data = countries.map((d: any) => {
         return ({feature: d, value: $worldMap[d.properties.name] || "0"})
       });
       chart.update();
@@ -22,11 +22,11 @@
         data: {
           datasets: [{
             label: 'Countries',
-            data: countries.map((d) => {
+            data: countries.map((d: any) => {
               return ({feature: d, value: $worldMap[d.properties.name] || "0"})
             }),
           }],
-          labels: countries.map((d) => d.properties.name)
+          labels: countries.map((d: any) => d.properties.name)
         },
         options: {
           showOutline: true,
@@ -34,6 +34,7 @@
             display: false
           },
           scale: {
+            // @ts-ignore
             projection: 'equirectangular'
           },
           geo: {

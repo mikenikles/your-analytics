@@ -40,7 +40,8 @@
   }
 
   .instructions :global(ol) {
-    @apply list-decimal list-inside;
+    @apply list-decimal;
+    @apply list-inside;
   }
 </style>
 
