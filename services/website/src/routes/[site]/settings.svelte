@@ -1,7 +1,12 @@
 <script context="module" lang="ts">
+  import type sapperCommon from "@sapper/common";
   import { getSettings } from "../../api/settings";
 
-  export async function preload(page, session) {
+  interface ISession {
+    user?: {}
+  };
+
+  export async function preload(page: sapperCommon.Page, session: ISession) {
     const { user } = session;
 
     if (!user) {
@@ -23,7 +28,9 @@
   import Header from "../../components/header/index.svelte";
   import MainContent from "../../components/main-content.svelte";
 
-  export let settings;
+  export let settings: {
+    visibility: string;
+  };
 
   const { page } = stores();
   const visibilities = [{
