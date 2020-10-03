@@ -6,6 +6,7 @@ import babel from "@rollup/plugin-babel";
 import { terser } from "rollup-plugin-terser";
 import sveltePreprocess from "svelte-preprocess";
 import tailwindcss from "tailwindcss";
+import typescript from "@rollup/plugin-typescript";
 import config from "sapper/config/rollup.js";
 import pkg from "./package.json";
 
@@ -27,7 +28,7 @@ const sveltePreprocessOptions = sveltePreprocess({
 
 export default {
   client: {
-    input: config.client.input(),
+    input: config.client.input(/\.js$/, ".ts"),
     output: config.client.output(),
     plugins: [
       replace({
@@ -45,6 +46,7 @@ export default {
         dedupe: ["svelte"],
       }),
       commonjs(),
+      typescript({ sourceMap: dev }),
 
       legacy &&
         babel({
@@ -81,7 +83,7 @@ export default {
   },
 
   server: {
-    input: config.server.input(),
+    input: { server: config.server.input().server.replace(/\.js$/, ".ts") },
     output: config.server.output(),
     plugins: [
       replace({
@@ -98,6 +100,7 @@ export default {
         dedupe: ["svelte"],
       }),
       commonjs(),
+      typescript({ sourceMap: dev }),
     ],
     external: Object.keys(pkg.dependencies).concat(
       require("module").builtinModules ||
@@ -109,7 +112,7 @@ export default {
   },
 
   serviceworker: {
-    input: config.serviceworker.input(),
+    input: config.serviceworker.input(/\.js$/, ".ts"),
     output: config.serviceworker.output(),
     plugins: [
       resolve(),
@@ -121,6 +124,7 @@ export default {
           : Date.now(),
       }),
       commonjs(),
+      typescript({ sourceMap: dev }),
       !dev && terser(),
     ],
 
