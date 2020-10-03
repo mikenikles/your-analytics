@@ -33,28 +33,32 @@ const fetchStats = (fetch, host, site) => async (path, storeName) => {
 
   if (response.status === 200) {
     const data = (await response.json()).data;
-    statsStores[storeName].set(data); // Neede on the client to reload the dashboard when the site changes.
+    statsStores[storeName].set(data); // Needed on the client to reload the dashboard when the site changes.
     return {
       storeName,
       data,
     };
   }
-  statsStores[storeName].set({}); // Neede on the client to reload the dashboard when the site changes.
+  statsStores[storeName].set({}); // Needed on the client to reload the dashboard when the site changes.
   return {
     storeName,
     data: {},
   };
 };
 
-export const browser = writable(null);
-export const os = writable(null);
+interface IStringNumber {
+  [key: string]: number;
+}
+
+export const browser = writable<IStringNumber | null>(null);
+export const os = writable<IStringNumber | null>(null);
 export const screen = writable(null);
-export const topPages = writable(null);
-export const topReferrers = writable(null);
-export const totalPageviews = writable(null);
-export const uniqueVisitors = writable(null);
-export const visitors = writable(null);
-export const worldMap = writable(null);
+export const topPages = writable<IStringNumber | null>(null);
+export const topReferrers = writable<IStringNumber | null>(null);
+export const totalPageviews = writable<number | null>(null);
+export const uniqueVisitors = writable<number | null>(null);
+export const visitors = writable<IStringNumber | null>(null);
+export const worldMap = writable<IStringNumber | null>(null);
 
 export const statsStores = {
   browser,
