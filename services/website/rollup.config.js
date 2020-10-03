@@ -112,7 +112,7 @@ export default {
   },
 
   serviceworker: {
-    input: config.serviceworker.input(/\.js$/, ".ts"),
+    input: config.serviceworker.input().replace(/\.js$/, ".ts"),
     output: config.serviceworker.output(),
     plugins: [
       resolve(),
