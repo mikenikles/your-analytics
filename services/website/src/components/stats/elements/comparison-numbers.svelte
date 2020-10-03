@@ -2,8 +2,8 @@
   import Number from "./number.svelte";
   import Loading from "../loading.svelte";
 
-  export let title;
-  export let currentValue;
+  export let title: string;
+  export let currentValue: string;
 </script>
 
 <div>

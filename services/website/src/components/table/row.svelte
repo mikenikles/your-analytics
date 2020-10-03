@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let rowIndex;
+  export let rowIndex: number;
 </script>
 
 <style>

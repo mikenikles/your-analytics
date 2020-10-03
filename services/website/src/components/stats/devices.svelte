@@ -6,7 +6,7 @@
   import TableRow from "../table/row.svelte";
   import Loading from "./loading.svelte";
 
-  export let showTitle = true;
+  export let showTitle: boolean = true;
 
   $: tabData = [
     Object.entries($os || {}),

@@ -5,7 +5,7 @@
   import { worldMap } from "../../api/stats";
   import Loading from "./loading.svelte";
 
-  export let showTitle = true;
+  export let showTitle: boolean = true;
 
   let chartElement;
   let chart;

@@ -1,6 +1,6 @@
 <script lang="ts">
-  export let number;
-  export let locale = "en";
+  export let number: number;
+  export let locale: string = "en";
 
   $: formattedNumber = number.toLocaleString(locale, {
     notation: "compact",

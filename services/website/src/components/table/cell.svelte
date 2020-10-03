@@ -1,7 +1,7 @@
 <script lang="ts">
-  export let clazz = "";
-  export let isFirst = false;
-  export let isLast = false;
+  export let clazz: string = "";
+  export let isFirst: boolean = false;
+  export let isLast: boolean = false;
 </script>
 
 <style>

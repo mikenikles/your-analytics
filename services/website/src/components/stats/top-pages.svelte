@@ -6,8 +6,8 @@
   import TableRow from "../table/row.svelte";
   import Loading from "./loading.svelte";
 
-  export let showTitle = true;
-  export let showShowMore = true;
+  export let showTitle: boolean = true;
+  export let showShowMore: boolean = true;
 
   $: topEntries = Object.entries($topPages || {});
   $: topTen = topEntries.length > 10 ? topEntries.slice(0, 10) : topEntries;
