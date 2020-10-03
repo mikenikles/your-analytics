@@ -28,7 +28,7 @@ const sveltePreprocessOptions = sveltePreprocess({
 
 export default {
   client: {
-    input: config.client.input(/\.js$/, ".ts"),
+    input: config.client.input().replace(/\.js$/, ".ts"),
     output: config.client.output(),
     plugins: [
       replace({
