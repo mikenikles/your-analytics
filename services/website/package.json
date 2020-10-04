@@ -5,10 +5,12 @@
   "scripts": {
     "build": "run-s clean && NODE_ENV=production sapper build --legacy",
     "clean": "rm -fr __sapper__",
+    "cy:install": "cypress install",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "dev": "run-s clean && sapper dev",
     "export": "run-s clean && NODE_ENV=production sapper export --legacy --entry '/ /auth /dashboard'",
+    "postinstall": "run-p cy:install",
     "start": "node __sapper__/build",
     "test": "run-p --race dev cy:run",
     "validate": "svelte-check --ignore src/node_modules/@sapper,**/tailwindcss.svelte,**/world-map.svelte"
@@ -42,6 +44,7 @@
     "@types/compression": "^1.7.0",
     "@types/node": "^14.11.2",
     "@types/polka": "^0.5.1",
+    "cypress": "^5.3.0",
     "npm-run-all": "^4.1.5",
     "postcss": "^7.0.32",
     "rollup": "^2.3.4",
