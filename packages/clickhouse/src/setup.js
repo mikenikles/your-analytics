@@ -1,5 +1,3 @@
-const IS_DEV = process.env.NODE_ENV === "development";
-
 const createDb = (ch, dbName) =>
   ch.querying(`CREATE DATABASE IF NOT EXISTS ${dbName}`);
 
@@ -33,16 +31,6 @@ SETTINGS index_granularity = 8192;`);
 
 const convertUrlToDbName = (url) => url.replace(/\./g, "__").replace(/-/g, "_");
 
-const addNewWebsiteDev = () => (url) =>
-  new Promise((resolve, reject) => {
-    console.log(
-      "Create new DB with events table. URL: %s; DB name: %s",
-      url,
-      convertUrlToDbName(url)
-    );
-    resolve();
-  });
-
 const addNewWebsite = (ch) => async (url) => {
   const dbName = convertUrlToDbName(url);
   await createDb(ch, dbName);
@@ -50,6 +38,6 @@ const addNewWebsite = (ch) => async (url) => {
 };
 
 module.exports = {
-  addNewWebsite: IS_DEV ? addNewWebsiteDev : addNewWebsite,
+  addNewWebsite,
   convertUrlToDbName,
 };
