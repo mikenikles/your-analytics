@@ -13,4 +13,5 @@ RUN sudo apt-key adv --keyserver keyserver.ubuntu.com --recv E0C56BD4 \
   && echo "debconf debconf/frontend select Noninteractive" | sudo debconf-set-selections \
   && sudo apt-get update \
   && sudo apt-get install -y clickhouse-server clickhouse-client \
+  && echo "debconf debconf/frontend select Dialog" | sudo debconf-set-selections \
   && sudo rm -rf /var/lib/apt/lists/*
