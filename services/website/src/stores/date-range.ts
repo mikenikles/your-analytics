@@ -1,6 +1,12 @@
 import { endOfDay, parseISO, startOfDay, startOfYear, sub } from "date-fns";
 import { writable } from "svelte/store";
 
+export interface IDateRangeStore {
+  preset?: string;
+  from?: string;
+  to?: string;
+}
+
 export const datePresets = {
   today: {
     label: "Today",
@@ -36,12 +42,12 @@ export const datePresets = {
 };
 
 const create = () => {
-  const { subscribe, set } = writable({});
+  const { subscribe, set } = writable<IDateRangeStore>({});
 
   return {
-    init: (queryParameters) => {
+    init: (queryParameters: IDateRangeStore) => {
       const { preset, from, to } = queryParameters;
-      const state = {
+      const state: IDateRangeStore = {
         preset: preset || "today",
       };
       if (preset === "custom") {

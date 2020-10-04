@@ -1,7 +1,7 @@
-<script>
-  export let href;
-  export let isActive = false;
-  export let label;
+<script lang="ts">
+  export let href: string;
+  export let isActive: boolean = false;
+  export let label: string;
 </script>
 
 <style>

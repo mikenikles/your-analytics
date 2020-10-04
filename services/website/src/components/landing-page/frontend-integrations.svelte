@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import Card from "../card.svelte";
   import Section from "./section.svelte";
 
@@ -40,7 +40,8 @@
   }
 
   .instructions :global(ol) {
-    @apply list-decimal list-inside;
+    @apply list-decimal;
+    @apply list-inside;
   }
 </style>
 

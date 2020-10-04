@@ -1,6 +1,6 @@
-<script>
-  export let title;
-  export let description;
+<script lang="ts">
+  export let title: string;
+  export let description: string;
 </script>
 
 <div class="py-10 max-w-6xl mx-auto sm:py-32">

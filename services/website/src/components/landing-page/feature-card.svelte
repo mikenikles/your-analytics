@@ -1,9 +1,9 @@
-<script>
+<script lang="ts">
   import Card from "../card.svelte";
 
-  export let title;
-  export let icon;
-  export let description;
+  export let title: string;
+  export let icon: string;
+  export let description: string;
 </script>
 
 <Card clazz="p-6 pb-20 sm:my-0 sm:w-1/3">

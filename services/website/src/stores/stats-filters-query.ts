@@ -1,5 +1,7 @@
 import { derived } from "svelte/store";
-import dateRange from "./date-range";
+import dateRange, { IDateRangeStore } from "./date-range";
+
+export interface IStatsFilterQueryStore extends IDateRangeStore {}
 
 export const initFilters = (queryParameters) => {
   dateRange.init(queryParameters);

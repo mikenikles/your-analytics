@@ -1,5 +1,8 @@
-<script context="module">
-  export async function preload(page, session) {
+<script context="module" lang="ts">
+  import type sapperCommon from "@sapper/common";
+  import type { ISession } from "../stores/session";
+
+  export async function preload(_page: sapperCommon.Page, session: ISession) {
     const { user } = session;
 
     if (!user) {
@@ -21,12 +24,12 @@
   };
 </script>
 
-<script>
+<script lang="ts">
   import Card from "../components/card.svelte";
   import Header from "../components/header/index.svelte";
   import MainContent from "../components/main-content.svelte";
 
-  export let sites;
+  export let sites: {};
 </script>
 
 <svelte:head>

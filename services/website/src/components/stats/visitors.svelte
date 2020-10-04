@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { goto, stores } from '@sapper/app';
   import { endOfMonth, formatISO, parseISO } from "date-fns";
   import Chart from "chart.js";
@@ -25,11 +25,10 @@
     "December": "12",
   };
 
-
   const { page } = stores();
 
-  let chartElement;
-  let chart;
+  let chartElement: HTMLCanvasElement;
+  let chart: Chart;
 
   $: if ($visitors && chartElement) {
     if (chart) {
@@ -53,8 +52,9 @@
           legend: {
             display: false
           },
-          onClick: async (event, item) => {
+          onClick: async (_event, item) => {
             if (item && item.length > 0) {
+              // @ts-ignore
               const labelClicked = item[0]._chart.config.data.labels[item[0]._index];
               if (labelClicked.match(REGEX_DAY)) {
                 dateRange.setCustomRange(labelClicked, labelClicked);
@@ -85,7 +85,7 @@
           },
           tooltips: {
             callbacks: {
-              label: (tooltipItem, data) => {
+              label: (tooltipItem) => {
                 return `${tooltipItem.value} Visitors`;
               }
             },

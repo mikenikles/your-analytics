@@ -1,6 +1,7 @@
-const isDevelopment = process.browser
-  ? window.location.hostname.endsWith(".gitpod.io")
-  : process.env.NODE_ENV === "development";
+const isDevelopment =
+  typeof window !== "undefined"
+    ? window.location.hostname.endsWith(".gitpod.io")
+    : process.env.NODE_ENV === "development";
 
 export const ADMIN_API_BASE_URL = "api/admin";
 export const QUERY_API_BASE_URL = "api/query";

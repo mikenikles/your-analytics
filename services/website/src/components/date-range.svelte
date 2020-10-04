@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { goto, stores } from '@sapper/app';
   import dateRange, { isLocalDateChange, datePresets } from "../stores/date-range";
   import statsFiltersQueryString from "../stores/stats-filters-query-string";

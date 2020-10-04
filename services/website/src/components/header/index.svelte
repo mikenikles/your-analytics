@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { goto, stores } from "@sapper/app";
   import { logout } from "../../auth/magic";
   import NavMobile from "./nav-mobile.svelte";

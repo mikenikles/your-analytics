@@ -1,5 +1,8 @@
-<script context="module">
-  export function preload(page, session) {
+<script context="module" lang="ts">
+  import type sapperCommon from "@sapper/common";
+  import type { ISession } from "../stores/session";
+
+  export function preload(_page: sapperCommon.Page, session: ISession) {
     const { user } = session;
     if (user) {
       this.redirect(302, "dashboard");
@@ -7,9 +10,8 @@
   };
 </script>
 
-<script>
+<script lang="ts">
   import { stores } from '@sapper/app';
-  import { onMount } from "svelte";
   import { login } from "../auth/magic";
   import Card from "../components/card.svelte";
   import Header from "../components/header/index.svelte";

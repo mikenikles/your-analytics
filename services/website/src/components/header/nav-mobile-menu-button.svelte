@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import isOpen from "../../stores/mobile-menu";
 </script>
 

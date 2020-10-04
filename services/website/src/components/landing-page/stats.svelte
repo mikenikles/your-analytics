@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import Card from "../card.svelte";
   import StatsCard from "./stats-card.svelte";
   import Section from "./section.svelte";

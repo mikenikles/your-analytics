@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { browser, os, screen } from "../../api/stats";
   import Number from "../stats/elements/number.svelte";
   import Table from "../table/index.svelte";
@@ -6,7 +6,7 @@
   import TableRow from "../table/row.svelte";
   import Loading from "./loading.svelte";
 
-  export let showTitle = true;
+  export let showTitle: boolean = true;
 
   $: tabData = [
     Object.entries($os || {}),
