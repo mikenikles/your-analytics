@@ -10,8 +10,6 @@ RUN brew install gh
 
 RUN sudo apt-key adv --keyserver keyserver.ubuntu.com --recv E0C56BD4 \
   && echo "deb http://repo.yandex.ru/clickhouse/deb/stable/ main/" | sudo tee /etc/apt/sources.list.d/clickhouse.list \
-  && echo "debconf debconf/frontend select Noninteractive" | sudo debconf-set-selections \
   && sudo apt-get update \
-  && sudo apt-get install -y clickhouse-server clickhouse-client \
-  && echo "debconf debconf/frontend select Dialog" | sudo debconf-set-selections \
+  && sudo DEBIAN_FRONTEND=noninteractive apt-get install -y clickhouse-server clickhouse-client \
   && sudo rm -rf /var/lib/apt/lists/*
