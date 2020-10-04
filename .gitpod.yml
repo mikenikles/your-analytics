@@ -9,6 +9,10 @@ tasks:
 ports:
   - port: 3000
     onOpen: ignore
+  - port: 5900
+    onOpen: ignore
+  - port: 6080
+    onOpen: ignore
   - port: 8123
     onOpen: ignore
   - port: 9000
