@@ -2,6 +2,7 @@ image:
   file: .gitpod.Dockerfile
 
 tasks:
+  - command: echo ""
   - init: npm install
     command: FAUNADB_ADMIN_SECRET=$YA_FAUNADB_ADMIN_SECRET FAUNADB_SERVER_SECRET=$YA_FAUNADB_SERVER_SECRET MAGIC_SECRET_KEY=$YA_MAGIC_SECRET_KEY npm run dev
   - command: cd services/db-analytics/dev/db && clickhouse-server
