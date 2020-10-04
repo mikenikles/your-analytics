@@ -1,7 +1,3 @@
-const IS_DEV = process.env.NODE_ENV === "development";
-
-const fetchUniqueVisitorsDev = () => () => 14233;
-
 const fetchUniqueVisitors = (ch) => async (
   dateRange,
   domain,
@@ -28,5 +24,5 @@ const fetchUniqueVisitors = (ch) => async (
 };
 
 module.exports = {
-  fetchUniqueVisitors: IS_DEV ? fetchUniqueVisitorsDev : fetchUniqueVisitors,
+  fetchUniqueVisitors,
 };

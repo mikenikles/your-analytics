@@ -1,9 +1,3 @@
-const devData = require("./dev-data.json");
-
-const IS_DEV = process.env.NODE_ENV === "development";
-
-const fetchTopReferrersDev = () => () => devData;
-
 const fetchTopReferrers = (ch) => async (
   dateRange,
   domain,
@@ -29,5 +23,5 @@ const fetchTopReferrers = (ch) => async (
 };
 
 module.exports = {
-  fetchTopReferrers: IS_DEV ? fetchTopReferrersDev : fetchTopReferrers,
+  fetchTopReferrers,
 };

@@ -1,6 +1,3 @@
-const devData = require("./dev-data.json");
-
-const IS_DEV = process.env.NODE_ENV === "development";
 const ONE_DAY = 60 * 60 * 24;
 const ONE_MONTH = ONE_DAY * 31;
 const ONE_YEAR = ONE_MONTH * 12;
@@ -90,5 +87,5 @@ const fetchVisitors = (ch) => async (dateRange, domain, websiteSettings) => {
 };
 
 module.exports = {
-  fetchVisitors: IS_DEV ? fetchVisitorsDev : fetchVisitors,
+  fetchVisitors,
 };
