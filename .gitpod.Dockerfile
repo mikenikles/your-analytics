@@ -8,9 +8,9 @@ FROM gitpod/workspace-full
 
 RUN brew install gh
 
-USER gitpod
 RUN sudo apt-key adv --keyserver keyserver.ubuntu.com --recv E0C56BD4 \
   && echo "deb http://repo.yandex.ru/clickhouse/deb/stable/ main/" | sudo tee /etc/apt/sources.list.d/clickhouse.list \
   && sudo apt-get update \
-  && DEBIAN_FRONTEND=noninteractive apt-get install -y clickhouse-server clickhouse-client \
-  && sudo rm -rf /var/lib/apt/lists/*
+  && sudo DEBIAN_FRONTEND=noninteractive apt-get install -y clickhouse-server clickhouse-client \
+  && sudo rm -rf /var/lib/apt/lists/* \
+  && sudo service clickhouse-server start
