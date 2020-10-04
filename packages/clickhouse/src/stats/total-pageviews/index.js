@@ -1,3 +1,5 @@
+const { getDateRange } = require("../fragments");
+
 const IS_DEV = process.env.NODE_ENV === "development";
 
 const fetchTotalPageviewsDev = () => () => 2134234;
@@ -8,7 +10,10 @@ const fetchTotalPageviews = (ch) => async (
   websiteSettings
 ) => {
   const { chDbName, timezone } = websiteSettings;
-  const sql = `SELECT COUNT(*) AS total FROM ${chDbName}.events WHERE toUnixTimestamp(timestamp, '${timezone}') >= ${dateRange.from} AND toUnixTimestamp(timestamp, '${timezone}') <= ${dateRange.to} AND domain = '${domain}'`;
+  const sql = `SELECT COUNT(*) AS total FROM ${chDbName}.events WHERE ${getDateRange(
+    dateRange,
+    timezone
+  )} AND domain = '${domain}'`;
 
   const stream = ch.query(sql);
 
