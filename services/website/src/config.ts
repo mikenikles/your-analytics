@@ -1,7 +1,6 @@
 const isDevelopment =
   typeof window !== "undefined"
-    ? window.location.hostname.endsWith(".gitpod.io") ||
-      window.location.hostname === "localhost.your-analytics.org"
+    ? window.location.hostname.endsWith(".gitpod.io")
     : process.env.NODE_ENV === "development";
 
 export const ADMIN_API_BASE_URL = "api/admin";
