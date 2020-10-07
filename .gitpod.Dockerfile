@@ -29,8 +29,11 @@ RUN sudo apt-get update \
     xvfb \
   && sudo rm -rf /var/lib/apt/lists/*
 
- # Install Firefox
+# Install Firefox
 RUN sudo apt-get update -q \
   && sudo apt-get install -yq \
     firefox \
   && sudo rm -rf /var/lib/apt/lists/*
+
+# Configure domain for localhost testing (needed to make cookies work)
+RUN echo "127.0.0.1 localhost.your-analytics.org" >> /etc/hosts
