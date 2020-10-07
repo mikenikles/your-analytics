@@ -8,7 +8,7 @@ describe("/auth", () => {
     cy.location("pathname").should("equal", "/auth");
   });
 
-  it.only("should authenticate and redirect to the /onboarding page", () => {
+  it("should authenticate and redirect to the /onboarding page", () => {
     cy.get('input[name="email"]').type(
       "hello+ya-automated-tests@mikenikles.com"
     );
