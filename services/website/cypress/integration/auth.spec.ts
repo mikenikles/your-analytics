@@ -1,19 +1,20 @@
-describe("Sapper template app", () => {
+describe("/auth", () => {
   beforeEach(() => {
-    cy.visit("/");
+    cy.visit("/auth");
   });
 
-  it("has the correct <h1>", () => {
-    cy.contains("h1", "Great success!");
+  it("should redirect unauthenticated users to the /auth page", () => {
+    cy.visit("/dashboard");
+    cy.location("pathname").should("equal", "/auth");
   });
 
-  it("navigates to /about", () => {
-    cy.get("nav a").contains("about").click();
-    cy.url().should("include", "/about");
-  });
-
-  it("navigates to /blog", () => {
-    cy.get("nav a").contains("blog").click();
-    cy.url().should("include", "/blog");
+  it.only("should authenticate and redirect to the /onboarding page", () => {
+    cy.get('input[name="email"]').type(
+      "hello+ya-automated-tests@mikenikles.com"
+    );
+    cy.get("button[type=submit]").click();
+    cy.location("pathname", {
+      timeout: 1000 * 60, // Time to manually click the auth link in the email
+    }).should("equal", "/onboarding");
   });
 });
