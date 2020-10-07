@@ -36,4 +36,4 @@ RUN sudo apt-get update -q \
   && sudo rm -rf /var/lib/apt/lists/*
 
 # Configure domain for localhost testing (needed to make cookies work)
-RUN sudo echo "127.0.0.1 localhost.your-analytics.org" >> /etc/hosts
+RUN echo "127.0.0.1 localhost.your-analytics.org" >> /etc/hosts
