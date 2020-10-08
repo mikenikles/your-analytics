@@ -12,7 +12,7 @@ const cookieConfig = {
   httpOnly: true,
   sameSite: true,
   signed: true,
-  secure: process.env.NODE_ENV !== "development",
+  secure: true,
 };
 
 module.exports = (authenticateMagic, authenticateJwtCookieCombo) => {
