@@ -2,6 +2,7 @@
 
 describe("/onboarding", () => {
   beforeEach(() => {
+    cy.task("db:reset");
     cy.loginWithApi();
     cy.visit("/onboarding");
   });
