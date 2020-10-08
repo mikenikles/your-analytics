@@ -25,6 +25,11 @@ const createUser = (serverClient) => (user) =>
     })
   );
 
+const deleteUser = (serverClient) => (issuer) =>
+  serverClient.query(
+    q.Delete(q.Select("ref", q.Get(q.Match(q.Index("user_by_issuer"), issuer))))
+  );
+
 const findUser = (serverClient) => async (issuer) => {
   const response = await serverClient.query(
     q.Paginate(q.Match(q.Index("user_by_issuer"), issuer))
@@ -124,6 +129,7 @@ const getDomainServerKeySecret = (serverClient) => async (issuer, domain) => {
 
 module.exports = {
   createUser,
+  deleteUser,
   findUser,
   setFirstName,
   setLastLoginAt,

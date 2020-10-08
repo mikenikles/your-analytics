@@ -24,8 +24,12 @@ const createWebsiteServerKey = (adminClient) => (url) =>
     })
   );
 
+const deleteWebsite = (adminClient) => (url) =>
+  adminClient.query(q.Delete(q.Database(url)));
+
 module.exports = {
   addNewWebsite,
   createCollection,
   createWebsiteServerKey,
+  deleteWebsite,
 };
