@@ -28,6 +28,6 @@ Cypress.Commands.add("loginWithApi", () => {
   return cy.request(
     "POST",
     "http://localhost:3000/api/admin/tests/user/login-with-api",
-    { email: "test-user@your-analytics.org" }
+    { email: "hello+ya-automated-tests@mikenikles.com" }
   );
 });
