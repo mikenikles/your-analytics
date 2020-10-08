@@ -23,3 +23,11 @@
 //
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+Cypress.Commands.add("loginWithApi", () => {
+  return cy.request(
+    "POST",
+    "http://localhost:3000/api/admin/tests/user/login-with-api",
+    { email: "test-user@your-analytics.org" }
+  );
+});
