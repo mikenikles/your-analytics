@@ -13,5 +13,10 @@
 
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
+  on("task", {
+    async "db:reset"() {
+      console.log("TODO: Remove all test data from the database.");
+    },
+  });
   // `config` is the resolved Cypress config
 };
