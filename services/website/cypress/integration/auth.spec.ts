@@ -8,7 +8,10 @@ describe("/auth", () => {
     cy.location("pathname").should("equal", "/auth");
   });
 
-  it("should authenticate and redirect to the /onboarding page", () => {
+  /**
+   * Skip until test users are available as per https://twitter.com/ikscodes/status/1313637273498337281
+   */
+  it.skip("should authenticate and redirect to the /onboarding page", () => {
     cy.get('input[name="email"]').type(
       "hello+ya-automated-tests@mikenikles.com"
     );
