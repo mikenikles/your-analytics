@@ -1,0 +1,31 @@
+name: "e2e"
+on: [pull_request]
+jobs:
+  e2e:
+    name: Test end-to-end
+    runs-on: ubuntu-latest
+    services:
+      clickhouse:
+        image: yandex/clickhouse-server
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm install
+      - name: Start all services
+        run: npm run dev &
+        env:
+          CH_HOST: clickhouse
+          FAUNADB_ADMIN_SECRET: ${{ secrets.FAUNADB_ADMIN_SECRET }}
+          FAUNADB_SERVER_SECRET: ${{ secrets.FAUNADB_SERVER_SECRET }}
+          MAGIC_SECRET_KEY: ${{ secrets.MAGIC_SECRET_KEY }}
+          NODE_ENV: development
+      - name: Run Cypress
+        uses: cypress-io/github-action@v1
+        with:
+          install: false
+          wait-on: "http://localhost:3000"
+          wait-on-timeout: 120
+          working-directory: services/website
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_ENV: development
