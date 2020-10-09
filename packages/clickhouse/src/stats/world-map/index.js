@@ -1,16 +1,7 @@
-const devData = require("./dev-data.json");
 const countryCodeToNameMap = require("./code-name-map.json");
-
-const IS_DEV = process.env.NODE_ENV === "development";
 
 const getCountryNameByCode = (code) =>
   countryCodeToNameMap[code] ? countryCodeToNameMap[code] : code;
-
-const fetchWorldMapDev = () => () =>
-  Object.entries(devData).reduce((result, [code, total]) => {
-    result[getCountryNameByCode(code)] = total;
-    return result;
-  }, {});
 
 const fetchWorldMap = (ch) => async (dateRange, domain, websiteSettings) => {
   const { chDbName, timezone } = websiteSettings;
@@ -36,5 +27,5 @@ const fetchWorldMap = (ch) => async (dateRange, domain, websiteSettings) => {
 };
 
 module.exports = {
-  fetchWorldMap: IS_DEV ? fetchWorldMapDev : fetchWorldMap,
+  fetchWorldMap,
 };

@@ -4,6 +4,7 @@ const {
   addNewWebsite,
   createCollection,
   createWebsiteServerKey,
+  deleteWebsite,
 } = require("./admin");
 
 const {
@@ -24,6 +25,7 @@ module.exports = (adminClient) => ({
         })
       ),
     createWebsiteServerKey: createWebsiteServerKey(adminClient),
+    deleteWebsite: deleteWebsite(adminClient),
   },
   settings: {
     getSettings: (websiteServerKeySecret) =>

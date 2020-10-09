@@ -2,10 +2,22 @@ image:
   file: .gitpod.Dockerfile
 
 tasks:
+  - command: echo ""
   - init: npm install
     command: FAUNADB_ADMIN_SECRET=$YA_FAUNADB_ADMIN_SECRET FAUNADB_SERVER_SECRET=$YA_FAUNADB_SERVER_SECRET MAGIC_SECRET_KEY=$YA_MAGIC_SECRET_KEY npm run dev
+  - command: cd services/db-analytics/dev/db && clickhouse-server
 ports:
   - port: 3000
+    onOpen: ignore
+  - port: 5900
+    onOpen: ignore
+  - port: 6080
+    onOpen: ignore
+  - port: 8123
+    onOpen: ignore
+  - port: 9000
+    onOpen: ignore
+  - port: 9004
     onOpen: ignore
   - port: 10000
     onOpen: ignore

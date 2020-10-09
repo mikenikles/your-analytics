@@ -1,9 +1,3 @@
-const devData = require("./dev-data.json");
-
-const IS_DEV = process.env.NODE_ENV === "development";
-
-const fetchOsDev = () => () => devData;
-
 const fetchOs = (ch) => async (dateRange, domain, websiteSettings) => {
   const { chDbName, timezone } = websiteSettings;
   const sql = `SELECT os_name, COUNT(*) AS total FROM ${chDbName}.events WHERE toUnixTimestamp(timestamp, '${timezone}') >= ${dateRange.from} AND toUnixTimestamp(timestamp, '${timezone}') <= ${dateRange.to} AND domain = '${domain}' GROUP BY os_name ORDER BY total DESC`;
@@ -25,5 +19,5 @@ const fetchOs = (ch) => async (dateRange, domain, websiteSettings) => {
 };
 
 module.exports = {
-  fetchOs: IS_DEV ? fetchOsDev : fetchOs,
+  fetchOs,
 };

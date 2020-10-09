@@ -1,9 +1,5 @@
 const { getDateRange } = require("../fragments");
 
-const IS_DEV = process.env.NODE_ENV === "development";
-
-const fetchTotalPageviewsDev = () => () => 2134234;
-
 const fetchTotalPageviews = (ch) => async (
   dateRange,
   domain,
@@ -33,5 +29,5 @@ const fetchTotalPageviews = (ch) => async (
 };
 
 module.exports = {
-  fetchTotalPageviews: IS_DEV ? fetchTotalPageviewsDev : fetchTotalPageviews,
+  fetchTotalPageviews,
 };

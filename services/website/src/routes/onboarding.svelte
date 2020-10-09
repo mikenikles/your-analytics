@@ -158,8 +158,7 @@
           </form>
         </Card>
 
-        <!-- {#if isSiteAdded} -->
-        {#if true}
+        {#if isSiteAdded}
           <h2 class="mt-12 text-center text-2xl leading-9 font-extrabold text-gray-900">
             Add script to your website
           </h2>
