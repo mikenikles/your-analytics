@@ -1,5 +1,6 @@
 const {
   createUser,
+  deleteUser,
   findUser,
   setFirstName,
   setLastLoginAt,
@@ -10,6 +11,7 @@ const {
 module.exports = (serverClient) => ({
   users: {
     create: createUser(serverClient),
+    delete: deleteUser(serverClient),
     find: findUser(serverClient),
     setFirstName: setFirstName(serverClient),
     setLastLoginAt: setLastLoginAt(serverClient),

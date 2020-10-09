@@ -7,6 +7,7 @@ const passportCookie = require("passport-cookie");
 const jwt = require("jsonwebtoken");
 const { magic } = require("./middlewares");
 const { user, website } = require("./routes");
+const tests = require("./routes/tests");
 
 const app = express();
 const port = process.env.PORT || 8082;
@@ -61,6 +62,11 @@ app.post("/beta-email", async (req, res) => {
     return res.status(500).end();
   }
 });
+
+if (process.env.NODE_ENV === "development") {
+  console.log("[TESTS] Adding a /tests API endpoint.");
+  app.use("/tests", tests);
+}
 
 app.listen(port, () => {
   console.log(`admin-api started at http://localhost:${port}`);
