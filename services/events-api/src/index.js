@@ -4,6 +4,9 @@ const urlParse = require("url-parse");
 const Geo2IpReader = require("@maxmind/geoip2-node").Reader;
 const { recordEvent } = require("@your-analytics/clickhouse");
 
+const GEO_DB_PATH_PREFIX =
+  process.env.NODE_ENV === "development" ? "." : "./services/events-api";
+
 /**
  * @see https://github.com/darkskyapp/string-hash/blob/master/index.js
  */
@@ -81,7 +84,9 @@ app.post("/", async (req, res) => {
       try {
         if (!readGeoFromIp) {
           readGeoFromIp = await Geo2IpReader.open(
-            "./geo-db/GeoLite2-City.mmdb"
+            // See this service's Dockerfile.
+            // We start this service from the monorepo root, hence the path prefix in production.
+            `${GEO_DB_PATH_PREFIX}/geo-db/GeoLite2-City.mmdb`
           );
         }
         const geoFromIpResponse = await readGeoFromIp.city(xForwardedFor);
