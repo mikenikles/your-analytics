@@ -26,24 +26,13 @@ Next, update the `cloudbuild.yaml` with the steps below.
 Set the `dir` option to the directory that contains your `GeoIP.conf` file.
 
 ```yaml
-- name: "bash"
+- name: "ubuntu"
+  entrypoint: bash
   args:
-    [
-      "sed",
-      "-i",
-      "'s|YOUR_ACCOUNT_ID_HERE|$_MAXMIND_ACCOUNT_ID |g'",
-      "./GeoIP.conf",
-    ]
-  dir: "services/events-api/geo-db"
-- name: "bash"
-  args:
-    [
-      "sed",
-      "-i",
-      "'s|YOUR_LICENSE_KEY_HERE|$_MAXMIND_LICENSE_KEY |g'",
-      "./GeoIP.conf",
-    ]
-  dir: "services/events-api/geo-db"
+    - "-c"
+    - |
+      sed -i "s|YOUR_ACCOUNT_ID_HERE|$_MAXMIND_ACCOUNT_ID |g" ./GeoIP.conf"
+      sed -i "s|YOUR_LICENSE_KEY_HERE|$_MAXMIND_LICENSE_KEY |g" ./GeoIP.conf"
 - name: "gcr.io/your-analytics/maxmind-geoipupdater"
   dir: "services/events-api/geo-db"
 - name: "bash"
