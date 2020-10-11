@@ -31,9 +31,10 @@ Set the `dir` option to the directory that contains your `GeoIP.conf` file.
   args:
     - "-c"
     - |
-      sed -i "s|YOUR_ACCOUNT_ID_HERE|$_MAXMIND_ACCOUNT_ID |g" ./GeoIP.conf"
-      sed -i "s|YOUR_LICENSE_KEY_HERE|$_MAXMIND_LICENSE_KEY |g" ./GeoIP.conf"
-- name: "gcr.io/your-analytics/maxmind-geoipupdater"
+      sed -i "s|YOUR_ACCOUNT_ID_HERE|$_MAXMIND_ACCOUNT_ID |g" ./GeoIP.conf
+      sed -i "s|YOUR_LICENSE_KEY_HERE|$_MAXMIND_LICENSE_KEY |g" ./GeoIP.conf
+  dir: "services/events-api/geo-db"
+- name: "gcr.io/your-analytics/maxmind-geoipupdater:latest"
   dir: "services/events-api/geo-db"
 - name: "bash"
   args: ["test", "-f", "GeoLite2-City.mmdb"]
