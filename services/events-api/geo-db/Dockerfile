@@ -7,4 +7,4 @@ RUN apt-get update -q \
     geoipupdate \
   && rm -rf /var/lib/apt/lists/*
 
-CMD /usr/local/bin/geoipupdate --config-file ./GeoIP.conf
+CMD geoipupdate --config-file ./GeoIP.conf
