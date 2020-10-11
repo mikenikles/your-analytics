@@ -5,6 +5,29 @@ steps:
   - name: "bash"
     args: ["cp", "-r", "../../packages/clickhouse", "local-packages/"]
     dir: "services/events-api"
+  - name: "bash"
+    args:
+      [
+        "sed",
+        "-i",
+        "'s|YOUR_ACCOUNT_ID_HERE|$_MAXMIND_ACCOUNT_ID |g'",
+        "./GeoIP.conf",
+      ]
+    dir: "services/events-api/geo-db"
+  - name: "bash"
+    args:
+      [
+        "sed",
+        "-i",
+        "'s|YOUR_LICENSE_KEY_HERE|$_MAXMIND_LICENSE_KEY |g'",
+        "./GeoIP.conf",
+      ]
+    dir: "services/events-api/geo-db"
+  - name: "gcr.io/your-analytics/maxmind-geoipupdater"
+    dir: "services/events-api/geo-db"
+  - name: "bash"
+    args: ["test", "-f", "GeoLite2-City.mmdb"]
+    dir: "services/events-api/geo-db"
   - name: "gcr.io/cloud-builders/docker"
     args: ["build", "-t", "gcr.io/$PROJECT_ID/events-api:$COMMIT_SHA", "."]
     dir: "services/events-api"
