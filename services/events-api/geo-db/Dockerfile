@@ -1,9 +1,10 @@
 FROM ubuntu
 
-RUN sudo add-apt-repository ppa:maxmind/ppa \
-  && sudo apt-get update -q \
-  && sudo apt-get install -yq \
+RUN apt-get update -q \
+  && apt-get install -yq software-properties-common \
+  && add-apt-repository ppa:maxmind/ppa \
+  && apt-get install -yq \
     geoipupdate \
-  && sudo rm -rf /var/lib/apt/lists/*
+  && rm -rf /var/lib/apt/lists/*
 
 CMD /usr/local/bin/geoipupdate --config-file ./GeoIP.conf
