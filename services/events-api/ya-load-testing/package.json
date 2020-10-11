@@ -1,0 +1,51 @@
+{
+  "name": "ya-load-testing",
+  "description": "A load testing CLI for your-analytics.org.",
+  "version": "1.0.0",
+  "author": "Mike Nikles @mikenikles",
+  "bin": {
+    "ya-load-testing": "./bin/run"
+  },
+  "bugs": "https://github.com/mikenikles/your-analytics/issues",
+  "dependencies": {
+    "@oclif/command": "^1.8.0",
+    "@oclif/config": "^1.17.0",
+    "@oclif/plugin-help": "^3.2.0",
+    "tslib": "^1.14.1"
+  },
+  "devDependencies": {
+    "@oclif/dev-cli": "^1.22.2",
+    "@oclif/test": "^1.2.7",
+    "@types/chai": "^4.2.13",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^10.17.39",
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "nyc": "^14.1.1",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.7"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "files": [
+    "/bin",
+    "/lib"
+  ],
+  "homepage": "https://github.com/mikenikles/your-analytics",
+  "keywords": [
+    "oclif"
+  ],
+  "license": "MIT",
+  "main": "lib/index.js",
+  "oclif": {
+    "bin": "ya-load-testing"
+  },
+  "repository": "mikenikles/your-analytics",
+  "scripts": {
+    "prepack": "rm -rf lib && tsc -b && oclif-dev readme",
+    "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
+    "version": "oclif-dev readme && git add README.md"
+  },
+  "types": "lib/index.d.ts"
+}
