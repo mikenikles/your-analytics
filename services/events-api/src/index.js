@@ -77,6 +77,10 @@ app.post("/", async (req, res) => {
       referrer,
       screen_size,
       session_id: 0,
+      timestamp:
+        process.env.NODE_ENV === "development"
+          ? new Date(req.body.timestamp) || new Date()
+          : new Date(),
       user_id: userId,
     };
 
