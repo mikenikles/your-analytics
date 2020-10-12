@@ -16,7 +16,7 @@ const recordEvent = (ch) => (event) =>
         err ? reject(err) : resolve();
       }
     );
-    writableStream.write({ ...event, timestamp: new Date() });
+    writableStream.write(event);
     writableStream.end();
   });
 
