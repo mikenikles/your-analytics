@@ -1,6 +1,7 @@
 import { Command, flags } from "@oclif/command";
 import { formatISO, startOfMonth, sub } from "date-fns";
-import got from "got";
+
+import { sendEvent } from "./api";
 
 class YaLoadTesting extends Command {
   static description = "describe the command here";
@@ -47,20 +48,13 @@ class YaLoadTesting extends Command {
 
     this.log(`Running load testing with flags: %o`, flags);
 
-    await got.post("http://localhost:8080", {
-      body: JSON.stringify({
-        name: "pageview",
-        domain: "local-testing.com",
-        url: "http://local-testing.com/tests",
-        referrer: "http://www.test-referrer.com",
-        screen_size: 800,
-        timestamp: new Date(2020, 5, 28, 12, 13, 14),
-      }),
-      headers: {
-        "Content-Type": "text/plain",
-        "User-Agent":
-          "Mozilla/5.0 (X11; CrOS x86_64 13099.48.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.64 Safari/537.36",
-      },
+    await sendEvent({
+      name: "pageview",
+      domain: "local-testing.com",
+      url: "http://local-testing.com/tests",
+      referrer: "http://www.test-referrer.com",
+      screen_size: 800,
+      timestamp: new Date(2020, 5, 28, 12, 13, 14),
     });
     this.log("Load testing completed.");
   }
