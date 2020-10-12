@@ -20,25 +20,25 @@ class YaLoadTesting extends Command {
           ),
           { representation: "date" }
         ),
-      description: "",
+      description: "The first day for which to generate events.",
     }),
     to: flags.string({
       char: "t",
       default: () => formatISO(new Date(), { representation: "date" }),
-      description: "",
+      description: "The last day (inclusive) for which to generate events.",
     }),
     min: flags.string({
       default: "0",
-      description: "",
+      description: "The minimum number of events to create for a given period.",
     }),
     max: flags.string({
       default: "50",
-      description: "",
+      description: "The maximum number of events to create for a given period.",
     }),
     period: flags.string({
       char: "p",
       default: "hour",
-      description: "",
+      description: "The period for which the min/max flags apply.",
       options: ["hour", "day", "month"],
     }),
   };
