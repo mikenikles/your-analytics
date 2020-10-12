@@ -9,6 +9,7 @@
     "dev:query-api": "npm run dev --prefix services/query-api",
     "dev:website": "npm run dev --prefix services/website",
     "install:admin-api": "npm i --prefix services/admin-api",
+    "install:events-api": "npm i --prefix services/events-api",
     "install:query-api": "npm i --prefix services/query-api",
     "install:website": "npm i --prefix services/website",
     "postinstall": "run-p install:*",
