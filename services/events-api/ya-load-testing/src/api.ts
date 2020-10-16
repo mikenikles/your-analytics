@@ -1,6 +1,6 @@
 import got from "got";
 
-interface IEvent {
+export interface IEvent {
   name: string;
   domain: string;
   url: string;
@@ -10,7 +10,7 @@ interface IEvent {
 }
 
 const defaultUserAgent =
-  "Mozilla/5.0 (X11; CrOS x86_64 13099.48.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.64 Safari/537.36";
+  "Mozilla/5.0 (Linux; Android 7.1.1; SM-T555 Build/NMF26X; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/83.0.4103.96 Safari/537.36";
 
 export const sendEvent = (
   event: IEvent,

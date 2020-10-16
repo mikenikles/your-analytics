@@ -1,7 +1,12 @@
 import { Command, flags } from "@oclif/command";
-import { formatISO, startOfMonth, sub } from "date-fns";
-
-import { sendEvent } from "./api";
+import {
+  formatDistanceToNowStrict,
+  formatISO,
+  parseISO,
+  startOfMonth,
+  sub,
+} from "date-fns";
+import { performLoadTesting } from "./load-testing";
 
 class YaLoadTesting extends Command {
   static description = "describe the command here";
@@ -44,19 +49,20 @@ class YaLoadTesting extends Command {
   };
 
   async run() {
+    const start = Date.now();
     const { flags } = this.parse(YaLoadTesting);
 
     this.log(`Running load testing with flags: %o`, flags);
-
-    await sendEvent({
-      name: "pageview",
-      domain: "local-testing.com",
-      url: "http://local-testing.com/tests",
-      referrer: "http://www.test-referrer.com",
-      screen_size: 800,
-      timestamp: new Date(2020, 5, 28, 12, 13, 14),
+    await performLoadTesting({
+      from: parseISO(flags.from),
+      to: parseISO(flags.to),
+      // @ts-ignore
+      min: flags.min * 1,
+      // @ts-ignore
+      max: flags.max * 1,
+      period: flags.period,
     });
-    this.log("Load testing completed.");
+    this.log("Load testing completed in %s.", formatDistanceToNowStrict(start));
   }
 }
 
