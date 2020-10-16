@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "run-p dev:*",
     "dev:admin-api": "npm run dev --prefix services/admin-api",
+    "dev:events-api": "npm run dev --prefix services/events-api",
     "dev:query-api": "npm run dev --prefix services/query-api",
     "dev:website": "npm run dev --prefix services/website",
     "install:admin-api": "npm i --prefix services/admin-api",
