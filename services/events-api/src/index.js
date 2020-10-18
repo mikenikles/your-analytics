@@ -49,7 +49,6 @@ app.use(
 );
 
 app.post("/", async (req, res) => {
-  let event; // Mutable to make it available for exception handling
   try {
     const { domain, name, referrer, screen_size, url } = req.body;
 
@@ -61,7 +60,7 @@ app.post("/", async (req, res) => {
 
     logDetailsIfUserAgentCannotBeParsed(userAgentHeader, userAgent);
 
-    event = {
+    const event = {
       browser_major: userAgent.browser.major,
       browser_name: userAgent.browser.name,
       browser_version: userAgent.browser.version,
@@ -77,6 +76,10 @@ app.post("/", async (req, res) => {
       referrer,
       screen_size,
       session_id: 0,
+      timestamp:
+        process.env.NODE_ENV === "development"
+          ? new Date(req.body.timestamp) || new Date()
+          : new Date(),
       user_id: userId,
     };
 
@@ -104,15 +107,9 @@ app.post("/", async (req, res) => {
       }
     }
 
-    await recordEvent(event);
+    recordEvent(event);
   } catch (error) {
-    console.error(
-      new Error(
-        `Cannot record event: ${JSON.stringify(event)}; error: ${JSON.stringify(
-          error
-        )}`
-      )
-    );
+    console.error(error);
   } finally {
     res.status(201).end();
   }
@@ -129,5 +126,5 @@ app.get("/error", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server started at http://localhost:${port}`);
+  console.log(`events-api started at http://localhost:${port}`);
 });
