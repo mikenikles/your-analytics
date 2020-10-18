@@ -2,6 +2,7 @@ FROM node:12-slim
 ARG SERVICE_PATH=services/query-api
 WORKDIR /app
 COPY ./local-packages /app/packages/
+RUN for D in ./app/packages/*/; do npm ci --prod --prefix $D; done
 COPY ./package*.json /app/${SERVICE_PATH}/
 RUN npm ci --prod --prefix ${SERVICE_PATH}
 
