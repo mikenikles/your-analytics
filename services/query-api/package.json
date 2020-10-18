@@ -11,7 +11,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@apla/clickhouse": "^1.6.3",
     "@your-analytics/clickhouse": "file:../../packages/clickhouse",
     "@your-analytics/faunadb": "file:../../packages/faunadb",
     "cookie-parser": "^1.4.5",
