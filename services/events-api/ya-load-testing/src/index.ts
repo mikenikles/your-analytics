@@ -46,6 +46,11 @@ class YaLoadTesting extends Command {
       description: "The period for which the min/max flags apply.",
       options: ["hour", "day", "month"],
     }),
+    domain: flags.string({
+      char: "d",
+      default: "local-testing.com",
+      description: "The domain name for which to create events.",
+    }),
   };
 
   async run() {
@@ -61,6 +66,7 @@ class YaLoadTesting extends Command {
       // @ts-ignore
       max: flags.max * 1,
       period: flags.period,
+      domain: flags.domain,
     });
     this.log("Load testing completed in %s.", formatDistanceToNowStrict(start));
   }

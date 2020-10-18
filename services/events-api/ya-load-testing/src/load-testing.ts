@@ -16,6 +16,7 @@ interface IFlags {
   min: number;
   max: number;
   period: string;
+  domain: string;
 }
 
 const startAndEndPeriodCalculations: {
@@ -38,10 +39,10 @@ const startAndEndPeriodCalculations: {
   },
 };
 
-const createEvent = (timestamp: Date) => ({
+const createEvent = (timestamp: Date, domain: string) => ({
   name: "pageview",
-  domain: "local-testing.com",
-  url: "http://local-testing.com/tests",
+  domain,
+  url: `http://${domain}/tests`,
   referrer: "http://www.test-referrer.com",
   screen_size: 800,
   timestamp,
@@ -49,7 +50,7 @@ const createEvent = (timestamp: Date) => ({
 
 const createEventsForPeriod = async (
   current: Date,
-  { max, min, period }: IFlags
+  { max, min, period, domain }: IFlags
 ) => {
   const randomEventsCount = Math.round(Math.random() * (max - min) + min);
   console.log("Creating %s event(s) for %s", randomEventsCount, current);
@@ -59,7 +60,8 @@ const createEventsForPeriod = async (
   let requestPromises: any[] | null = [];
   for (let i = 0; i < randomEventsCount; i++) {
     let event: IEvent | null = createEvent(
-      new Date(Math.random() * (end - start) + start)
+      new Date(Math.random() * (end - start) + start),
+      domain
     );
     requestPromises.push(sendEvent(event));
 
