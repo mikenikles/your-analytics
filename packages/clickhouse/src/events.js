@@ -36,6 +36,8 @@ const recordEvent = (ch) => (event) => {
       });
     };
     // TODO: Clean this up. Flush also when there are 10k events.
+    // TODO: Consider intervals for individual domains and randomizing the delay
+    //       to spread DB writes over a few seconds.
     flushIntervalId = setInterval(flushBuffer, 5000);
   }
 };
