@@ -1,6 +1,11 @@
+const { getDateRange } = require("../fragments");
+
 const fetchTopPages = (ch) => async (dateRange, domain, websiteSettings) => {
   const { chDbName, timezone } = websiteSettings;
-  const sql = `SELECT path, COUNT(*) AS total FROM ${chDbName}.events WHERE toUnixTimestamp(timestamp, '${timezone}') >= ${dateRange.from} AND toUnixTimestamp(timestamp, '${timezone}') <= ${dateRange.to} AND domain = '${domain}' GROUP BY path ORDER BY total DESC`;
+  const sql = `SELECT path, COUNT(*) AS total FROM ${chDbName}.events WHERE ${getDateRange(
+    dateRange,
+    timezone
+  )} AND domain = '${domain}' GROUP BY path ORDER BY total DESC`;
   const stream = ch.query(sql);
 
   return new Promise((resolve, reject) => {

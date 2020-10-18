@@ -2,6 +2,7 @@ FROM mhart/alpine-node:12
 ARG SERVICE_PATH=services/events-api
 WORKDIR /app
 COPY ./local-packages /app/packages/
+RUN for D in /app/packages/*; do npm ci --prod --prefix $D; done
 COPY ./package*.json /app/${SERVICE_PATH}/
 RUN npm ci --prod --prefix ${SERVICE_PATH}
 

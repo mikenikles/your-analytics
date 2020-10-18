@@ -1,3 +1,4 @@
+const { getDateRange } = require("../fragments");
 const countryCodeToNameMap = require("./code-name-map.json");
 
 const getCountryNameByCode = (code) =>
@@ -5,7 +6,10 @@ const getCountryNameByCode = (code) =>
 
 const fetchWorldMap = (ch) => async (dateRange, domain, websiteSettings) => {
   const { chDbName, timezone } = websiteSettings;
-  const sql = `SELECT geo_country, COUNT(*) AS total FROM ${chDbName}.events WHERE toUnixTimestamp(timestamp, '${timezone}') >= ${dateRange.from} AND toUnixTimestamp(timestamp, '${timezone}') <= ${dateRange.to} AND domain = '${domain}' GROUP BY geo_country ORDER BY total DESC`;
+  const sql = `SELECT geo_country, COUNT(*) AS total FROM ${chDbName}.events WHERE ${getDateRange(
+    dateRange,
+    timezone
+  )} AND domain = '${domain}' GROUP BY geo_country ORDER BY total DESC`;
   const stream = ch.query(sql);
 
   return new Promise((resolve, reject) => {

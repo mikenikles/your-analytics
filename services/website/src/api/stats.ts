@@ -1,32 +1,11 @@
 import { get, writable } from "svelte/store";
 import { QUERY_API_BASE_URL } from "../config";
-import { convertPresetToFromAndToRange } from "../stores/date-range";
-import statsFiltersQuery, {
-  IStatsFilterQueryStore,
-} from "../stores/stats-filters-query";
+import statsFilterQueryString from "../stores/stats-filters-query-string";
 
 const fetchStats = (fetch, host, site) => async (path, storeName) => {
-  const statsFiltersQueryStore = get(
-    statsFiltersQuery
-  ) as IStatsFilterQueryStore;
-  let dateRangeParams = convertPresetToFromAndToRange(
-    statsFiltersQueryStore.preset,
-    statsFiltersQueryStore.from,
-    statsFiltersQueryStore.to
-  );
-
-  const apiQueryParams = Object.assign(
-    {},
-    statsFiltersQueryStore,
-    dateRangeParams
-  );
-  delete apiQueryParams.preset; // Not needed by the API. This is mainly for user experience in the browser URL
-
-  const filterQueryString = Object.entries(apiQueryParams)
-    .map(([key, value]) => `${key}=${value}`)
-    .join("&");
-  const url = `https://${host}/${QUERY_API_BASE_URL}/${site}/${path}?${filterQueryString}`;
-
+  const url = `https://${host}/${QUERY_API_BASE_URL}/${site}/${path}?${get(
+    statsFilterQueryString
+  )}`;
   const response = await fetch(url, {
     credentials: "include",
   });

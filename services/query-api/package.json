@@ -11,11 +11,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@apla/clickhouse": "^1.6.3",
     "@your-analytics/clickhouse": "file:../../packages/clickhouse",
     "@your-analytics/faunadb": "file:../../packages/faunadb",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
+    "date-fns": "^2.16.1",
     "express": "^4.17.1",
     "faunadb": "^2.14.2",
     "helmet": "^4.1.1",

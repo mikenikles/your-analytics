@@ -1,6 +1,13 @@
 const { rootDb, domainDb } = require("@your-analytics/faunadb");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const {
+  endOfDay,
+  parseISO,
+  startOfDay,
+  startOfYear,
+  sub,
+} = require("date-fns");
 const express = require("express");
 const helmet = require("helmet");
 const jwt = require("jsonwebtoken");
@@ -36,6 +43,40 @@ process.env.NODE_ENV === "development" &&
 app.use(helmet());
 app.use(rateLimiterMiddleware);
 app.use(cookieParser(process.env.COOKIE_SECRET));
+
+const datePresets = {
+  // Also update `services/website/src/components/date-range.svelte`
+  today: {
+    calculateFromDate: () => new Date(),
+    calculateToDate: () => new Date(),
+  },
+  "7days": {
+    calculateFromDate: () =>
+      sub(new Date(), {
+        days: 7,
+      }),
+    calculateToDate: () => new Date(),
+  },
+  "30days": {
+    calculateFromDate: () =>
+      sub(new Date(), {
+        days: 30,
+      }),
+    calculateToDate: () => new Date(),
+  },
+  thisyear: {
+    calculateFromDate: () => startOfYear(new Date()),
+    calculateToDate: () => new Date(),
+  },
+  custom: {
+    calculateFromDate: (from) => parseISO(from),
+    calculateToDate: (to) => parseISO(to),
+  },
+};
+const determineDateRange = (preset, from, to) => ({
+  from: startOfDay(datePresets[preset].calculateFromDate(from)),
+  to: endOfDay(datePresets[preset].calculateToDate(to)),
+});
 
 const createStatsEndpoint = (path, fetcher) => {
   app.get(`/:domain/${path}`, async (req, res) => {
@@ -82,10 +123,11 @@ const createStatsEndpoint = (path, fetcher) => {
         websiteSettings = data;
       }
 
-      const dateRange = {
-        from: req.query.from ? Math.floor(req.query.from / 1000) : null,
-        to: req.query.to ? Math.floor(req.query.to / 1000) : null,
-      };
+      const dateRange = determineDateRange(
+        req.query.preset,
+        req.query.from,
+        req.query.to
+      );
       const data = await fetcher(dateRange, domain, websiteSettings);
       res.json({ data });
     } catch (error) {

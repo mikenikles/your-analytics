@@ -1,9 +1,27 @@
 <script lang="ts">
   import { goto, stores } from '@sapper/app';
-  import dateRange, { isLocalDateChange, datePresets } from "../stores/date-range";
+  import dateRange, { isLocalDateChange } from "../stores/date-range";
   import statsFiltersQueryString from "../stores/stats-filters-query-string";
 
   const { page } = stores();
+  const datePresets = {
+    // Also update `services/query-api/src/index.js`
+    today: {
+      label: "Today",
+    },
+    "7days": {
+      label: "Last 7 days",
+    },
+    "30days": {
+      label: "Last 30 days",
+    },
+    thisyear: {
+      label: "This year",
+    },
+    custom: {
+      label: "Custom",
+    },
+  };
 
   let datePreset = null;
   let fromDate = null;

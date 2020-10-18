@@ -1,4 +1,6 @@
-const ONE_DAY = 60 * 60 * 24;
+const { getDateRange } = require("../fragments");
+
+const ONE_DAY = 1000 * 60 * 60 * 24;
 const ONE_MONTH = ONE_DAY * 31;
 const ONE_YEAR = ONE_MONTH * 12;
 const MONTHS = {
@@ -15,8 +17,6 @@ const MONTHS = {
   11: "November",
   12: "December",
 };
-
-const fetchVisitorsDev = () => () => devData;
 
 /**
  * Each `dateRange.to` value represents 23:59:59 on a given day.
@@ -65,9 +65,15 @@ const dateRangeOptions = [
 const fetchVisitors = (ch) => async (dateRange, domain, websiteSettings) => {
   const { chDbName, timezone } = websiteSettings;
   const { format, getLabel } = dateRangeOptions.find((dateRangeOption) =>
-    dateRangeOption.test(dateRange)
+    dateRangeOption.test({
+      from: dateRange.from.getTime(),
+      to: dateRange.to.getTime(),
+    })
   );
-  const sql = `SELECT formatDateTime(timestamp, '${format}', '${timezone}') AS daterange, COUNT(DISTINCT user_id) AS total FROM ${chDbName}.events WHERE toUnixTimestamp(timestamp, '${timezone}') >= ${dateRange.from} AND toUnixTimestamp(timestamp, '${timezone}') <= ${dateRange.to} AND domain = '${domain}' GROUP BY daterange ORDER BY daterange`;
+  const sql = `SELECT formatDateTime(timestamp, '${format}', '${timezone}') AS daterange, COUNT(DISTINCT user_id) AS total FROM ${chDbName}.events WHERE ${getDateRange(
+    dateRange,
+    timezone
+  )} AND domain = '${domain}' GROUP BY daterange ORDER BY daterange`;
 
   const stream = ch.query(sql);
 
