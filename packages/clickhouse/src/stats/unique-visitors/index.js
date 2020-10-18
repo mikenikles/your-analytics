@@ -1,10 +1,15 @@
+const { getDateRange } = require("../fragments");
+
 const fetchUniqueVisitors = (ch) => async (
   dateRange,
   domain,
   websiteSettings
 ) => {
   const { chDbName, timezone } = websiteSettings;
-  const sql = `SELECT COUNT(DISTINCT user_id) AS total FROM ${chDbName}.events WHERE toUnixTimestamp(timestamp, '${timezone}') >= ${dateRange.from} AND toUnixTimestamp(timestamp, '${timezone}') <= ${dateRange.to} AND domain = '${domain}'`;
+  const sql = `SELECT COUNT(DISTINCT user_id) AS total FROM ${chDbName}.events WHERE ${getDateRange(
+    dateRange,
+    timezone
+  )} AND domain = '${domain}'`;
 
   const stream = ch.query(sql);
 
