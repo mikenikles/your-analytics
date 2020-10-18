@@ -13,6 +13,8 @@ ports:
     onOpen: ignore
   - port: 6080
     onOpen: ignore
+  - port: 8080
+    onOpen: ignore
   - port: 8123
     onOpen: ignore
   - port: 9000

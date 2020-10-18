@@ -4,6 +4,9 @@ const urlParse = require("url-parse");
 const Geo2IpReader = require("@maxmind/geoip2-node").Reader;
 const { recordEvent } = require("@your-analytics/clickhouse");
 
+const GEO_DB_PATH_PREFIX =
+  process.env.NODE_ENV === "development" ? "." : "./services/events-api";
+
 /**
  * @see https://github.com/darkskyapp/string-hash/blob/master/index.js
  */
@@ -46,7 +49,6 @@ app.use(
 );
 
 app.post("/", async (req, res) => {
-  let event; // Mutable to make it available for exception handling
   try {
     const { domain, name, referrer, screen_size, url } = req.body;
 
@@ -58,7 +60,7 @@ app.post("/", async (req, res) => {
 
     logDetailsIfUserAgentCannotBeParsed(userAgentHeader, userAgent);
 
-    event = {
+    const event = {
       browser_major: userAgent.browser.major,
       browser_name: userAgent.browser.name,
       browser_version: userAgent.browser.version,
@@ -74,6 +76,10 @@ app.post("/", async (req, res) => {
       referrer,
       screen_size,
       session_id: 0,
+      timestamp:
+        process.env.NODE_ENV === "development"
+          ? new Date(req.body.timestamp) || new Date()
+          : new Date(),
       user_id: userId,
     };
 
@@ -81,7 +87,9 @@ app.post("/", async (req, res) => {
       try {
         if (!readGeoFromIp) {
           readGeoFromIp = await Geo2IpReader.open(
-            "./geo-db/GeoLite2-City.mmdb"
+            // See this service's Dockerfile.
+            // We start this service from the monorepo root, hence the path prefix in production.
+            `${GEO_DB_PATH_PREFIX}/geo-db/GeoLite2-City.mmdb`
           );
         }
         const geoFromIpResponse = await readGeoFromIp.city(xForwardedFor);
@@ -99,15 +107,9 @@ app.post("/", async (req, res) => {
       }
     }
 
-    await recordEvent(event);
+    recordEvent(event);
   } catch (error) {
-    console.error(
-      new Error(
-        `Cannot record event: ${JSON.stringify(event)}; error: ${JSON.stringify(
-          error
-        )}`
-      )
-    );
+    console.error(error);
   } finally {
     res.status(201).end();
   }
@@ -124,5 +126,5 @@ app.get("/error", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server started at http://localhost:${port}`);
+  console.log(`events-api started at http://localhost:${port}`);
 });
