@@ -18,8 +18,6 @@ const MONTHS = {
   12: "December",
 };
 
-const fetchVisitorsDev = () => () => devData;
-
 /**
  * Each `dateRange.to` value represents 23:59:59 on a given day.
  * The `+ 1` in the calculations below are there to represent a full day.
