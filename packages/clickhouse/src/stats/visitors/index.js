@@ -1,6 +1,6 @@
 const { getDateRange } = require("../fragments");
 
-const ONE_DAY = 60 * 60 * 24;
+const ONE_DAY = 1000 * 60 * 60 * 24;
 const ONE_MONTH = ONE_DAY * 31;
 const ONE_YEAR = ONE_MONTH * 12;
 const MONTHS = {
@@ -67,7 +67,10 @@ const dateRangeOptions = [
 const fetchVisitors = (ch) => async (dateRange, domain, websiteSettings) => {
   const { chDbName, timezone } = websiteSettings;
   const { format, getLabel } = dateRangeOptions.find((dateRangeOption) =>
-    dateRangeOption.test(dateRange)
+    dateRangeOption.test({
+      from: dateRange.from.getTime(),
+      to: dateRange.to.getTime(),
+    })
   );
   const sql = `SELECT formatDateTime(timestamp, '${format}', '${timezone}') AS daterange, COUNT(DISTINCT user_id) AS total FROM ${chDbName}.events WHERE ${getDateRange(
     dateRange,

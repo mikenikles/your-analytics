@@ -1,7 +1,13 @@
 const { rootDb, domainDb } = require("@your-analytics/faunadb");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-const { formatISO, startOfYear, sub } = require("date-fns");
+const {
+  endOfDay,
+  parseISO,
+  startOfDay,
+  startOfYear,
+  sub,
+} = require("date-fns");
 const express = require("express");
 const helmet = require("helmet");
 const jwt = require("jsonwebtoken");
@@ -62,14 +68,14 @@ const datePresets = {
     calculateFromDate: () => startOfYear(new Date()),
     calculateToDate: () => new Date(),
   },
+  custom: {
+    calculateFromDate: (from) => parseISO(from),
+    calculateToDate: (to) => parseISO(to),
+  },
 };
-const determineDateRange = (preset) => ({
-  from: formatISO(datePresets[preset].calculateFromDate(), {
-    representation: "date",
-  }),
-  to: formatISO(datePresets[preset].calculateToDate(), {
-    representation: "date",
-  }),
+const determineDateRange = (preset, from, to) => ({
+  from: startOfDay(datePresets[preset].calculateFromDate(from)),
+  to: endOfDay(datePresets[preset].calculateToDate(to)),
 });
 
 const createStatsEndpoint = (path, fetcher) => {
@@ -117,13 +123,11 @@ const createStatsEndpoint = (path, fetcher) => {
         websiteSettings = data;
       }
 
-      const dateRange =
-        req.query.preset === "custom"
-          ? {
-              from: req.query.from,
-              to: req.query.to,
-            }
-          : determineDateRange(req.query.preset);
+      const dateRange = determineDateRange(
+        req.query.preset,
+        req.query.from,
+        req.query.to
+      );
       const data = await fetcher(dateRange, domain, websiteSettings);
       res.json({ data });
     } catch (error) {

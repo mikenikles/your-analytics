@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@apla/clickhouse": "^1.6.4"
+    "@apla/clickhouse": "^1.6.4",
+    "date-fns": "^2.16.1"
   }
 }
