@@ -4,17 +4,14 @@
   import isOpen from "../../stores/mobile-menu";
   import { session } from "../../stores/session";
 
+  export let handleLogout;
+
   $: user = $session.user || {};
   $: userWebsites = Object.keys(user.sites || {});
   $: hasMultipleSites = userWebsites.length > 1;
   $: userFirstName = user.firstName || "";
   $: userEmail = user.email || "";
   $: userEmailHash = user.emailHash;
-
-  const handleLogout = async () => {
-    await logout();
-    await goto("/auth");
-  };
 </script>
 
 <div class="md:hidden">

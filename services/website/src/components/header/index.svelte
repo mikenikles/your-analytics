@@ -14,6 +14,7 @@
 
   const handleLogout = async () => {
     await logout();
+    $session.user = null;
     await goto("/auth");
   };
 </script>
@@ -36,4 +37,4 @@
     </div>
   {/if}
 </div>
-<NavMobile />
+<NavMobile {handleLogout} />
