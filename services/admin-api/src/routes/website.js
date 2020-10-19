@@ -107,8 +107,8 @@ module.exports = (authenticate) => {
       const domain = req.params.domain;
       const visibility = req.body.visibility;
 
-      const user = await rootDb.users.find(req.user.issuer);
-      if (!user.data.sites[domain]) {
+      const user = await rootDb.users.findUserWithAllData(req.user.issuer);
+      if (!user.sites[domain]) {
         console.error(
           new Error(
             `User ${req.user.issuer} tried to access domain ${domain} but is not authorized.`
@@ -117,9 +117,9 @@ module.exports = (authenticate) => {
         res.status(401).end();
         return;
       }
-      await domainDb.settings.setVisibility(
-        user.data.sites[domain].serverKeySecret
-      )(visibility);
+      await domainDb.settings.setVisibility(user.sites[domain].serverKeySecret)(
+        visibility
+      );
       return res.status(200).end();
     } catch (error) {
       console.error(error);
