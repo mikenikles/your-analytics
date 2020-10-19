@@ -30,7 +30,7 @@ const deleteUser = (serverClient) => (issuer) =>
     q.Delete(q.Select("ref", q.Get(q.Match(q.Index("user_by_issuer"), issuer))))
   );
 
-const findUser = (serverClient) => async (issuer) => {
+const findUserWithAllData = (serverClient) => async (issuer) => {
   const response = await serverClient.query(
     q.Paginate(q.Match(q.Index("user_by_issuer"), issuer))
   );
@@ -50,7 +50,16 @@ const findUser = (serverClient) => async (issuer) => {
     return null;
   }
 
-  return prepareUserForPublic(user.data);
+  return user.data;
+};
+
+const findUser = (serverClient) => async (issuer) => {
+  const user = await findUserWithAllData(serverClient)(issuer);
+  if (!user) {
+    return null;
+  }
+
+  return prepareUserForPublic(user);
 };
 
 const setFirstName = (serverClient) => (issuer, firstName) =>
@@ -131,6 +140,7 @@ module.exports = {
   createUser,
   deleteUser,
   findUser,
+  findUserWithAllData,
   setFirstName,
   setLastLoginAt,
   addNewWebsiteServerKey,
