@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { goto, stores } from "@sapper/app";
+  import { stores } from "@sapper/app";
   import { logout } from "../../auth/magic";
   import NavMobile from "./nav-mobile.svelte";
   import NavMobileMenuButton from "./nav-mobile-menu-button.svelte";
@@ -14,7 +14,7 @@
 
   const handleLogout = async () => {
     await logout();
-    await goto("/auth");
+    $session.user = null;
   };
 </script>
 
@@ -36,4 +36,4 @@
     </div>
   {/if}
 </div>
-<NavMobile />
+<NavMobile {handleLogout} />

@@ -14,7 +14,7 @@
   }
 </script>
 
-{#if websites}
+{#if Object.keys(websites).length >= 2}
   <div class="mx-2 mt-4">
     <select bind:value={selectedWebsite} class="form-select">
       {#each Object.entries(websites) as [value]}

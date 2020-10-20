@@ -5,7 +5,7 @@
 
   export let segment: string;
 
-  $: segment; // Gets rid of the "<Laout> was created with unknown prop 'segment'" browser console warning
+  $: segment; // Gets rid of the "<Layout> was created with unknown prop 'segment'" browser console warning
 
   session.init();
 </script>
