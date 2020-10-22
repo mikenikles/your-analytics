@@ -11,7 +11,13 @@
   };
 </script>
 
-<div class="bg-pink-600 text-white">
+<style>
+  .bg {
+    background-image: url('/logo-3d.png');
+  }
+</style>
+
+<div class="bg bg-fixed bg-center bg-cover text-white">
   <div class="max-w-4xl mx-auto">
     <div class="py-10 px-4 sm:py-32 sm:px-12">
       <h1 class="text-3xl text-center font-extrabold tracking-wide sm:text-5xl sm:text-left">Your web analytics<br />with privacy and simplicity in mind</h1>
