@@ -50,7 +50,8 @@
   }
 
   onMount(async () => {
-    const response = await fetch("https://unpkg.com/world-atlas/countries-50m.json");
+    // Download from https://unpkg.com/world-atlas/countries-110m.json
+    const response = await fetch("/countries-110m.json");
     const data = await response.json();
     countries = topojson.feature(data, data.objects.countries).features;
   });
