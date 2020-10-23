@@ -1,4 +1,6 @@
 <script lang="ts">
+  import onboarding from "../stores/onboarding";
+
   export let name: string;
 
   /**
@@ -607,11 +609,9 @@
     "US/Samoa": "−11:00",
     "Etc/GMT+12": "−12:00"
   };
-
-  let userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 </script>
 
-<select required {name} bind:value={userTimezone} class="form-select w-full sm:text-sm sm:leading-5">
+<select required {name} bind:value={$onboarding.timezone} class="form-select w-full sm:text-sm sm:leading-5">
   {#each Object.entries(timezones) as [tzName, tzOffset]}
     <option
       value={tzName}>
