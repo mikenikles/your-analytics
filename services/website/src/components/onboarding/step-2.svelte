@@ -18,11 +18,10 @@
   $: isUrlInvalid = hasUserAlreadyConfiguredSite || $onboarding.isSiteAlreadyConfiguredGlobally;
 
   const handleSubmit = async () => {
-    const firstName = $onboarding.user.firstName;
     const url = $onboarding.url;
     const timezone = $onboarding.timezone;
 
-    const responseCode = await addNewWebsite({firstName, url, timezone});
+    const responseCode = await addNewWebsite({url, timezone});
     switch (responseCode) {
       case 201:
         $onboarding.isSiteAdded = true;
