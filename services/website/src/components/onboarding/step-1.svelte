@@ -1,10 +1,12 @@
 <script lang="ts">
+  import { setFirstName } from "../../api/onboarding";
   import onboarding from "../../stores/onboarding";
   import StepWrapper from "./step-wrapper.svelte";
 
   let firstName = "";
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    await setFirstName(firstName);
     $onboarding.user.firstName = firstName;
   };
 

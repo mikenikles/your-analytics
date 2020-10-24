@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { goto } from "@sapper/app";
-  import { logout } from "../../auth/magic";
   import isOpen from "../../stores/mobile-menu";
   import { session } from "../../stores/session";
 
