@@ -4,6 +4,7 @@ const {
 } = require("@your-analytics/clickhouse");
 const { domainDb, rootDb } = require("@your-analytics/faunadb");
 const express = require("express");
+const { signJwtAndSetCookie } = require("../utils/cookies");
 
 const router = express.Router();
 
@@ -23,9 +24,6 @@ module.exports = (authenticate) => {
 
   router.post("/", authenticate, async (req, res) => {
     try {
-      if (req.body.firstName) {
-        await rootDb.users.setFirstName(req.user.issuer, req.body.firstName);
-      }
       try {
         if (!isValidWebsite(req.body.url)) {
           throw new Error(`Invalid website provided: ${req.body.url}`);
@@ -53,7 +51,14 @@ module.exports = (authenticate) => {
         visibility: "private",
       });
 
-      return res.status(201).end();
+      try {
+        const newUser = Object.assign({}, req.user);
+        newUser.sites[req.body.url] = {};
+        await signJwtAndSetCookie(res, newUser);
+        return res.status(201).end();
+      } catch (error) {
+        return res.status(401).end("Something went wrong.");
+      }
     } catch (error) {
       console.error(error);
       return res.status(500).end();
