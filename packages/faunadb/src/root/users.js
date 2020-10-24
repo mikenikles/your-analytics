@@ -25,6 +25,22 @@ const createUser = (serverClient) => (user) =>
     })
   );
 
+const updateUser = (serverClient) => (issuer, updates) =>
+  serverClient.query(
+    q.Update(
+      q.Select(
+        ["data", 0],
+        q.Paginate(q.Match(q.Index("user_by_issuer"), issuer))
+      ),
+      {
+        data: {
+          // Whitelist properties that are save to be updated
+          firstName: updates.firstName,
+        },
+      }
+    )
+  );
+
 const deleteUser = (serverClient) => (issuer) =>
   serverClient.query(
     q.Delete(q.Select("ref", q.Get(q.Match(q.Index("user_by_issuer"), issuer))))
@@ -61,21 +77,6 @@ const findUser = (serverClient) => async (issuer) => {
 
   return prepareUserForPublic(user);
 };
-
-const setFirstName = (serverClient) => (issuer, firstName) =>
-  serverClient.query(
-    q.Update(
-      q.Select(
-        ["data", 0],
-        q.Paginate(q.Match(q.Index("user_by_issuer"), issuer))
-      ),
-      {
-        data: {
-          firstName,
-        },
-      }
-    )
-  );
 
 const setLastLoginAt = (serverClient) => (issuer, lastLoginAt) =>
   serverClient.query(
@@ -138,10 +139,10 @@ const getDomainServerKeySecret = (serverClient) => async (issuer, domain) => {
 
 module.exports = {
   createUser,
+  updateUser,
   deleteUser,
   findUser,
   findUserWithAllData,
-  setFirstName,
   setLastLoginAt,
   addNewWebsiteServerKey,
   getDomainServerKeySecret,
