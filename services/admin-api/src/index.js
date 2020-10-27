@@ -50,19 +50,6 @@ app.get("/", async (req, res) => {
 app.use("/user", user(authenticateMagic, authenticateJwtCookieCombo));
 app.use("/website", website(authenticateJwtCookieCombo));
 
-app.post("/beta-email", async (req, res) => {
-  try {
-    // This triggers Google Cloud's Error Reporting. Email addresses
-    // can be filtered in the logs, exported and used to notify when
-    // the project is ready.
-    console.error(new Error(`New beta email: ${req.query.email}`));
-    return res.status(201).end();
-  } catch (error) {
-    console.error(error);
-    return res.status(500).end();
-  }
-});
-
 if (process.env.NODE_ENV === "development") {
   console.log("[TESTS] Adding a /tests API endpoint.");
   app.use("/tests", tests);

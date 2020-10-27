@@ -7,13 +7,13 @@
     price: "$0"
   }, {
     pageViews: "100k",
-    price: "??"
+    price: "Free while in beta"
   }, {
     pageViews: "1M",
-    price: "??"
+    price: "Free while in beta"
   }, {
     pageViews: "10M",
-    price: "??"
+    price: "Free while in beta"
   }];
   let selectedPricingIndex = 0;
 </script>
