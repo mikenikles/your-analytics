@@ -2,10 +2,10 @@ const { getDateRange } = require("../fragments");
 
 const fetchOs = (ch) => async (dateRange, domain, websiteSettings) => {
   const { chDbName, timezone } = websiteSettings;
-  const sql = `SELECT os_name, COUNT(*) AS total FROM ${chDbName}.events WHERE ${getDateRange(
+  const sql = `SELECT COALESCE(NULLIF(os_name, ''), 'Unknown') AS os, COUNT(*) AS total FROM ${chDbName}.events WHERE ${getDateRange(
     dateRange,
     timezone
-  )} AND domain = '${domain}' GROUP BY os_name ORDER BY total DESC`;
+  )} AND domain = '${domain}' GROUP BY os ORDER BY total DESC`;
   const stream = ch.query(sql);
 
   return new Promise((resolve, reject) => {
@@ -13,7 +13,7 @@ const fetchOs = (ch) => async (dateRange, domain, websiteSettings) => {
     stream.on("error", (error) => reject(error));
 
     stream.on("data", (row) => {
-      // row: [os_name, total]
+      // row: [os, total]
       result[row[0]] = row[1] * 1;
     });
 
