@@ -1,4 +1,4 @@
-const { getDateRange } = require("../fragments");
+const { getDateRange, formatISODate } = require("../fragments");
 
 const ONE_DAY = 1000 * 60 * 60 * 24;
 const ONE_MONTH = ONE_DAY * 31;
@@ -30,6 +30,7 @@ const dateRangeOptions = [
   {
     test: ({ from, to }) => to - from + 1 === ONE_DAY,
     format: "%H",
+    period: "Hour",
     getLabel: (valueString) => {
       const value = valueString * 1;
       return value < 12
@@ -41,18 +42,21 @@ const dateRangeOptions = [
     test: ({ from, to }) =>
       to - from + 1 > ONE_DAY && to - from + 1 <= ONE_MONTH,
     format: "%F",
+    period: "Day",
     getLabel: (value) => value,
   },
   {
     test: ({ from, to }) =>
       to - from + 1 > ONE_MONTH && to - from + 1 <= ONE_YEAR,
     format: "%Y %m",
+    period: "Month",
     getLabel: (value) =>
       `${MONTHS[value.substring(5) * 1]} ${value.substring(0, 4)}`, // `* 1` to convert "01" to 1
   },
   {
     test: ({ from, to }) => to - from + 1 > ONE_YEAR,
     format: "%Y",
+    period: "Year",
     getLabel: (value) => value,
   },
   {
@@ -64,17 +68,45 @@ const dateRangeOptions = [
 
 const fetchVisitors = (ch) => async (dateRange, domain, websiteSettings) => {
   const { chDbName, timezone } = websiteSettings;
-  const { format, getLabel } = dateRangeOptions.find((dateRangeOption) =>
-    dateRangeOption.test({
-      from: dateRange.from.getTime(),
-      to: dateRange.to.getTime(),
-    })
+  const { format, getLabel, period } = dateRangeOptions.find(
+    (dateRangeOption) =>
+      dateRangeOption.test({
+        from: dateRange.from.getTime(),
+        to: dateRange.to.getTime(),
+      })
   );
-  const sql = `SELECT formatDateTime(timestamp, '${format}', '${timezone}') AS daterange, COUNT(DISTINCT user_id) AS total FROM ${chDbName}.events WHERE ${getDateRange(
-    dateRange,
-    timezone
-  )} AND domain = '${domain}' GROUP BY daterange ORDER BY daterange`;
 
+  const sql = `
+    SELECT t, SUM(total) AS total FROM (
+        SELECT 
+            arrayJoin(
+              arrayMap( x -> formatDateTime(add${period}s(toDateTime('${formatISODate(
+    dateRange.from
+  )} 00:00:00', '${timezone}'), x), '${format}', '${timezone}'),
+                  range(toUInt64(
+                      dateDiff('${period.toLowerCase()}', 
+                          toDateTime('${formatISODate(
+                            dateRange.from
+                          )} 00:00:00', '${timezone}'), 
+                          toDateTime(toStartOfDay(addDays(toDate('${formatISODate(
+                            dateRange.to
+                          )}', '${timezone}'), 1), '${timezone}'))))))
+            ) as t,
+            0 as total
+
+        UNION ALL
+
+        SELECT
+            formatDateTime(timestamp, '${format}', '${timezone}') as t,
+            COUNT(DISTINCT user_id) as total
+            FROM ${chDbName}.events
+            WHERE ${getDateRange(dateRange, timezone)}
+            AND domain = '${domain}'
+            GROUP BY t
+    )
+    GROUP BY t ORDER BY t
+  `;
+  console.log(sql);
   const stream = ch.query(sql);
 
   return new Promise((resolve, reject) => {
