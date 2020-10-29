@@ -12,7 +12,9 @@ const recordEvent = (ch) => (event) => {
   if (!flushIntervalId) {
     const flushBuffer = () => {
       Object.entries(insertBuffers).forEach(([domain, events]) => {
-        console.log(`Flushing ${events.length} events for domain ${domain}`);
+        if (events.length > 0) {
+          console.log(`Flushing ${events.length} events for domain ${domain}`);
+        }
         const dbName = convertUrlToDbName(domain);
         const writableStream = ch.query(
           `INSERT INTO ${dbName}.events`,
