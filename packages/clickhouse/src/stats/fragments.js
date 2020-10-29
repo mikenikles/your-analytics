@@ -11,4 +11,5 @@ const getDateRange = (dateRange, timezone) =>
 
 module.exports = {
   getDateRange,
+  formatISODate,
 };
