@@ -78,35 +78,34 @@ const fetchVisitors = (ch) => async (dateRange, domain, websiteSettings) => {
 
   const sql = `
     SELECT t, SUM(total) AS total FROM (
-        SELECT 
-            arrayJoin(
-              arrayMap( x -> formatDateTime(add${period}s(toDateTime('${formatISODate(
+      SELECT 
+        arrayJoin(
+          arrayMap( x -> formatDateTime(add${period}s(toDateTime('${formatISODate(
     dateRange.from
   )} 00:00:00', '${timezone}'), x), '${format}', '${timezone}'),
-                  range(toUInt64(
-                      dateDiff('${period.toLowerCase()}', 
-                          toDateTime('${formatISODate(
-                            dateRange.from
-                          )} 00:00:00', '${timezone}'), 
-                          toDateTime(toStartOfDay(addDays(toDate('${formatISODate(
-                            dateRange.to
-                          )}', '${timezone}'), 1), '${timezone}'))))))
+            range(toUInt64(
+              dateDiff('${period.toLowerCase()}',
+                toDateTime('${formatISODate(
+                  dateRange.from
+                )} 00:00:00', '${timezone}'),
+                toDateTime(toStartOfDay(addDays(toDate('${formatISODate(
+                  dateRange.to
+                )}', '${timezone}'), 1), '${timezone}'))))))
             ) as t,
             0 as total
 
-        UNION ALL
+      UNION ALL
 
-        SELECT
-            formatDateTime(timestamp, '${format}', '${timezone}') as t,
-            COUNT(DISTINCT user_id) as total
-            FROM ${chDbName}.events
-            WHERE ${getDateRange(dateRange, timezone)}
-            AND domain = '${domain}'
-            GROUP BY t
+      SELECT
+        formatDateTime(timestamp, '${format}', '${timezone}') as t,
+        COUNT(DISTINCT user_id) as total
+        FROM ${chDbName}.events
+        WHERE ${getDateRange(dateRange, timezone)}
+        AND domain = '${domain}'
+        GROUP BY t
     )
     GROUP BY t ORDER BY t
   `;
-  console.log(sql);
   const stream = ch.query(sql);
 
   return new Promise((resolve, reject) => {
