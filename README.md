@@ -25,3 +25,7 @@ to open a new browser tab on port 3000.
 1. Create an account at https://magic.link.
 1. In your Gitpod.io account, set the following environment variable:
    - `YA_MAGIC_SECRET_KEY`: Your Magic **TEST**\_SECRET_KEY value
+
+## Tests
+
+All test results are publicly available on the [Cypress Dashboard](https://dashboard.cypress.io/projects/gynhxr/runs).
