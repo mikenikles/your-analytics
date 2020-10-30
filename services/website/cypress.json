@@ -1,5 +1,9 @@
 {
   "baseUrl": "http://localhost:3000",
   "video": false,
-  "projectId": "gynhxr"
+  "projectId": "gynhxr",
+  "retries": {
+    "runMode": 1,
+    "openMode": 0
+  }
 }
