@@ -1,5 +1,5 @@
 name: "e2e"
-on: [pull_request]
+on: [push]
 jobs:
   e2e:
     name: Test end-to-end
@@ -23,9 +23,11 @@ jobs:
         uses: cypress-io/github-action@v1
         with:
           install: false
+          record: true
           wait-on: "http://localhost:3000"
           wait-on-timeout: 120
           working-directory: services/website
         env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_ENV: development
