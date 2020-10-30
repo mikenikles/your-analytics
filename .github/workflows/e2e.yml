@@ -27,5 +27,6 @@ jobs:
           wait-on-timeout: 120
           working-directory: services/website
         env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_ENV: development
