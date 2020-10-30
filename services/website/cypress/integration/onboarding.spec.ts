@@ -12,10 +12,13 @@ describe("/onboarding", () => {
   });
 
   it("should create a new website", () => {
+    const websiteUrl = "local-testing.com";
     cy.get('input[id="firstName"]').type("Tester");
     cy.get("button[type=button]").click();
-    cy.get('input[id="url"]').type("local-testing.com");
+    cy.get('input[id="url"]').type(websiteUrl);
     cy.get('select[name="timezone"]').select("America/Toronto");
     cy.get("button[type=button]").click();
+    cy.get("#script").should("contain.value", `data-domain="${websiteUrl}"`);
+    cy.get(`a[href="https://${websiteUrl}"]`).contains(websiteUrl);
   });
 });
