@@ -1,5 +1,5 @@
 name: "e2e"
-on: [pull_request]
+on: [push]
 jobs:
   e2e:
     name: Test end-to-end
