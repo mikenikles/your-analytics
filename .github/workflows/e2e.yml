@@ -23,6 +23,7 @@ jobs:
         uses: cypress-io/github-action@v1
         with:
           install: false
+          record: true
           wait-on: "http://localhost:3000"
           wait-on-timeout: 120
           working-directory: services/website
