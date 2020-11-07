@@ -32,6 +32,7 @@ router.post("/login-with-api", async (req, res) => {
       issuer: req.body.email,
       email: req.body.email,
       lastLoginAt: Math.floor(Date.now() / 1000),
+      sites: {},
     };
     await rootDb.users.create(testUser);
   }
