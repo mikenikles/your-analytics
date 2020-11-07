@@ -28,12 +28,12 @@ router.post("/login-with-api", async (req, res) => {
       Math.floor(Date.now() / 1000)
     );
   } else {
-    testUser = {
+    await rootDb.users.create({
       issuer: req.body.email,
       email: req.body.email,
       lastLoginAt: Math.floor(Date.now() / 1000),
-    };
-    await rootDb.users.create(testUser);
+    });
+    testUser = await rootDb.users.find(req.body.email);
   }
 
   jwt.sign({ user: testUser }, process.env.JWT_SECRET, (error, token) => {
