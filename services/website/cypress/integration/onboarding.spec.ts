@@ -13,11 +13,14 @@ describe("/onboarding", () => {
 
   it("should create a new website", () => {
     const websiteUrl = "local-testing.com";
-    cy.get('input[id="firstName"]').type("Tester");
-    cy.get("button[type=button]").click();
-    cy.get('input[id="url"]').type(websiteUrl);
-    cy.get('select[name="timezone"]').select("America/Toronto");
-    cy.get("button[type=button]").click();
+    cy.findByLabelText("What's your first name?").type("Tester");
+    cy.findByText("Next: Configure your website").click();
+    cy.findByLabelText("What's your website URL?").type(websiteUrl);
+    cy.findByLabelText("What's your preferred reporting timezone?").select(
+      "America/Toronto"
+    );
+    cy.findByText("Let's go").click();
+
     cy.get("#script").should("contain.value", `data-domain="${websiteUrl}"`);
     cy.get(`a[href="https://${websiteUrl}"]`).contains(websiteUrl);
   });
