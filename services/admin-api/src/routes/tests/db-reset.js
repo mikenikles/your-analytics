@@ -4,7 +4,10 @@ const express = require("express");
 
 const router = express.Router();
 
-const ignoreError = (promise) => promise.catch((e) => undefined);
+const ignoreError = (promise) =>
+  promise.catch((e) => {
+    console.log(e);
+  });
 
 router.post("/", async (req, res) => {
   console.log("[admin-api]: TESTS - Resetting database...");
@@ -21,7 +24,12 @@ router.post("/", async (req, res) => {
     }
     steps.push(rootDb.users.delete(testUserIssuer));
 
-    await Promise.all(steps.map(ignoreError));
+    try {
+      await Promise.all(steps.map(ignoreError));
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   }
 
   return res.status(200).end();
