@@ -13,7 +13,7 @@ router.post("/", async (req, res) => {
   const testUser = await rootDb.users.find(testUserIssuer);
 
   if (testUser) {
-    const sites = Object.keys(testUser.sites || {});
+    const sites = ["local-testing.com"]; //Object.keys(testUser.sites || {});
     const steps = [];
     for (const site of sites) {
       steps.push(domainDb.admin.deleteWebsite(site));
