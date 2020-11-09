@@ -16,7 +16,6 @@ jobs:
       - name: Start all services
         run: npm run dev &
         env:
-          CH_HOST: clickhouse
           FAUNADB_ADMIN_SECRET: ${{ secrets.FAUNADB_ADMIN_SECRET }}
           FAUNADB_SERVER_SECRET: ${{ secrets.FAUNADB_SERVER_SECRET }}
           MAGIC_SECRET_KEY: ${{ secrets.MAGIC_SECRET_KEY }}
