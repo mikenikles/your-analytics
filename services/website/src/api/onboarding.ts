@@ -21,5 +21,5 @@ export const addNewWebsite = async (info) => {
     body: JSON.stringify(info),
     method: "POST",
   });
-  return response.body;
+  return response.json();
 };
