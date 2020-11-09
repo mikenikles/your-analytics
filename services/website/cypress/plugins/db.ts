@@ -5,7 +5,7 @@ const tasks = {
     await fetch("http://localhost:3000/api/admin/tests/db-reset", {
       method: "POST",
     });
-    return {};
+    return null;
   },
 };
 

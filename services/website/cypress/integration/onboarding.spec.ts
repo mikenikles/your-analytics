@@ -11,7 +11,7 @@ describe("/onboarding", () => {
     cy.location("pathname").should("equal", "/onboarding");
   });
 
-  it.skip("should create a new website", () => {
+  it("should create a new website", () => {
     const websiteUrl = "local-testing.com";
     cy.findByLabelText("What's your first name?").type("Tester");
     cy.findByText("Next: Configure your website").click();
