@@ -54,7 +54,7 @@
 </style>
 
 <StepWrapper>
-  MMM{responseBody}MMM
+  MMM{JSON.stringify(responseBody)}MMM
   <div>
     <label for="url" class="text-sm font-medium leading-5 text-gray-700">
       What's your website URL?
