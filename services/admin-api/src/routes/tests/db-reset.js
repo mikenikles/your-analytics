@@ -4,10 +4,7 @@ const express = require("express");
 
 const router = express.Router();
 
-const ignoreError = (promise) =>
-  promise.catch((e) => {
-    console.log(e);
-  });
+const ignoreError = (promise) => promise.catch((e) => undefined);
 
 router.post("/", async (req, res) => {
   console.log("[admin-api]: TESTS - Resetting database...");
@@ -16,7 +13,7 @@ router.post("/", async (req, res) => {
   const testUser = await rootDb.users.find(testUserIssuer);
 
   if (testUser) {
-    const sites = ["local-testing.com"]; //Object.keys(testUser.sites || {});
+    const sites = Object.keys(testUser.sites || {});
     const steps = [];
     for (const site of sites) {
       steps.push(domainDb.admin.deleteWebsite(site));
@@ -24,12 +21,7 @@ router.post("/", async (req, res) => {
     }
     steps.push(rootDb.users.delete(testUserIssuer));
 
-    try {
-      await Promise.all(steps.map(ignoreError));
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
+    await Promise.all(steps.map(ignoreError));
   }
 
   return res.status(200).end();
