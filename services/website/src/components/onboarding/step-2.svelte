@@ -12,6 +12,7 @@
   export let isUrlInvalid: boolean;
 
   let fetchUniqueVisitorsInterval: number;
+  let responseBody = "";
 
   $: existingUserSites = Object.keys($onboarding.user.sites || {}) || [];
   $: hasUserAlreadyConfiguredSite = existingUserSites.includes($onboarding.url);
@@ -21,20 +22,21 @@
     const url = $onboarding.url;
     const timezone = $onboarding.timezone;
 
-    const responseCode = await addNewWebsite({url, timezone});
-    switch (responseCode) {
-      case 201:
-        $onboarding.isSiteAdded = true;
-        $session.user.sites[url] = {};
-        dateRange.setPreset("today");
-        fetchUniqueVisitorsInterval = setInterval(() => {
-          fetchUniqueVisitorsOnOnboardingPage(window.fetch, window.location.hostname, url);
-        }, 10000);
-        break;
-      case 400:
-        $onboarding.isSiteAlreadyConfiguredGlobally = true;
-        break;
-    }
+    responseBody = await addNewWebsite({url, timezone});
+    // const responseCode = await addNewWebsite({url, timezone});
+    // switch (responseCode) {
+    //   case 201:
+    //     $onboarding.isSiteAdded = true;
+    //     $session.user.sites[url] = {};
+    //     dateRange.setPreset("today");
+    //     fetchUniqueVisitorsInterval = setInterval(() => {
+    //       fetchUniqueVisitorsOnOnboardingPage(window.fetch, window.location.hostname, url);
+    //     }, 10000);
+    //     break;
+    //   case 400:
+    //     $onboarding.isSiteAlreadyConfiguredGlobally = true;
+    //     break;
+    // }
   };
 
   onDestroy(() => {
@@ -52,6 +54,7 @@
 </style>
 
 <StepWrapper>
+  MMM{responseBody}MMM
   <div>
     <label for="url" class="text-sm font-medium leading-5 text-gray-700">
       What's your website URL?

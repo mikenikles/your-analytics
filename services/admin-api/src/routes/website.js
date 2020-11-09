@@ -32,7 +32,7 @@ module.exports = (authenticate) => {
         await addNewWebsite(req.body.url);
       } catch (error) {
         console.error(error);
-        return res.status(400).end();
+        return res.status(400).send(error);
       }
       const {
         secret: websiteServerKeySecret,
