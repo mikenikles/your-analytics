@@ -79,11 +79,11 @@
   </div>
 
   <div class="mt-6">
-    <label for="url" class="text-sm font-medium leading-5 text-gray-700">
+    <label for="timezone" class="text-sm font-medium leading-5 text-gray-700">
       What's your preferred reporting timezone?
     </label>
     <div class="mt-1 rounded-md shadow-sm">
-      <TimezoneSelect name="timezone" />
+      <TimezoneSelect />
     </div>
   </div>
 

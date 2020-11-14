@@ -1,8 +1,6 @@
 <script lang="ts">
   import onboarding from "../stores/onboarding";
 
-  export let name: string;
-
   /**
    * To obtain the list:
    * 1. Navigate to https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
@@ -611,7 +609,7 @@
   };
 </script>
 
-<select required {name} bind:value={$onboarding.timezone} class="form-select w-full sm:text-sm sm:leading-5">
+<select required bind:value={$onboarding.timezone} id="timezone" name="timezone" class="form-select w-full sm:text-sm sm:leading-5">
   {#each Object.entries(timezones) as [tzName, tzOffset]}
     <option
       value={tzName}>

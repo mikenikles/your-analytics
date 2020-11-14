@@ -7,7 +7,7 @@ const router = express.Router();
 const ignoreError = (promise) => promise.catch((e) => undefined);
 
 router.post("/", async (req, res) => {
-  console.log("[admin-api]: Resetting database...");
+  console.log("[admin-api]: TESTS - Resetting database...");
 
   const testUserIssuer = "hello+ya-automated-tests@mikenikles.com";
   const testUser = await rootDb.users.find(testUserIssuer);
