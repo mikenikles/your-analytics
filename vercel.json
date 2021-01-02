@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "package.json",
+      "src": "services/website/package.json",
       "use": "vercel-sapper"
     }
   ],
