@@ -30,4 +30,4 @@ to open a new browser tab on port 3000.
 
 All test results are publicly available on the [Cypress Dashboard](https://dashboard.cypress.io/projects/gynhxr/runs).
 
-WIP: Trigger Vercel build
+WIP: Trigger Vercel build: 2
