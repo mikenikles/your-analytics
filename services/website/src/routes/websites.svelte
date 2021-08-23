@@ -1,8 +1,9 @@
 <script context="module" lang="ts">
   import type sapperCommon from "@sapper/common";
   import type { ISession } from "../stores/session";
+  import { ADMIN_API_BASE_URL } from "../config";
 
-  export async function preload(_page: sapperCommon.Page, session: ISession) {
+  export async function preload(page: sapperCommon.Page, session: ISession) {
     const { user } = session;
 
     if (!user) {
@@ -10,18 +11,27 @@
       return;
     }
 
-    const response = await this.fetch("api/admin/website");
+    const url = new URL(
+      `https://${page.host}/${ADMIN_API_BASE_URL}/website`
+    );
+    const response = await this.fetch(url, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+      credentials: "include",
+    });
     if (response.status === 200) {
       const sites = await response.json();
       return {
-        sites
+        sites,
       };
     }
 
     return {
-      sites: []
+      sites: [],
     };
-  };
+  }
 </script>
 
 <script lang="ts">
@@ -42,7 +52,11 @@
   {#each Object.entries(sites) as [url]}
     <Card>
       <div class="p-4 flex justify-between items-center">
-        <a href="/{url}" rel="prefetch" class="text-pink-600 hover:underline">{url}</a>
+        <a
+          href="/{url}"
+          rel="prefetch"
+          class="text-pink-600 hover:underline"
+        >{url}</a>
         <a href="/{url}/settings" rel="prefetch">
           <img src="/svg/cog.svg" alt="Cog icon" class="h-12 w-12" />
         </a>
