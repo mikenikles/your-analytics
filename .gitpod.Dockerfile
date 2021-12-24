@@ -31,9 +31,10 @@ RUN sudo apt-get update \
 
 # `gitpod-workspace-full-vnc` may get updated with a newer version of Node
 # Let's make sure we stick to what works for us.
-RUN nvm install 14 \
-    && nvm use 14 \
-    && nvm alias default 14
+RUN curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | PROFILE=/dev/null bash \
+    && bash -c ". .nvm/nvm.sh \
+      && nvm install 14 \
+      && nvm alias default 14"
 
 RUN echo "nvm use default &>/dev/null" >> ~/.bashrc.d/51-nvm-fix
 
