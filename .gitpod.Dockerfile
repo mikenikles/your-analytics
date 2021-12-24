@@ -29,7 +29,15 @@ RUN sudo apt-get update \
     xvfb \
   && sudo rm -rf /var/lib/apt/lists/*
 
- # Install Firefox
+# `gitpod-workspace-full-vnc` may get updated with a newer version of Node
+# Let's make sure we stick to what works for us.
+RUN bash -c "nvm install 14 \
+    && nvm use 14 \
+    && nvm alias default 14"
+
+RUN echo "nvm use default &>/dev/null" >> ~/.bashrc.d/51-nvm-fix
+
+# Install Firefox
 RUN sudo apt-get update -q \
   && sudo apt-get install -yq \
     firefox \
