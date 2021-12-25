@@ -16,6 +16,7 @@ ports:
     onOpen: ignore
   - port: 8080-8082
     onOpen: ignore
+    visibility: public
   - port: 8123
     onOpen: ignore
   - port: 9000
@@ -27,4 +28,4 @@ ports:
 
 vscode:
   extensions:
-    - svelte.svelte-vscode@101.11.0:IeLZ6cWKXa9lffjVILRhEA==
+    - svelte.svelte-vscode
