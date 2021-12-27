@@ -1,6 +1,6 @@
 <script lang="ts">
   import isOpen from "../../stores/mobile-menu";
-  import { session } from "../../stores/session";
+  import { session } from "$app/stores";
 
   export let handleLogout;
 

@@ -1,21 +1,25 @@
 <script context="module" lang="ts">
-  import type sapperCommon from "@sapper/common";
-  import type { ISession } from "../../stores/session";
   import { getVisibility } from "../../api/settings";
   import { fetchAllStats } from "../../api/stats";
   import { initFilters } from "../../stores/stats-filters-query";
 
-  export async function preload(page: sapperCommon.Page, session: ISession) {
+  export const load: import('@sveltejs/kit').Load = async ({fetch, page, session}) => {
     const { user } = session;
-    const { visibility } = await getVisibility(this.fetch, page.host, page.path.substring(1));
+    const { visibility } = await getVisibility(fetch, page.host, page.path.substring(1));
 
     if (!user && visibility === "private") {
-      this.redirect(302, "auth");
-      return;
+      return {
+        status: 302,
+        redirect: "auth"
+      }
     }
 
-    initFilters(page.query);
-    const statsResults = await fetchAllStats(this.fetch, page.host, page.params.site);
+    initFilters({
+      preset: page.query.get("preset"),
+      from: page.query.get("from"),
+      to: page.query.get("to"),
+    });
+    const statsResults = await fetchAllStats(fetch, page.host, page.params.site);
     const stats = {};
     statsResults.forEach((statsResultPromise) => {
       if (statsResultPromise.status === "fulfilled") {
@@ -24,13 +28,13 @@
     });
 
     return {
-      stats
+      props: {stats}
     };
   };
 </script>
 
 <script lang="ts">
-  import { stores } from "@sapper/app";
+  import { page } from "$app/stores";
   import { statsStores } from "../../api/stats";
   import Card from "../../components/card.svelte";
   import DateRange from "../../components/date-range.svelte";
@@ -50,9 +54,11 @@
     data: any;
   };;
 
-  const { page } = stores();
-
-  initFilters($page.query);
+  initFilters({
+    preset: $page.query.get("preset"),
+    from: $page.query.get("from"),
+    to: $page.query.get("to"),
+  });
 
   Object.entries(stats).forEach(([storeName, data]) => {
     statsStores[storeName].set(data);

@@ -11,6 +11,9 @@ jobs:
           - 8123:8123
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "14"
       - name: Install dependencies
         run: npm install
       - name: Start all services
@@ -21,7 +24,7 @@ jobs:
           MAGIC_SECRET_KEY: ${{ secrets.MAGIC_SECRET_KEY }}
           NODE_ENV: development
       - name: Run Cypress
-        uses: cypress-io/github-action@v1
+        uses: cypress-io/github-action@v2
         with:
           install: false
           record: true

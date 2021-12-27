@@ -1,6 +1,6 @@
 import { writable } from "svelte/store";
 
-interface IDateRangeStore {
+export interface IDateRangeStore {
   preset?: string;
   from?: string;
   to?: string;
@@ -35,7 +35,5 @@ const create = () => {
     reset: () => set({}),
   };
 };
-
-export const isLocalDateChange = writable(false);
 
 export default create();

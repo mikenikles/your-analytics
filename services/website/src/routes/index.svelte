@@ -1,23 +1,22 @@
 <script context="module" lang="ts">
-  import type sapperCommon from "@sapper/common";
   import { fetchAllStats } from "../api/stats";
   import { initFilters } from "../stores/stats-filters-query";
 
-  export async function preload(page: sapperCommon.Page) {
+  export async function load({fetch, page}) {
     initFilters({
       preset: "30days"
     });
-    const statsResults = await fetchAllStats(this.fetch, page.host, "your-analytics.org");
+    const statsResults = await fetchAllStats(fetch, page.host, "your-analytics.org");
     const stats = {};
-
+    
     statsResults.forEach((statsResultPromise) => {
       if (statsResultPromise.status === "fulfilled") {
         stats[statsResultPromise.value.storeName] = statsResultPromise.value.data;
       }
     });
-
+    
     return {
-      stats
+      props: {stats}
     };
   };
 </script>
@@ -31,12 +30,12 @@
   import Stats from "../components/landing-page/stats.svelte";
   import FrontendIntegrations from "../components/landing-page/frontend-integrations.svelte";
   import Pricing from "../components/landing-page/pricing.svelte";
-
+  
   export let stats: {
     storeName: string;
     data: any;
   };
-
+  
   Object.entries(stats).forEach(([storeName, data]) => {
     statsStores[storeName].set(data);
   });

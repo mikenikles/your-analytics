@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { goto, stores } from '@sapper/app';
+  import { goto } from '$app/navigation';
+  import { page } from '$app/stores';
   import { endOfMonth, formatISO, parseISO } from "date-fns";
   import Chart from "chart.js";
   import { visitors } from "../../api/stats";
-  import dateRange, { isLocalDateChange } from "../../stores/date-range";
+  import dateRange from "../../stores/date-range";
   import statsFiltersQueryString from "../../stores/stats-filters-query-string";
   import Loading from "./loading.svelte";
 
@@ -24,8 +25,6 @@
     "November": "11",
     "December": "12",
   };
-
-  const { page } = stores();
 
   let chartElement: HTMLCanvasElement;
   let chart: Chart;
@@ -67,7 +66,6 @@
               } else if (labelClicked.match(REGEX_YEAR)) {
                 dateRange.setCustomRange(`${labelClicked}-01-01`, `${labelClicked}-12-31`);
               }
-              $isLocalDateChange = false;
               await goto(`${$page.path}?${$statsFiltersQueryString}`);
             }
           },

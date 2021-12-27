@@ -1,7 +1,7 @@
 .DS_Store
+/.svelte-kit
 /node_modules/
-/src/node_modules/@sapper/
 yarn-error.log
 /cypress/screenshots/
 /cypress/videos/
-/__sapper__/
+/static/tailwind.css

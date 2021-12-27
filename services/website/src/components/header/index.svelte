@@ -1,12 +1,10 @@
 <script lang="ts">
-  import { stores } from "@sapper/app";
+  import { page, session } from "$app/stores";
   import { logout } from "../../auth/magic";
   import NavMobile from "./nav-mobile.svelte";
   import NavMobileMenuButton from "./nav-mobile-menu-button.svelte";
   import Nav from "./nav.svelte";
   import NavItem from "./nav-item.svelte";
-
-  const { page, session } = stores();
 
   $: user = $session.user || {};
   $: userWebsites = Object.keys(user.sites || {});

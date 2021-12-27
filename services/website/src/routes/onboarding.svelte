@@ -1,15 +1,14 @@
 <script context="module" lang="ts">
-  import type sapperCommon from "@sapper/common";
-  import type { ISession } from "../stores/session";
-
-  export async function preload(_page: sapperCommon.Page, session: ISession) {
+  export async function load({session}) {
     const { user } = session;
     if (!user) {
-      this.redirect(302, "auth");
-      return;
+      return {
+        status: 302,
+        redirect: "auth"
+      }
     }
     return {
-      user
+      props: {user}
     }
   };
 </script>
