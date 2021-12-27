@@ -1,10 +1,10 @@
 <script lang="ts">
+  import { session } from "$app/stores";
   import { onDestroy } from "svelte";
   import { addNewWebsite } from "../../api/onboarding";
   import { fetchUniqueVisitorsOnOnboardingPage } from "../../api/stats";
   import dateRange from "../../stores/date-range";
   import onboarding from "../../stores/onboarding";
-  import { session } from "../../stores/session";
   import StepWrapper from "./step-wrapper.svelte";
   import TimezoneSelect from "../timezone-select.svelte";
 
@@ -27,7 +27,7 @@
         $onboarding.isSiteAdded = true;
         $session.user.sites[url] = {};
         dateRange.setPreset("today");
-        fetchUniqueVisitorsInterval = setInterval(() => {
+        fetchUniqueVisitorsInterval = window.setInterval(() => {
           fetchUniqueVisitorsOnOnboardingPage(window.fetch, window.location.hostname, url);
         }, 10000);
         break;

@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { goto, stores } from '@sapper/app';
+  import { goto } from '$app/navigation';
+  import { page } from '$app/stores';
   import dateRange, { isLocalDateChange } from "../stores/date-range";
   import statsFiltersQueryString from "../stores/stats-filters-query-string";
 
-  const { page } = stores();
   const datePresets = {
     // Also update `services/query-api/src/index.js`
     today: {
@@ -23,40 +23,30 @@
     },
   };
 
-  let datePreset = null;
-  let fromDate = null;
-  let toDate = null;
-
-  $: if (!$isLocalDateChange && $page.query.preset &&
-    (($page.query.preset !== datePreset) || $page.query.preset === "custom") &&
-    $page.query.from !== fromDate &&
-    $page.query.to !== toDate) {
-      datePreset = $page.query.preset;
-      fromDate = $page.query.from;
-      toDate = $page.query.to;
-  };
+  $: datePreset = $page.query.get("preset") || $dateRange.preset || "today";
+  $: fromDate = $page.query.get("from") || $dateRange.from;
+  $: toDate = $page.query.get("to") || $dateRange.to;
 
   const applyCustomDateRange = async () => {
     dateRange.setCustomRange(fromDate, toDate);
-    if (fromDate !== $page.query.from || toDate !== $page.query.to) {
+    if (fromDate !== $page.query.get("from") || toDate !== $page.query.get("to")) {
       await goto(`${$page.path}?${$statsFiltersQueryString}`);
       $isLocalDateChange = false;
     }
   };
 
-  $: if (datePreset && datePreset !== "custom") {
-    dateRange.setPreset(datePreset);
-    if (datePreset !== $page.query.preset) {
-      fromDate = null;
-      toDate = null;
-      goto(`${$page.path}?${$statsFiltersQueryString}`);
+  const applyPreset = async () => {
+    if (datePreset !== "custom") {
+      dateRange.setPreset(datePreset);
+      await goto(`${$page.path}?${$statsFiltersQueryString}`);
+      $isLocalDateChange = false;
     }
   };
 </script>
 
 <div class="mx-2 flex flex-col sm:flex-row sm:items-end">
   <div class="mt-4 sm:py-0">
-    <select bind:value={datePreset} on:click={() => {$isLocalDateChange = true}} aria-label="Choose a date range" class="form-select">
+    <select bind:value={datePreset} on:click={() => {$isLocalDateChange = true; applyPreset()}} aria-label="Choose a date range" class="form-select">
       {#each Object.entries(datePresets) as [value, {label}]}
         <option {value}>{label}</option>
       {/each}

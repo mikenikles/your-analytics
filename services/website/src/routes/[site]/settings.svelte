@@ -1,26 +1,26 @@
 <script context="module" lang="ts">
-  import type sapperCommon from "@sapper/common";
-  import type { ISession } from "../../stores/session";
   import { getSettings } from "../../api/settings";
 
-  export async function preload(page: sapperCommon.Page, session: ISession) {
+  export async function load({fetch, page, session}) {
     const { user } = session;
 
     if (!user) {
-      this.redirect(302, "auth");
-      return;
+      return {
+        status: 302,
+        redirect: "auth"
+      }
     }
 
-    const settings = await getSettings(this.fetch, page.host, page.params.site);
+    const settings = await getSettings(fetch, page.host, page.params.site);
 
     return {
-      settings
+      props: {settings}
     };
   };
 </script>
 
 <script lang="ts">
-  import { stores } from "@sapper/app";
+  import { page } from "$app/stores"
   import { setVisibility } from "../../api/settings";
   import Header from "../../components/header/index.svelte";
   import MainContent from "../../components/main-content.svelte";
@@ -29,7 +29,6 @@
     visibility: string;
   };
 
-  const { page } = stores();
   const visibilities = [{
     label: "Private",
     value: "private",

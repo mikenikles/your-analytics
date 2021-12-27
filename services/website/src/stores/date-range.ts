@@ -1,6 +1,6 @@
 import { writable } from "svelte/store";
 
-interface IDateRangeStore {
+export interface IDateRangeStore {
   preset?: string;
   from?: string;
   to?: string;

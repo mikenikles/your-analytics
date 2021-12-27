@@ -1,29 +1,34 @@
 <script context="module" lang="ts">
-  import type sapperCommon from "@sapper/common";
-  import type { ISession } from "../stores/session";
-
-  export async function preload(_page: sapperCommon.Page, session: ISession) {
+  export async function load({session}) {
     const { user } = session;
 
     if (!user) {
-      this.redirect(302, "auth");
-      return;
+      return {
+        status: 302,
+        redirect: "auth"
+      }
     }
 
     if (!user.sites || Object.keys(user.sites).length === 0) {
-      this.redirect(302, "onboarding");
-      return;
+      return {
+        status: 302,
+        redirect: "onboarding"
+      }
     }
 
     const sites = Object.keys(user.sites);
     if (sites.length === 1) {
-      this.redirect(302, sites[0]);
-      return;
+      return {
+        status: 302,
+        redirect: sites[0]
+      }
     }
 
     if (sites.length >= 2) {
-      this.redirect(302, "websites");
-      return;
+      return {
+        status: 302,
+        redirect: "websites"
+      }
     }
   };
 </script>

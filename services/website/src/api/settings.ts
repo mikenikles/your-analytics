@@ -1,7 +1,7 @@
 import { ADMIN_API_BASE_URL } from "../config";
 
 export const setVisibility = async (website, visibility) => {
-  const url = `${ADMIN_API_BASE_URL}/website/${website}/settings/visibility`;
+  const url = `/${ADMIN_API_BASE_URL}/website/${website}/settings/visibility`;
   const response = await fetch(url, {
     headers: new Headers({
       "Content-Type": "application/json",
@@ -16,10 +16,9 @@ export const setVisibility = async (website, visibility) => {
 };
 
 export const getVisibility = async (fetch, host, website) => {
-  const url = new URL(
-    `https://${host}/${ADMIN_API_BASE_URL}/website/${website}/settings/visibility`
+  const response = await fetch(
+    `/${ADMIN_API_BASE_URL}/website/${website}/settings/visibility`
   );
-  const response = await fetch(url);
 
   if (response.status === 200) {
     return await response.json();
@@ -28,16 +27,16 @@ export const getVisibility = async (fetch, host, website) => {
 };
 
 export const getSettings = async (fetch, host, website) => {
-  const url = new URL(
-    `https://${host}/${ADMIN_API_BASE_URL}/website/${website}/settings`
+  const response = await fetch(
+    `/${ADMIN_API_BASE_URL}/website/${website}/settings`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+      credentials: "include",
+    }
   );
-  const response = await fetch(url, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-    method: "GET",
-    credentials: "include",
-  });
 
   if (response.status === 200) {
     return await response.json();

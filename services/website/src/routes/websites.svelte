@@ -1,20 +1,17 @@
 <script context="module" lang="ts">
-  import type sapperCommon from "@sapper/common";
-  import type { ISession } from "../stores/session";
   import { ADMIN_API_BASE_URL } from "../config";
 
-  export async function preload(page: sapperCommon.Page, session: ISession) {
+  export async function load({fetch, page, session}) {
     const { user } = session;
 
     if (!user) {
-      this.redirect(302, "auth");
-      return;
+      return {
+        status: 302,
+        redirect: "auth"
+      }
     }
 
-    const url = new URL(
-      `https://${page.host}/${ADMIN_API_BASE_URL}/website`
-    );
-    const response = await this.fetch(url, {
+    const response = await fetch(`https://${page.host}/${ADMIN_API_BASE_URL}/website`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -24,12 +21,12 @@
     if (response.status === 200) {
       const sites = await response.json();
       return {
-        sites,
+        props: {sites},
       };
     }
 
     return {
-      sites: [],
+      props: {sites: []},
     };
   }
 </script>
@@ -54,10 +51,10 @@
       <div class="p-4 flex justify-between items-center">
         <a
           href="/{url}"
-          rel="prefetch"
+          sveltekit:prefetch
           class="text-pink-600 hover:underline"
         >{url}</a>
-        <a href="/{url}/settings" rel="prefetch">
+        <a href="/{url}/settings" sveltekit:prefetch>
           <img src="/svg/cog.svg" alt="Cog icon" class="h-12 w-12" />
         </a>
       </div>

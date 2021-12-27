@@ -1,4 +1,24 @@
-<script lang="ts">
+<script context="module">
+	/** @type {import('@sveltejs/kit').ErrorLoad} */
+	export function load({ error, status }) {
+		return {
+			props: {
+				title: `${status}: ${error.message}`
+			}
+		};
+	}
+</script>
+
+<script>
+	export let title;
+</script>
+
+<h1>{title}</h1>
+
+
+
+
+<!-- <script lang="ts">
 	export let status: number;
 	export let error: Error;
 
@@ -37,4 +57,4 @@
 
 {#if dev && error.stack}
 	<pre>{error.stack}</pre>
-{/if}
+{/if} -->

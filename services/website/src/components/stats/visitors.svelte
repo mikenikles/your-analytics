@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { goto, stores } from '@sapper/app';
+  import { goto } from '$app/navigation';
+  import { page } from '$app/stores';
   import { endOfMonth, formatISO, parseISO } from "date-fns";
   import Chart from "chart.js";
   import { visitors } from "../../api/stats";
@@ -24,8 +25,6 @@
     "November": "11",
     "December": "12",
   };
-
-  const { page } = stores();
 
   let chartElement: HTMLCanvasElement;
   let chart: Chart;

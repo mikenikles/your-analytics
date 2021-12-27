@@ -1,8 +1,7 @@
 <script lang="ts">
-  import { goto, stores } from '@sapper/app';
-  import { session } from "../stores/session";
+  import { goto } from '$app/navigation';
+  import { page, session } from '$app/stores';
 
-  const { page } = stores();
   const navigateAndFetchStats = async () => {
     await goto(`/${selectedWebsite}`);
   };
