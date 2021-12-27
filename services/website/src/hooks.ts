@@ -45,7 +45,7 @@ const handleCookies: import("@sveltejs/kit").Handle = async ({
   request,
   resolve,
 }) => {
-  const cookies = cookie.parse(request.headers.cookie);
+  const cookies = cookie.parse(request.headers.cookie || "");
   let signedCookies = cookieParser.signedCookies(cookies, [COOKIE_SECRET]);
   signedCookies = cookieParser.JSONCookies(signedCookies);
   const jwtToken = signedCookies["jwt"];
