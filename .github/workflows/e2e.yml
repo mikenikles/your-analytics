@@ -24,7 +24,7 @@ jobs:
           MAGIC_SECRET_KEY: ${{ secrets.MAGIC_SECRET_KEY }}
           NODE_ENV: development
       - name: Run Cypress
-        uses: cypress-io/github-action@v1
+        uses: cypress-io/github-action@v2
         with:
           install: false
           record: true
