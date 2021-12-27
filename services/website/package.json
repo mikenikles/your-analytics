@@ -18,8 +18,8 @@
     "watch:dev": "svelte-kit dev --host"
   },
   "dependencies": {
-    "chart.js": "^2.9.3",
-    "chartjs-chart-geo": "^2.1.0",
+    "chart.js": "^3.7.0",
+    "chartjs-chart-geo": "^3.6.0",
     "cookie": "^0.4.1",
     "cookie-parser": "^1.4.6",
     "date-fns": "^2.27.0",
