@@ -36,6 +36,4 @@ const create = () => {
   };
 };
 
-export const isLocalDateChange = writable(false);
-
 export default create();

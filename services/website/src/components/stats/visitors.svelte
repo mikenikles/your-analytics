@@ -4,7 +4,7 @@
   import { endOfMonth, formatISO, parseISO } from "date-fns";
   import Chart from "chart.js";
   import { visitors } from "../../api/stats";
-  import dateRange, { isLocalDateChange } from "../../stores/date-range";
+  import dateRange from "../../stores/date-range";
   import statsFiltersQueryString from "../../stores/stats-filters-query-string";
   import Loading from "./loading.svelte";
 
@@ -66,7 +66,6 @@
               } else if (labelClicked.match(REGEX_YEAR)) {
                 dateRange.setCustomRange(`${labelClicked}-01-01`, `${labelClicked}-12-31`);
               }
-              $isLocalDateChange = false;
               await goto(`${$page.path}?${$statsFiltersQueryString}`);
             }
           },
