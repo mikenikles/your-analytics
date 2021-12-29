@@ -12,7 +12,7 @@ describe("/onboarding", () => {
   });
 
   it("should create a new website", () => {
-    const websiteUrl = "dev.com";
+    const websiteUrl = "dev-test.com";
     cy.findByLabelText("What's your first name?").type("Tester");
     cy.findByText("Next: Configure your website").click();
     cy.findByLabelText("What's your website URL?").type(websiteUrl);
