@@ -2,11 +2,13 @@
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import { endOfMonth, formatISO, parseISO } from "date-fns";
-  import Chart from "chart.js";
+  import { Chart, CategoryScale, LinearScale, LineController, LineElement, PointElement, Tooltip } from "chart.js";
   import { visitors } from "../../api/stats";
   import dateRange from "../../stores/date-range";
   import statsFiltersQueryString from "../../stores/stats-filters-query-string";
   import Loading from "./loading.svelte";
+
+  Chart.register(CategoryScale, LinearScale, LineController, LineElement, PointElement, Tooltip);
 
   const REGEX_DAY = /\d{4}-\d{2}-\d{2}/;
   const REGEX_MONTH = /\s\d{4}$/;
@@ -48,13 +50,39 @@
           labels: Object.keys($visitors)
         },
         options: {
-          legend: {
-            display: false
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              callbacks: {
+                label: (tooltipItem) => {
+                  return `${tooltipItem.raw} Visitors`;
+                }
+              },
+              titleFont: {
+                size: 16,
+              },
+              titleMarginBottom: 8,
+              padding: {
+                top: 10,
+                right: 10,
+                bottom: 10,
+                left: 10
+              },
+            }
+
           },
-          onClick: async (_event, item) => {
-            if (item && item.length > 0) {
-              // @ts-ignore
-              const labelClicked = item[0]._chart.config.data.labels[item[0]._index];
+          onClick: async (event, item, chart) => {
+            // @ts-ignore
+            const activePoints = chart.getElementsAtEventForMode(event, "nearest", {
+              intersect: true
+            }, false)
+
+            console.log(activePoints)
+            if (activePoints.length > 0) {
+              const [{ index }] = activePoints;
+              const labelClicked = chart.data.labels[index] as String;
               if (labelClicked.match(REGEX_DAY)) {
                 dateRange.setCustomRange(labelClicked, labelClicked);
               } else if (labelClicked.match(REGEX_MONTH)) {
@@ -70,29 +98,18 @@
             }
           },
           scales: {
-            xAxes: [{
-              gridLines: {
+            x: {
+              grid: {
                 display: false
               }
-            }],
-            yAxes: [{
+            },
+            y: {
+              beginAtZero: true,
               ticks: {
-                beginAtZero: true,
                 stepSize: 1,
               }
-            }]
+            }
           },
-          tooltips: {
-            callbacks: {
-              label: (tooltipItem) => {
-                return `${tooltipItem.value} Visitors`;
-              }
-            },
-            titleFontSize: 16,
-            titleMarginBottom: 8,
-            xPadding: 10,
-            yPadding: 10
-          }
         },
         type: "line"
       });

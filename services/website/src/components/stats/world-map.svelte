@@ -1,9 +1,11 @@
 <script lang="ts">
-  import Chart from "chart.js";
-  import { topojson } from "chartjs-chart-geo";
+  import { Chart, Tooltip } from "chart.js";
+  import { ColorScale, ChoroplethController, ProjectionScale, topojson, GeoFeature } from 'chartjs-chart-geo';
   import { onMount } from "svelte";
   import { worldMap } from "../../api/stats";
   import Loading from "./loading.svelte";
+
+  Chart.register(Tooltip, ColorScale, ChoroplethController, GeoFeature, ProjectionScale);
 
   export let showTitle: boolean = true;
 
@@ -30,18 +32,19 @@
         },
         options: {
           showOutline: true,
-          legend: {
-            display: false
+          plugins: {
+            legend: {
+              display: false
+            }
           },
-          scale: {
-            // @ts-ignore
-            projection: 'equirectangular'
-          },
-          geo: {
-            colorScale: {
-              interpolate: "RdPu",
+          scales: {
+            color: {
+              interpolate: "rdPu",
               missing: "white"
             },
+            xy: {
+              projection: "equirectangular"
+            }
           },
         },
         type: "choropleth"

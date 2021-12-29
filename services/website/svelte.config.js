@@ -21,6 +21,9 @@ const config = {
             : "localhost",
         },
       },
+      ssr: {
+        noExternal: ["chart.js"],
+      },
     },
   },
 };
