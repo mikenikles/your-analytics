@@ -2,13 +2,13 @@
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import { endOfMonth, formatISO, parseISO } from "date-fns";
-  import { Chart, CategoryScale, LinearScale, LineController, LineElement, PointElement } from "chart.js";
+  import { Chart, CategoryScale, LinearScale, LineController, LineElement, PointElement, Tooltip } from "chart.js";
   import { visitors } from "../../api/stats";
   import dateRange from "../../stores/date-range";
   import statsFiltersQueryString from "../../stores/stats-filters-query-string";
   import Loading from "./loading.svelte";
 
-  Chart.register(CategoryScale, LinearScale, LineController, LineElement, PointElement);
+  Chart.register(CategoryScale, LinearScale, LineController, LineElement, PointElement, Tooltip);
 
   const REGEX_DAY = /\d{4}-\d{2}-\d{2}/;
   const REGEX_MONTH = /\s\d{4}$/;

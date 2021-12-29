@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { Chart } from "chart.js";
+  import { Chart, Tooltip } from "chart.js";
   import { ColorScale, ChoroplethController, ProjectionScale, topojson, GeoFeature } from 'chartjs-chart-geo';
   import { onMount } from "svelte";
   import { worldMap } from "../../api/stats";
   import Loading from "./loading.svelte";
 
-  Chart.register(ColorScale, ChoroplethController, GeoFeature, ProjectionScale);
+  Chart.register(Tooltip, ColorScale, ChoroplethController, GeoFeature, ProjectionScale);
 
   export let showTitle: boolean = true;
 
