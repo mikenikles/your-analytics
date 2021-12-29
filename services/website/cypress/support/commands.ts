@@ -27,9 +27,7 @@
 import "@testing-library/cypress/add-commands";
 
 Cypress.Commands.add("loginWithApi", () => {
-  return cy.request(
-    "POST",
-    "http://localhost:3000/api/admin/tests/user/login-with-api",
-    { email: "hello+ya-automated-tests@mikenikles.com" }
-  );
+  return cy.request("POST", "/api/admin/tests/user/login-with-api", {
+    email: "hello+ya-automated-tests@mikenikles.com",
+  });
 });

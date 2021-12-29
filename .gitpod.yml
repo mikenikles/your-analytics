@@ -5,8 +5,8 @@ tasks:
   - command: |
       cd services/website
       gp await-port 3000
-      npm run cy:run
-      cd services/events-api/ya-load-testing
+      CYPRESS_BASE_URL=`gp url 3000` npm run cy:run
+      cd ../events-api/ya-load-testing
       gp await-port 8123
       ./bin/run -d dev.com
     env:
