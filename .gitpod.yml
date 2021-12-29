@@ -7,17 +7,21 @@ tasks:
       gp await-port 3000
       CYPRESS_BASE_URL=`gp url 3000` npm run cy:run
       cd ../events-api/ya-load-testing
-      gp await-port 8123
-      ./bin/run -d dev.com
     env:
       CYPRESS_CACHE_FOLDER: /workspace/.cache/cypress
   - init: npm install
     command: |
+      gp await-port 8123
       export HMR_HOST=`gp url 3000`
       FAUNADB_ADMIN_SECRET=$YA_FAUNADB_ADMIN_SECRET FAUNADB_SERVER_SECRET=$YA_FAUNADB_SERVER_SECRET MAGIC_SECRET_KEY=$YA_MAGIC_SECRET_KEY npm run dev
     env:
       CYPRESS_CACHE_FOLDER: /workspace/.cache/cypress
   - command: cd services/db-analytics/dev/db && clickhouse-server
+  - command: |
+      gp await-port 8082
+      curl -v -X POST -H "content-type: application/json" -d '{"url": "your-analytics.org"}' http://localhost:8082/tests/domain-db
+      ./bin/run -d your-analytics.org
+      exit
 ports:
   - port: 3000
     onOpen: ignore
