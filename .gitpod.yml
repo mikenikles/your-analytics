@@ -7,6 +7,7 @@ tasks:
       gp await-port 3000
       CYPRESS_BASE_URL=`gp url 3000` npm run cy:run
       cd ../events-api/ya-load-testing
+      ./bin/run -d dev.com
     env:
       CYPRESS_CACHE_FOLDER: /workspace/.cache/cypress
   - init: npm install
