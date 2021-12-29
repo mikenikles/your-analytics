@@ -2,11 +2,21 @@ image:
   file: .gitpod.Dockerfile
 
 tasks:
-  - command: echo ""
+  - command: |
+      cd services/website
+      gp await-port 3000
+      CYPRESS_BASE_URL=`gp url 3000` npm run cy:run
+      cd ../events-api/ya-load-testing
+      gp await-port 8123
+      ./bin/run -d dev.com
+    env:
+      CYPRESS_CACHE_FOLDER: /workspace/.cache/cypress
   - init: npm install
     command: |
       export HMR_HOST=`gp url 3000`
       FAUNADB_ADMIN_SECRET=$YA_FAUNADB_ADMIN_SECRET FAUNADB_SERVER_SECRET=$YA_FAUNADB_SERVER_SECRET MAGIC_SECRET_KEY=$YA_MAGIC_SECRET_KEY npm run dev
+    env:
+      CYPRESS_CACHE_FOLDER: /workspace/.cache/cypress
   - command: cd services/db-analytics/dev/db && clickhouse-server
 ports:
   - port: 3000
