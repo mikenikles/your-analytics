@@ -50,9 +50,6 @@
           labels: Object.keys($visitors)
         },
         options: {
-          interaction: {
-
-          },
           plugins: {
             legend: {
               display: false

@@ -1,5 +1,6 @@
 .DS_Store
 /.svelte-kit
+/.vercel_build_output
 /node_modules/
 yarn-error.log
 /cypress/screenshots/
