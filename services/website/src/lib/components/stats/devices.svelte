@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { browser, os, screen } from "../../api/stats";
-  import Number from "../stats/elements/number.svelte";
+  import { browser, os, screen } from "$lib/api/stats";
+  import Number from "./elements/number.svelte";
   import Table from "../table/index.svelte";
   import TableCell from "../table/cell.svelte";
   import TableRow from "../table/row.svelte";

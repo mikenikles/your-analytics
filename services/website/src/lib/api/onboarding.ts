@@ -1,4 +1,4 @@
-import { ADMIN_API_BASE_URL } from "../config";
+import { ADMIN_API_BASE_URL } from "$lib/config";
 
 export const setFirstName = async (firstName) => {
   const url = `${ADMIN_API_BASE_URL}/user`;

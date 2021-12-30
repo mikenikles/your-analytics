@@ -1,4 +1,4 @@
-import { ADMIN_API_BASE_URL } from "../../config";
+import { ADMIN_API_BASE_URL } from "$lib/config";
 
 export const setVisibility = async (website, visibility) => {
   const url = `/${ADMIN_API_BASE_URL}/website/${website}/settings/visibility`;

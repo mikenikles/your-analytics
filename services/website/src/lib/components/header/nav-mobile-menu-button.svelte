@@ -1,5 +1,5 @@
 <script lang="ts">
-  import isOpen from "../../stores/mobile-menu";
+  import isOpen from "$lib/stores/mobile-menu";
 </script>
 
 <div class="-mr-2 flex md:hidden">

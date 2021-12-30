@@ -1,5 +1,5 @@
 <script lang="ts">
-  import onboarding from "../stores/onboarding";
+  import onboarding from "$lib/stores/onboarding";
 
   /**
    * To obtain the list:

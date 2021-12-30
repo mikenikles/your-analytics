@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-  import { getSettings } from "../../api/settings";
+  import { getSettings } from "$lib/api/settings";
 
   export async function load({session}) {
     const { user } = session;
@@ -21,10 +21,10 @@
 
 <script lang="ts">
   import { setContext } from "svelte";
-  import { contextKeySettings } from "../../config";
-  import Header from "../../components/header/index.svelte";
-  import MainContent from "../../components/main-content.svelte";
-  import Billing from "../../components/settings/billing/index.svelte";
+  import { contextKeySettings } from "$lib/config";
+  import Header from "$lib/components/header/index.svelte";
+  import MainContent from "$lib/components/main-content.svelte";
+  import Billing from "$lib/components/settings/billing/index.svelte";
 
   export let settings: {
     visibility: string;

@@ -1,8 +1,8 @@
 <script>
   import { page } from "$app/stores";
   import { getContext } from "svelte";
-  import { setVisibility } from "../../../../api/site/settings";
-  import { contextKeySiteSettings } from "../../../../config";
+  import { setVisibility } from "$lib/api/site/settings";
+  import { contextKeySiteSettings } from "$lib/config";
 
   const visibilities = [{
     label: "Private",

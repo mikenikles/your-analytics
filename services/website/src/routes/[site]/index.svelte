@@ -1,7 +1,7 @@
 <script context="module" lang="ts">
-  import { getVisibility } from "../../api/site/settings";
-  import { fetchAllStats } from "../../api/stats";
-  import { initFilters } from "../../stores/stats-filters-query";
+  import { getVisibility } from "$lib/api/site/settings";
+  import { fetchAllStats } from "$lib/api/stats";
+  import { initFilters } from "$lib/stores/stats-filters-query";
 
   export const load: import('@sveltejs/kit').Load = async ({fetch, page, session}) => {
     const { user } = session;
@@ -35,19 +35,19 @@
 
 <script lang="ts">
   import { page } from "$app/stores";
-  import { statsStores } from "../../api/stats";
-  import Card from "../../components/card.svelte";
-  import DateRange from "../../components/date-range.svelte";
-  import WebsiteSelect from "../../components/website-select.svelte";
-  import Header from "../../components/header/index.svelte";
-  import MainContent from "../../components/main-content.svelte";
-  import Devices from "../../components/stats/devices.svelte";
-  import TopPages from "../../components/stats/top-pages.svelte";
-  import TopReferrers from "../../components/stats/top-referrers.svelte";
-  import TotalPageviews from "../../components/stats/total-pageviews.svelte";
-  import UniqueVisitors from "../../components/stats/unique-visitors.svelte";
-  import Visitors from "../../components/stats/visitors.svelte";
-  import WorldMap from "../../components/stats/world-map.svelte";
+  import { statsStores } from "$lib/api/stats";
+  import Card from "$lib/components/card.svelte";
+  import DateRange from "$lib/components/date-range.svelte";
+  import WebsiteSelect from "$lib/components/website-select.svelte";
+  import Header from "$lib/components/header/index.svelte";
+  import MainContent from "$lib/components/main-content.svelte";
+  import Devices from "$lib/components/stats/devices.svelte";
+  import TopPages from "$lib/components/stats/top-pages.svelte";
+  import TopReferrers from "$lib/components/stats/top-referrers.svelte";
+  import TotalPageviews from "$lib/components/stats/total-pageviews.svelte";
+  import UniqueVisitors from "$lib/components/stats/unique-visitors.svelte";
+  import Visitors from "$lib/components/stats/visitors.svelte";
+  import WorldMap from "$lib/components/stats/world-map.svelte";
 
   export let stats: {
     storeName: string;

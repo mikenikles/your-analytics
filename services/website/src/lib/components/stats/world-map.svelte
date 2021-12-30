@@ -2,7 +2,7 @@
   import { Chart, Tooltip } from "chart.js";
   import { ColorScale, ChoroplethController, ProjectionScale, topojson, GeoFeature } from 'chartjs-chart-geo';
   import { onMount } from "svelte";
-  import { worldMap } from "../../api/stats";
+  import { worldMap } from "$lib/api/stats";
   import Loading from "./loading.svelte";
 
   Chart.register(Tooltip, ColorScale, ChoroplethController, GeoFeature, ProjectionScale);

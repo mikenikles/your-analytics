@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { setFirstName } from "../../api/onboarding";
-  import onboarding from "../../stores/onboarding";
+  import { setFirstName } from "$lib/api/onboarding";
+  import onboarding from "$lib/stores/onboarding";
   import StepWrapper from "./step-wrapper.svelte";
 
   let firstName = "";

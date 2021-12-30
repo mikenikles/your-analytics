@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page, session } from "$app/stores";
-  import { logout } from "../../auth/magic";
+  import { logout } from "$lib/auth/magic";
   import NavMobile from "./nav-mobile.svelte";
   import NavMobileMenuButton from "./nav-mobile-menu-button.svelte";
   import Nav from "./nav.svelte";

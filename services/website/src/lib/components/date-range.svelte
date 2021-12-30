@@ -1,8 +1,8 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
-  import dateRange from "../stores/date-range";
-  import statsFiltersQueryString from "../stores/stats-filters-query-string";
+  import dateRange from "$lib/stores/date-range";
+  import statsFiltersQueryString from "$lib/stores/stats-filters-query-string";
 
   const datePresets = {
     // Also update `services/query-api/src/index.js`

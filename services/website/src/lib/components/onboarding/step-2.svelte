@@ -1,10 +1,10 @@
 <script lang="ts">
   import { session } from "$app/stores";
   import { onDestroy } from "svelte";
-  import { addNewWebsite } from "../../api/onboarding";
-  import { fetchUniqueVisitorsOnOnboardingPage } from "../../api/stats";
-  import dateRange from "../../stores/date-range";
-  import onboarding from "../../stores/onboarding";
+  import { addNewWebsite } from "$lib/api/onboarding";
+  import { fetchUniqueVisitorsOnOnboardingPage } from "$lib/api/stats";
+  import dateRange from "$lib/stores/date-range";
+  import onboarding from "$lib/stores/onboarding";
   import StepWrapper from "./step-wrapper.svelte";
   import TimezoneSelect from "../timezone-select.svelte";
 

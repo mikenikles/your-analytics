@@ -3,9 +3,9 @@
   import { page } from '$app/stores';
   import { endOfMonth, formatISO, parseISO } from "date-fns";
   import { Chart, CategoryScale, LinearScale, LineController, LineElement, PointElement, Tooltip } from "chart.js";
-  import { visitors } from "../../api/stats";
-  import dateRange from "../../stores/date-range";
-  import statsFiltersQueryString from "../../stores/stats-filters-query-string";
+  import { visitors } from "$lib/api/stats";
+  import dateRange from "$lib/stores/date-range";
+  import statsFiltersQueryString from "$lib/stores/stats-filters-query-string";
   import Loading from "./loading.svelte";
 
   Chart.register(CategoryScale, LinearScale, LineController, LineElement, PointElement, Tooltip);

@@ -1,5 +1,5 @@
 import { Magic } from "magic-sdk";
-import { ADMIN_API_BASE_URL, MAGIC_PUBLIC_KEY } from "../config";
+import { ADMIN_API_BASE_URL, MAGIC_PUBLIC_KEY } from "$lib/config";
 
 let magic;
 

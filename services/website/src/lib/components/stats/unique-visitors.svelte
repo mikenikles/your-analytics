@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { uniqueVisitors } from "../../api/stats";
+  import { uniqueVisitors } from "$lib/api/stats";
   import ComparisonNumbers from "./elements/comparison-numbers.svelte";
 </script>
 

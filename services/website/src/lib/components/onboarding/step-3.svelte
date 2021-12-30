@@ -1,5 +1,5 @@
 <script lang="ts">
-  import onboarding from "../../stores/onboarding";
+  import onboarding from "$lib/stores/onboarding";
   import StepWrapper from "./step-wrapper.svelte";
   import UniqueVisitors from "../stats/unique-visitors.svelte";
 

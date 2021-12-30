@@ -1,5 +1,5 @@
 <script lang="ts">
-  import isOpen from "../../stores/mobile-menu";
+  import isOpen from "$lib/stores/mobile-menu";
   import { session } from "$app/stores";
 
   export let handleLogout;

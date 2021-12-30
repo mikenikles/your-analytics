@@ -1,6 +1,6 @@
 import { get, writable } from "svelte/store";
-import { QUERY_API_BASE_URL } from "../config";
-import statsFilterQueryString from "../stores/stats-filters-query-string";
+import { QUERY_API_BASE_URL } from "$lib/config";
+import statsFilterQueryString from "$lib/stores/stats-filters-query-string";
 
 const fetchStats = (fetch, host, site) => async (path, storeName) => {
   const url = `https://${host}/${QUERY_API_BASE_URL}/${site}/${path}?${get(
