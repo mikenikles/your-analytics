@@ -21,7 +21,7 @@ tasks:
   - command: |
       cd services/events-api/ya-load-testing
       gp await-port 8082
-      curl -v -X POST -H "content-type: application/json" -d '{"url": "your-analytics.org"}' http://localhost:8082/tests/domain-db
+      curl -X POST -H "content-type: application/json" -d '{"url": "your-analytics.org"}' http://localhost:8082/tests/domain-db
       ./bin/run -d your-analytics.org
 ports:
   - port: 3000
