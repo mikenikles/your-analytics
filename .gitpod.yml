@@ -23,6 +23,7 @@ tasks:
       gp await-port 8082
       curl -X POST -H "content-type: application/json" -d '{"url": "your-analytics.org"}' http://localhost:8082/tests/domain-db
       ./bin/run -d your-analytics.org
+
 ports:
   - port: 3000
     onOpen: ignore
@@ -42,6 +43,12 @@ ports:
     onOpen: ignore
   - port: 10000
     onOpen: ignore
+
+github:
+  prebuilds:
+    addCheck: false
+    addBadge: true
+    branches: true
 
 vscode:
   extensions:
