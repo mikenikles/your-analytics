@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-  import { getVisibility } from "../../api/settings";
+  import { getVisibility } from "../../api/site/settings";
   import { fetchAllStats } from "../../api/stats";
   import { initFilters } from "../../stores/stats-filters-query";
 

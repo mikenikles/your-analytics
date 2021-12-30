@@ -1,7 +1,7 @@
 <script context="module" lang="ts">
-  import { getSettings } from "../../api/site/settings";
+  import { getSettings } from "../../api/settings";
 
-  export async function load({fetch, page, session}) {
+  export async function load({session}) {
     const { user } = session;
 
     if (!user) {
@@ -11,7 +11,7 @@
       }
     }
 
-    const settings = await getSettings(fetch, page.host, page.params.site);
+    const settings = await getSettings();
 
     return {
       props: {settings}
@@ -20,25 +20,24 @@
 </script>
 
 <script lang="ts">
-  import { page } from "$app/stores";
   import { setContext } from "svelte";
-  import { contextKeySiteSettings } from "../../config";
+  import { contextKeySettings } from "../../config";
   import Header from "../../components/header/index.svelte";
   import MainContent from "../../components/main-content.svelte";
-  import Website from "../../components/site/settings/website/index.svelte";
+  import Billing from "../../components/settings/billing/index.svelte";
 
   export let settings: {
     visibility: string;
   };
 
-  setContext(contextKeySiteSettings, settings);
+  setContext(contextKeySettings, settings);
 </script>
 
 <svelte:head>
-  <title>Settings for {$page.params.site} | Your Analytics</title>
+  <title>Settings | Your Analytics</title>
 </svelte:head>
 
 <Header />
 <MainContent>
-  <Website />
+  <Billing />
 </MainContent>

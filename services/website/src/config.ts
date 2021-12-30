@@ -11,3 +11,4 @@ export const MAGIC_PUBLIC_KEY = isDevelopment
   : "pk_live_BA455263710CC21F";
 
 export const contextKeySettings = {};
+export const contextKeySiteSettings = {};

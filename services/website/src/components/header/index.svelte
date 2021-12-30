@@ -28,6 +28,7 @@
         {:else}
           <NavItem href="/{userWebsites[0]}" label="{userWebsites[0]}" isActive={$page.path === `/${userWebsites[0]}`} />
         {/if}
+        <NavItem href="/settings" label="Settings" isActive={$page.path === "/settings"} />
       </Nav>
       <button on:click={handleLogout} class="hidden md:block font-semibold tracking-wide">Sign out</button>
       <NavMobileMenuButton />

@@ -1,8 +1,8 @@
 <script>
   import { page } from "$app/stores";
   import { getContext } from "svelte";
-  import { setVisibility } from "../../../api/settings";
-  import { contextKeySettings } from "../../../config";
+  import { setVisibility } from "../../../../api/site/settings";
+  import { contextKeySiteSettings } from "../../../../config";
 
   const visibilities = [{
     label: "Private",
@@ -14,7 +14,7 @@
     description: "Share your website analytics publicly - anyone can see it."
   }];
 
-  let selectedVisibility = getContext(contextKeySettings).visibility;
+  let selectedVisibility = getContext(contextKeySiteSettings).visibility;
 
   const handleVisibilitySubmit = async () => {
     await setVisibility($page.params.site, selectedVisibility);
