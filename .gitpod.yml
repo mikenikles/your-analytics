@@ -19,6 +19,7 @@ tasks:
       CYPRESS_CACHE_FOLDER: /workspace/.cache/cypress
   - command: cd services/db-analytics/dev/db && clickhouse-server
   - command: |
+      cd services/events-api/ya-load-testing
       gp await-port 8082
       curl -v -X POST -H "content-type: application/json" -d '{"url": "your-analytics.org"}' http://localhost:8082/tests/domain-db
       ./bin/run -d your-analytics.org
