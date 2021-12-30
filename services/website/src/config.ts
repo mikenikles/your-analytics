@@ -9,3 +9,5 @@ export const QUERY_API_BASE_URL = "api/query";
 export const MAGIC_PUBLIC_KEY = isDevelopment
   ? "pk_test_517AC93805DD89CB"
   : "pk_live_BA455263710CC21F";
+
+export const contextKeySettings = {};
