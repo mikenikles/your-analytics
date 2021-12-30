@@ -44,7 +44,7 @@
 
 <div class="mx-2 flex flex-col sm:flex-row sm:items-end">
   <div class="mt-4 sm:py-0">
-    <select bind:value={datePreset} on:click={applyPreset} aria-label="Choose a date range" class="form-select">
+    <select bind:value={datePreset} on:change={applyPreset} aria-label="Choose a date range" class="form-select">
       {#each Object.entries(datePresets) as [value, {label}]}
         <option {value}>{label}</option>
       {/each}
