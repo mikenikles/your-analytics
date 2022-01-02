@@ -1,7 +1,31 @@
 const { convertUrlToDbName } = require("./setup");
+const { getDateRange } = require("./stats/fragments");
 
 const insertBuffers = {};
 let flushIntervalId;
+
+const countEvents = (ch) => (domain, dateRange) => {
+  const dbName = convertUrlToDbName(domain);
+  const sql = `SELECT COUNT(*) FROM ${dbName}.events WHERE ${getDateRange(
+    dateRange,
+    "Etc/UTC"
+  )}`;
+  const stream = ch.query(sql);
+
+  return new Promise((resolve, reject) => {
+    const result = {};
+    stream.on("error", (error) => reject(error));
+
+    stream.on("data", (row) => {
+      // row: [total]
+      result.count = row[0] * 1;
+    });
+
+    stream.on("end", () => {
+      resolve(result);
+    });
+  });
+};
 
 const recordEvent = (ch) => (event) => {
   if (!insertBuffers[event.domain]) {
@@ -45,5 +69,6 @@ const recordEvent = (ch) => (event) => {
 };
 
 module.exports = {
+  countEvents,
   recordEvent,
 };

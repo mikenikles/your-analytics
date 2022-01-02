@@ -6,7 +6,7 @@ const passport = require("passport");
 const passportCookie = require("passport-cookie");
 const jwt = require("jsonwebtoken");
 const { magic } = require("./middlewares");
-const { user, website } = require("./routes");
+const { settings, user, website } = require("./routes");
 const tests = require("./routes/tests");
 
 const app = express();
@@ -47,6 +47,7 @@ app.get("/", async (req, res) => {
   res.status(200).end();
 });
 
+app.use("/settings", settings(authenticateJwtCookieCombo));
 app.use("/user", user(authenticateMagic, authenticateJwtCookieCombo));
 app.use("/website", website(authenticateJwtCookieCombo));
 

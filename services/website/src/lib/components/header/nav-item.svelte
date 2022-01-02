@@ -11,5 +11,5 @@
 </style>
 
 <li class:active={isActive} class="mx-2 px-4 py-2 hover:bg-gray-200 rounded-full">
-  <a href="{href}">{label}</a>
+  <a sveltekit:prefetch href="{href}">{label}</a>
 </li>

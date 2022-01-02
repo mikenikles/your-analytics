@@ -1,7 +1,7 @@
 <script context="module" lang="ts">
   import { getSettings } from "$lib/api/settings";
 
-  export async function load({session}) {
+  export async function load({fetch, session}) {
     const { user } = session;
 
     if (!user) {
@@ -11,7 +11,7 @@
       }
     }
 
-    const settings = await getSettings();
+    const settings = await getSettings(fetch);
 
     return {
       props: {settings}

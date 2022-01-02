@@ -8,6 +8,12 @@ const {
 } = require("./admin");
 
 const {
+  createByIssuerAndRoleIndex,
+  hasRole,
+  insertPerson,
+} = require("./people");
+
+const {
   getSettings,
   getSettingsPublic,
   getVisibility,
@@ -26,6 +32,26 @@ module.exports = (adminClient) => ({
       ),
     createWebsiteServerKey: createWebsiteServerKey(adminClient),
     deleteWebsite: deleteWebsite(adminClient),
+  },
+  people: {
+    createByIssuerAndRoleIndex: (websiteServerKeySecret) =>
+      createByIssuerAndRoleIndex(
+        new faunadb.Client({
+          secret: websiteServerKeySecret,
+        })
+      ),
+    hasRole: (websiteServerKeySecret) =>
+      hasRole(
+        new faunadb.Client({
+          secret: websiteServerKeySecret,
+        })
+      ),
+    insertPerson: (websiteServerKeySecret) =>
+      insertPerson(
+        new faunadb.Client({
+          secret: websiteServerKeySecret,
+        })
+      ),
   },
   settings: {
     getSettings: (websiteServerKeySecret) =>
