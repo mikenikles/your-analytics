@@ -9,6 +9,7 @@ const ch = new ClickHouse({
   port: process.env.CH_PORT,
   user: process.env.CH_USER,
   password: process.env.CH_PASSWORD,
+  protocol: "https",
 });
 
 module.exports = {
