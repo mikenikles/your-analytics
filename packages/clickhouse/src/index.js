@@ -9,7 +9,9 @@ const ch = new ClickHouse({
   port: process.env.CH_PORT,
   user: process.env.CH_USER,
   password: process.env.CH_PASSWORD,
-  protocol: process.env.NODE_ENV === "production" ? "https:" : "http:",
+  // Uncomment the protocol if we give ClickHouse Cloud a try again in the future.
+  // See https://github.com/mikenikles/your-analytics/issues/299
+  // protocol: process.env.NODE_ENV === "production" ? "https:" : "http:",
 });
 
 module.exports = {
