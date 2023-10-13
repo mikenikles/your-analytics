@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
-  import { fetchAllStats } from "../api/stats";
-  import { initFilters } from "../stores/stats-filters-query";
+  import { fetchAllStats } from "$lib/api/stats";
+  import { initFilters } from "$lib/stores/stats-filters-query";
 
   export async function load({fetch, page}) {
     initFilters({
@@ -23,13 +23,13 @@
 
 
 <script lang="ts">
-  import { statsStores } from "../api/stats";
-  import Features from "../components/landing-page/features.svelte";
-  import Header from "../components/header/index.svelte";
-  import Hero from "../components/landing-page/hero.svelte";
-  import Stats from "../components/landing-page/stats.svelte";
-  import FrontendIntegrations from "../components/landing-page/frontend-integrations.svelte";
-  import Pricing from "../components/landing-page/pricing.svelte";
+  import { statsStores } from "$lib/api/stats";
+  import Features from "$lib/components/landing-page/features.svelte";
+  import Header from "$lib/components/header/index.svelte";
+  import Hero from "$lib/components/landing-page/hero.svelte";
+  import Stats from "$lib/components/landing-page/stats.svelte";
+  import FrontendIntegrations from "$lib/components/landing-page/frontend-integrations.svelte";
+  import Pricing from "$lib/components/landing-page/pricing.svelte";
   
   export let stats: {
     storeName: string;

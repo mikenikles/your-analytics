@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-  import { ADMIN_API_BASE_URL } from "../config";
+  import { ADMIN_API_BASE_URL } from "$lib/config";
 
   export async function load({fetch, page, session}) {
     const { user } = session;
@@ -32,9 +32,9 @@
 </script>
 
 <script lang="ts">
-  import Card from "../components/card.svelte";
-  import Header from "../components/header/index.svelte";
-  import MainContent from "../components/main-content.svelte";
+  import Card from "$lib/components/card.svelte";
+  import Header from "$lib/components/header/index.svelte";
+  import MainContent from "$lib/components/main-content.svelte";
 
   export let sites: {};
 </script>

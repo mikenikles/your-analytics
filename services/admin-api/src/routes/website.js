@@ -51,6 +51,15 @@ module.exports = (authenticate) => {
         visibility: "private",
       });
 
+      await domainDb.admin.createCollection(websiteServerKeySecret)("people");
+      await domainDb.people.insertPerson(websiteServerKeySecret)({
+        issuer: req.user.issuer,
+        role: "owner",
+      });
+      await domainDb.people.createByIssuerAndRoleIndex(
+        websiteServerKeySecret
+      )();
+
       try {
         const newUser = Object.assign({}, req.user);
         newUser.sites[req.body.url] = {};

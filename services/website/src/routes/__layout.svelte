@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Footer from "../components/footer.svelte";
+  import Footer from "$lib/components/footer.svelte";
 
   export let segment: string;
 

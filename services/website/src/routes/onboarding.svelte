@@ -14,13 +14,13 @@
 </script>
 
 <script lang="ts">
-  import onboarding from "../stores/onboarding";
-  import Header from "../components/header/index.svelte";
-  import MainContent from "../components/main-content.svelte";
-  import StepHeader from "../components/onboarding/step-header.svelte";
-  import Step1 from "../components/onboarding/step-1.svelte";
-  import Step2 from "../components/onboarding/step-2.svelte";
-  import Step3 from "../components/onboarding/step-3.svelte";
+  import onboarding from "$lib/stores/onboarding";
+  import Header from "$lib/components/header/index.svelte";
+  import MainContent from "$lib/components/main-content.svelte";
+  import StepHeader from "$lib/components/onboarding/step-header.svelte";
+  import Step1 from "$lib/components/onboarding/step-1.svelte";
+  import Step2 from "$lib/components/onboarding/step-2.svelte";
+  import Step3 from "$lib/components/onboarding/step-3.svelte";
 
   export let user: {
     firstName?: string;

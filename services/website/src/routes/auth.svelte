@@ -16,10 +16,10 @@
 
 <script lang="ts">
   import { session } from "$app/stores";
-  import { login } from "../auth/magic";
-  import Card from "../components/card.svelte";
-  import Header from "../components/header/index.svelte";
-  import MainContent from "../components/main-content.svelte";
+  import { login } from "$lib/auth/magic";
+  import Card from "$lib/components/card.svelte";
+  import Header from "$lib/components/header/index.svelte";
+  import MainContent from "$lib/components/main-content.svelte";
 </script>
 
 <svelte:head>
